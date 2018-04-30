@@ -24,7 +24,8 @@ import javafx.util.Duration;
 
 public class Game extends Application {
 	
-	int HEIGHT = 1080;
+	// 16 : 9 Ratio based off height
+	int HEIGHT = 720;
 	int WIDTH =  HEIGHT * 16 / 9;
 	
 	Parent mainMenuLayout, characterSelectLayout;
@@ -43,7 +44,8 @@ public class Game extends Application {
         mainMenuLayout = createMainMenu();
         
     	Scene root = new Scene(mainMenuLayout);
-
+    	
+    	stage.setResizable(false);
         stage.setTitle("Super CSC FighterZ");
         stage.setScene(root);
         stage.show();
@@ -54,9 +56,13 @@ public class Game extends Application {
 
         Image background = new Image("MainMenuBG.png");
         ImageView imgView = new ImageView(background);
+        imgView.setFitHeight(HEIGHT);
+        imgView.setFitWidth(WIDTH);
         
         Image logo = new Image("MainMenuLogo.png");
         ImageView logoView = new ImageView(logo);
+        logoView.setFitHeight(HEIGHT);
+        logoView.setFitWidth(WIDTH);
         
         Timeline timeline = new Timeline();
         timeline.getKeyFrames().addAll(
@@ -70,7 +76,7 @@ public class Game extends Application {
         MainMenuButton play = new MainMenuButton("Play", createCharacterSelect());
         MainMenuButton leaderboards = new MainMenuButton("Leaderboards", createCharacterSelect());
         MainMenuButton options = new MainMenuButton("Options", createCharacterSelect());
-        MainMenuButton exit = new MainMenuButton("Exit", createCharacterSelect());
+        MainMenuButton exit = new MainMenuButton("Exit");
         
         play.setTranslateX(-360);
         leaderboards.setTranslateX(-110);
@@ -91,6 +97,8 @@ public class Game extends Application {
         StackPane characterSelectLayout = new StackPane();
         Image background = new Image("CharacterSelect.png");
         ImageView imgView = new ImageView(background);
+        imgView.setFitHeight(HEIGHT);
+        imgView.setFitWidth(WIDTH);
 
         BackButton backBtn = new BackButton(null);
     	
@@ -103,17 +111,45 @@ public class Game extends Application {
     	
     	public MainMenuButton(String label, Parent newScene) {
             super(label);
-            MainMenuButton that = this;
             
-            this.setFont(Font.font("Arial", FontWeight.NORMAL, 42));
-            this.setTextFill(Color.WHITE);
-            this.setCursor(Cursor.HAND);
+            this.setupAppearence();
+            this.setupHandlers();
+            
             this.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
     			@Override
     			public void handle(MouseEvent e) {
     				getScene().setRoot(newScene);
     			}
             });
+    	}
+    	
+    	// Currently only for exit button
+    	public MainMenuButton(String label) {
+            super(label);
+            
+            this.setupAppearence();
+            this.setupHandlers();
+            
+            this.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+    			@Override
+    			public void handle(MouseEvent e) {
+    				System.exit(0);
+    			}
+            });
+    	}
+    	
+    	private void setupAppearence() {
+            //TODO: better font
+            this.setFont(Font.font("Arial", FontWeight.NORMAL, 42));
+            this.setTextFill(Color.WHITE);
+            this.setCursor(Cursor.HAND);
+            
+            // Relative height to window size, 1/4 of the way up from the bottom
+            this.setTranslateY(HEIGHT / 2 - HEIGHT /  4);
+    	}
+    	
+    	private void setupHandlers() {
+            MainMenuButton that = this;
             
             this.addEventHandler(MouseEvent.MOUSE_ENTERED, new EventHandler<MouseEvent>() {
     			@Override
@@ -127,8 +163,7 @@ public class Game extends Application {
       			public void handle(MouseEvent e) {
       				that.setEffect(null);
       			}
-             });
-            this.setTranslateY(265);
+            });
     	}
     }
     
@@ -138,6 +173,9 @@ public class Game extends Application {
             super(new Image("BackIcon.png"));
             BackButton that = this;
             this.setCursor(Cursor.HAND);
+            double side = HEIGHT / 1080.0 * new Image("BackIcon.png").getHeight();
+            this.setFitHeight(side);
+            this.setFitWidth(side);
             
             this.addEventHandler(MouseEvent.MOUSE_PRESSED, new EventHandler<MouseEvent>() {
     			@Override
@@ -165,11 +203,11 @@ public class Game extends Application {
       			public void handle(MouseEvent e) {
       				that.setEffect(null);
       			}
-             });
+            });
             
-            
-            this.setTranslateY(420);
-            this.setTranslateX(-820);
+            // Place back button in left corner relative to window size
+            this.setTranslateY(HEIGHT / 2 - 80);
+            this.setTranslateX(-WIDTH / 2 + 80);
     	}
     }
 }
