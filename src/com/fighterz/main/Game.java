@@ -26,6 +26,9 @@ public class Game extends Application {
     // 16 : 9 Ratio based off height
     int HEIGHT = 720;
     int WIDTH = HEIGHT * 16 / 9;
+    
+    // Used to determine values based off ratio of current res (HEIGHT) to standard res (1080p)
+    double H_RATIO = HEIGHT / 1080.0;
 
     Parent mainMenuLayout, characterSelectLayout;
 
@@ -64,9 +67,11 @@ public class Game extends Application {
         logoView.setFitWidth(WIDTH);
 
         Timeline timeline = new Timeline();
-        timeline.getKeyFrames().addAll(new KeyFrame(Duration.ZERO, new KeyValue(logoView.rotateProperty(), -2)),
-                new KeyFrame(new Duration(800), new KeyValue(logoView.rotateProperty(), 2)),
-                new KeyFrame(new Duration(1600), new KeyValue(logoView.rotateProperty(), -2)));
+        timeline.getKeyFrames().addAll(
+            new KeyFrame(Duration.ZERO, new KeyValue(logoView.rotateProperty(), -2)),
+            new KeyFrame(new Duration(800), new KeyValue(logoView.rotateProperty(), 2)),
+            new KeyFrame(new Duration(1600), new KeyValue(logoView.rotateProperty(), -2))
+        );
         timeline.setCycleCount(Animation.INDEFINITE);
         timeline.play();
 
@@ -74,11 +79,12 @@ public class Game extends Application {
         MainMenuButton leaderboards = new MainMenuButton("Leaderboards", createCharacterSelect());
         MainMenuButton options = new MainMenuButton("Options", createCharacterSelect());
         MainMenuButton exit = new MainMenuButton("Exit");
-
-        play.setTranslateX(-360);
-        leaderboards.setTranslateX(-110);
-        options.setTranslateX(170);
-        exit.setTranslateX(360);
+     
+        int maxX = (int) (H_RATIO * 420);
+        play.setTranslateX(-maxX);
+        leaderboards.setTranslateX(-maxX / 2 + H_RATIO * 90); // Leaderboard btn is offset b/c it's so long
+        options.setTranslateX(maxX / 2);
+        exit.setTranslateX(maxX);
 
         mainMenuLayout.getChildren().add(imgView);
         mainMenuLayout.getChildren().add(logoView);
@@ -97,6 +103,8 @@ public class Game extends Application {
         imgView.setFitHeight(HEIGHT);
         imgView.setFitWidth(WIDTH);
 
+        // Eventually null will be replaced with a reference to the previous scene
+        // For now we assume mainMenu
         BackButton backBtn = new BackButton(null);
 
         characterSelectLayout.getChildren().add(imgView);
@@ -136,8 +144,8 @@ public class Game extends Application {
         }
 
         private void setupAppearence() {
-            // TODO: better font
-            this.setFont(Font.font("Arial", FontWeight.NORMAL, 42));
+            // TODO better font
+            this.setFont(Font.font("Arial", FontWeight.NORMAL, H_RATIO * 54));
             this.setTextFill(Color.WHITE);
             this.setCursor(Cursor.HAND);
 
@@ -146,6 +154,7 @@ public class Game extends Application {
         }
 
         private void setupHandlers() {
+            // B/c we lose reference to ourself inside event handler
             MainMenuButton that = this;
 
             this.addEventHandler(MouseEvent.MOUSE_ENTERED, new EventHandler<MouseEvent>() {
@@ -167,13 +176,15 @@ public class Game extends Application {
     public class BackButton extends ImageView {
 
         public BackButton(Parent prevScene) {
-            super(new Image("BackIcon.png"));
-            BackButton that = this;
+            super(new Image("BackIcon.png"));  
+            
             this.setCursor(Cursor.HAND);
-            double side = HEIGHT / 1080.0 * new Image("BackIcon.png").getHeight();
+            double side = H_RATIO * new Image("BackIcon.png").getHeight();
             this.setFitHeight(side);
             this.setFitWidth(side);
 
+            // Save ourself for event handler
+            BackButton that = this;
             this.addEventHandler(MouseEvent.MOUSE_PRESSED, new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent e) {
@@ -203,8 +214,8 @@ public class Game extends Application {
             });
 
             // Place back button in left corner relative to window size
-            this.setTranslateY(HEIGHT / 2 - 80);
-            this.setTranslateX(-WIDTH / 2 + 80);
+            this.setTranslateY(HEIGHT / 2 - H_RATIO * 90);
+            this.setTranslateX(-WIDTH / 2 + H_RATIO * 90);
         }
     }
 }
