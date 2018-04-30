@@ -25,11 +25,11 @@ import javafx.util.Duration;
 public class Game extends Application {
 	
 	// 16 : 9 Ratio based off height
-	int HEIGHT = 720;
-	int WIDTH =  HEIGHT * 16 / 9;
+    int HEIGHT = 720;
+    int WIDTH =  HEIGHT * 16 / 9;
 	
-	Parent mainMenuLayout, characterSelectLayout;
-	
+    Parent mainMenuLayout, characterSelectLayout;
+
     public static void main(String[] args) {
         launch(args);
     }
