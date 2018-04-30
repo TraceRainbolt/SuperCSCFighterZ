@@ -24,7 +24,7 @@ import javafx.util.Duration;
 
 public class Game extends Application {
 	
-	// 16 : 9 Ratio based off height
+    // 16 : 9 Ratio based off height
     int HEIGHT = 720;
     int WIDTH =  HEIGHT * 16 / 9;
 	
