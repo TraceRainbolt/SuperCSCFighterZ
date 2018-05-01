@@ -24,15 +24,14 @@ import javafx.util.Duration;
 
 public class Game extends Application {
     // 16 : 9 Ratio based off height
-    private final static int INIT_HEIGHT = 1080;
+    private final static int INIT_HEIGHT = 720;
     private final static int INIT_WIDTH = INIT_HEIGHT * 16 / 9;
     
     // Used to determine values based off ratio of current res (HEIGHT) to standard res (1080p)
     private static double hRatio = INIT_HEIGHT / 1080.0;
     
+    // Mutable height and with variables
     private static int height = INIT_HEIGHT, width = INIT_WIDTH;
-
-    Parent mainMenuLayout, characterSelectLayout;
 
     public static void main(String[] args) {
         launch(args);
@@ -44,8 +43,7 @@ public class Game extends Application {
     }
 
     private void initUI(Stage stage) {
-        characterSelectLayout = createCharacterSelect();
-        mainMenuLayout = createMainMenu();
+        StackPane mainMenuLayout = createMainMenu();
 
         Scene root = new Scene(mainMenuLayout);
 
@@ -58,9 +56,9 @@ public class Game extends Application {
     }
     
     private static void setWindowSize(Stage stage, int newHeight) {
-    	height = newHeight;
-    	width = newHeight * 16 / 9;
-    	hRatio = newHeight / 1080.0;
+    	Game.height = newHeight;
+    	Game.width = newHeight * 16 / 9;
+    	Game.hRatio = newHeight / 1080.0;
     	
         stage.setHeight(height);
         stage.setWidth(width);
@@ -72,6 +70,10 @@ public class Game extends Application {
     
     private static int getHeight() {
     	return height;
+    }
+    
+    private static double getHRatio() {
+        return hRatio;
     }
 
     private StackPane createMainMenu() {
@@ -88,18 +90,13 @@ public class Game extends Application {
         MainMenuButton options = new MainMenuButton("Options", createOptionsMenu());
         MainMenuButton exit = new MainMenuButton("Exit");
      
-        int maxX = (int) (hRatio * 420);
+        int maxX = (int) (Game.getHRatio() * 420);
         play.setTranslateX(-maxX);
-        leaderboards.setTranslateX(-maxX / 2 + hRatio * 90); // Leaderboard btn is offset b/c it's so long
+        leaderboards.setTranslateX(-maxX / 2 + Game.getHRatio() * 90); // Leaderboard btn is offset b/c it's so long
         options.setTranslateX(maxX / 2);
         exit.setTranslateX(maxX);
 
-        mainMenuLayout.getChildren().add(background);
-        mainMenuLayout.getChildren().add(logoView);
-        mainMenuLayout.getChildren().add(play);
-        mainMenuLayout.getChildren().add(leaderboards);
-        mainMenuLayout.getChildren().add(options);
-        mainMenuLayout.getChildren().add(exit);
+        mainMenuLayout.getChildren().addAll(background, logoView, play, leaderboards, options, exit);
 
         return mainMenuLayout;
     }
@@ -132,8 +129,7 @@ public class Game extends Application {
         // For now we assume mainMenu
         BackButton backBtn = new BackButton(null);
 
-        characterSelectLayout.getChildren().add(imgView);
-        characterSelectLayout.getChildren().add(backBtn);
+        characterSelectLayout.getChildren().addAll(imgView, backBtn);
         return characterSelectLayout;
     }
     
@@ -147,14 +143,18 @@ public class Game extends Application {
         OptionsButton medRes = new OptionsButton("1280 x 720");
         OptionsButton maxRes = new OptionsButton("1920 x 1080");
         
-        minRes.setTranslateX(-270 * hRatio);
-        minRes.setTranslateY(-170 * hRatio);
+        // Starting point for resolution choices
+        int baseY = -170;
         
-        medRes.setTranslateX(-259 * hRatio);
-        medRes.setTranslateY(-70 * hRatio);
+        // Magic numbers for x values simply left align the res label
+        minRes.setTranslateX(-270 * Game.getHRatio());
+        minRes.setTranslateY(baseY * Game.getHRatio());
         
-        maxRes.setTranslateX(-241 * hRatio);
-        maxRes.setTranslateY(30 * hRatio);
+        medRes.setTranslateX(-259 * Game.getHRatio());
+        medRes.setTranslateY((baseY + 100) * Game.getHRatio());
+        
+        maxRes.setTranslateX(-241 * Game.getHRatio());
+        maxRes.setTranslateY((baseY + 200) * Game.getHRatio());
         
         SimpleImage pointer = new SimpleImage("OptionPointer.png", false);
         
@@ -166,25 +166,18 @@ public class Game extends Application {
         // For now we assume mainMenu
         BackButton backBtn = new BackButton(null);
 
-        optionsMenu.getChildren().add(imgView);
-        optionsMenu.getChildren().add(backBtn);
-        optionsMenu.getChildren().add(logoView);
-        optionsMenu.getChildren().add(container);
-        optionsMenu.getChildren().add(heading);
-        optionsMenu.getChildren().add(minRes);
-        optionsMenu.getChildren().add(medRes);
-        optionsMenu.getChildren().add(maxRes);
-        optionsMenu.getChildren().add(pointer);
+        optionsMenu.getChildren().addAll(imgView, backBtn, logoView, container, 
+                heading, minRes, medRes, maxRes, pointer);
         
+        pointer.setTranslateX(-450 * Game.getHRatio());
         
-        pointer.setTranslateX(-450 * hRatio);
-        
+        // Always initialize pointer pointing to correct resolution
         if(Game.getHeight() == 1080) {
-            pointer.setTranslateY(30 * hRatio);
+            pointer.setTranslateY((baseY + 200) * Game.getHRatio());
         } else if(Game.getHeight() == 720) {
-        	pointer.setTranslateY(-70 * hRatio);
+        	pointer.setTranslateY((baseY + 100) * Game.getHRatio());
         } else {
-        	pointer.setTranslateY(-170 * hRatio);
+        	pointer.setTranslateY(baseY * Game.getHRatio());
         }
         
         minRes.setupHandlers(optionsMenu, pointer);
@@ -194,21 +187,24 @@ public class Game extends Application {
         return optionsMenu;
     }
     
-    // Removes a lot of boilerplate for adding images
+    
+    // Class removes a lot of boilerplate for adding images
     public class SimpleImage extends ImageView {
     	
     	public SimpleImage(String path) {
     		super(new Image(path));
     	}
     	
+    	// This constructor used if images need to be scaled based on resolution
     	public SimpleImage(String path, boolean fitScreen) {
     		super(new Image(path));
+    		// Stretch to entire screen or just scale based on hRatio
     		if(fitScreen) {
                 this.setFitHeight(Game.getHeight());
                 this.setFitWidth(Game.getWidth());
     		} else {
-    			double width = this.boundsInLocalProperty().getValue().getWidth() * hRatio;
-    			double height = this.boundsInLocalProperty().getValue().getHeight() * hRatio;
+    			double width = this.boundsInLocalProperty().getValue().getWidth() * Game.getHRatio();
+    			double height = this.boundsInLocalProperty().getValue().getHeight() * Game.getHRatio();
     			this.setFitWidth(width);
     			this.setFitHeight(height);
     		}
@@ -226,24 +222,27 @@ public class Game extends Application {
         }
         
         private void setupAppearence() {
-            this.setFont(Font.font("Myriad Pro", FontWeight.NORMAL, hRatio * 54));
+            this.setFont(Font.font("Myriad Pro", FontWeight.NORMAL, Game.getHRatio() * 54));
             this.setTextFill(Color.WHITE);
             this.setCursor(Cursor.HAND);
         }
         
         public void setupHandlers(StackPane optionsMenu, SimpleImage pointer){
+            // B/c we lose reference to ourself inside event handler
         	OptionsButton that = this;
+        	
         	SimpleImage highlight = new SimpleImage("OptionHighlighter.png");
-            highlight.setFitHeight(highlight.boundsInLocalProperty().getValue().getHeight() * hRatio);
-            highlight.setFitWidth(highlight.boundsInLocalProperty().getValue().getWidth() * hRatio);
+            highlight.setFitHeight(highlight.boundsInLocalProperty().getValue().getHeight() * Game.getHRatio());
+            highlight.setFitWidth(highlight.boundsInLocalProperty().getValue().getWidth() * Game.getHRatio());
             
             this.addEventHandler(MouseEvent.MOUSE_ENTERED, new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent e) {
                     optionsMenu.getChildren().add(highlight);
-                    highlight.setTranslateX(that.getTranslateX() + 170 * hRatio);
+                    highlight.setTranslateX(that.getTranslateX() + 170 * Game.getHRatio());
                     highlight.setTranslateY(that.getTranslateY());
                     
+                    // So that the highlight doesn't appear on top of us
                     that.toFront();
                 }
             });
@@ -298,8 +297,7 @@ public class Game extends Application {
         }
 
         private void setupAppearence() {
-            // TODO better font
-            this.setFont(Font.font("Arial", FontWeight.NORMAL, hRatio * 54));
+            this.setFont(Font.font("Myriad Pro", FontWeight.NORMAL, Game.getHRatio() * 54));
             this.setTextFill(Color.WHITE);
             this.setCursor(Cursor.HAND);
 
@@ -308,7 +306,6 @@ public class Game extends Application {
         }
 
         private void setupHandlers() {
-            // B/c we lose reference to ourself inside event handler
             MainMenuButton that = this;
 
             this.addEventHandler(MouseEvent.MOUSE_ENTERED, new EventHandler<MouseEvent>() {
@@ -333,11 +330,10 @@ public class Game extends Application {
             super(new Image("BackIcon.png"));  
             
             this.setCursor(Cursor.HAND);
-            double side = hRatio * new Image("BackIcon.png").getHeight();
+            double side = Game.getHRatio() * new Image("BackIcon.png").getHeight();
             this.setFitHeight(side);
             this.setFitWidth(side);
 
-            // Save ourself for event handler
             BackButton that = this;
             this.addEventHandler(MouseEvent.MOUSE_PRESSED, new EventHandler<MouseEvent>() {
                 @Override
@@ -368,8 +364,8 @@ public class Game extends Application {
             });
 
             // Place back button in left corner relative to window size
-            this.setTranslateY(Game.getHeight() / 2 - hRatio * 110);
-            this.setTranslateX(-Game.getWidth() / 2 + hRatio * 110);
+            this.setTranslateY(Game.getHeight() / 2 - Game.getHRatio() * 110);
+            this.setTranslateX(-Game.getWidth() / 2 + Game.getHRatio() * 110);
         }
     }
 }
