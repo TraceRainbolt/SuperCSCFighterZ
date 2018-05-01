@@ -26,10 +26,11 @@ public class Game extends Application {
     // 16 : 9 Ratio based off height
     private final static int INIT_HEIGHT = 720;
     private final static int INIT_WIDTH = INIT_HEIGHT * 16 / 9;
-    
-    // Used to determine values based off ratio of current res (HEIGHT) to standard res (1080p)
+
+    // Used to determine values based off ratio of current res (HEIGHT) to standard
+    // res (1080p)
     private static double hRatio = INIT_HEIGHT / 1080.0;
-    
+
     // Mutable height and with variables
     private static int height = INIT_HEIGHT, width = INIT_WIDTH;
 
@@ -54,24 +55,24 @@ public class Game extends Application {
         stage.setScene(root);
         stage.show();
     }
-    
+
     private static void setWindowSize(Stage stage, int newHeight) {
-    	Game.height = newHeight;
-    	Game.width = newHeight * 16 / 9;
-    	Game.hRatio = newHeight / 1080.0;
-    	
+        Game.height = newHeight;
+        Game.width = newHeight * 16 / 9;
+        Game.hRatio = newHeight / 1080.0;
+
         stage.setHeight(height);
         stage.setWidth(width);
     }
-    
+
     private static int getWidth() {
-    	return width;
+        return width;
     }
-    
+
     private static int getHeight() {
-    	return height;
+        return height;
     }
-    
+
     private static double getHRatio() {
         return hRatio;
     }
@@ -89,7 +90,7 @@ public class Game extends Application {
         MainMenuButton leaderboards = new MainMenuButton("Leaderboards", createCharacterSelect());
         MainMenuButton options = new MainMenuButton("Options", createOptionsMenu());
         MainMenuButton exit = new MainMenuButton("Exit");
-     
+
         int maxX = (int) (Game.getHRatio() * 420);
         play.setTranslateX(-maxX);
         leaderboards.setTranslateX(-maxX / 2 + Game.getHRatio() * 90); // Leaderboard btn is offset b/c it's so long
@@ -100,21 +101,20 @@ public class Game extends Application {
 
         return mainMenuLayout;
     }
-    
+
     private ImageView setupLogo() {
-    	SimpleImage logo = new SimpleImage("MainMenuLogo.png");
-    	logo.setFitHeight(Game.getHeight());
-    	logo.setFitWidth(Game.getWidth());
+        SimpleImage logo = new SimpleImage("MainMenuLogo.png");
+        logo.setFitHeight(Game.getHeight());
+        logo.setFitWidth(Game.getWidth());
 
         Timeline timeline = new Timeline();
         timeline.getKeyFrames().addAll(
-            new KeyFrame(Duration.ZERO, new KeyValue(logo.rotateProperty(), -2)),
-            new KeyFrame(new Duration(800), new KeyValue(logo.rotateProperty(), 2)),
-            new KeyFrame(new Duration(1600), new KeyValue(logo.rotateProperty(), -2))
-        );
+                new KeyFrame(Duration.ZERO, new KeyValue(logo.rotateProperty(), -2)),
+                new KeyFrame(new Duration(800), new KeyValue(logo.rotateProperty(), 2)),
+                new KeyFrame(new Duration(1600), new KeyValue(logo.rotateProperty(), -2)));
         timeline.setCycleCount(Animation.INDEFINITE);
         timeline.play();
-        
+
         return logo;
     }
 
@@ -132,33 +132,32 @@ public class Game extends Application {
         characterSelectLayout.getChildren().addAll(imgView, backBtn);
         return characterSelectLayout;
     }
-    
+
     private StackPane createOptionsMenu() {
         StackPane optionsMenu = new StackPane();
         SimpleImage imgView = new SimpleImage("OptionsMenu.png", true);
-        
+
         ImageView logoView = setupLogo();
-        
+
         OptionsButton minRes = new OptionsButton("640 x 480");
         OptionsButton medRes = new OptionsButton("1280 x 720");
         OptionsButton maxRes = new OptionsButton("1920 x 1080");
-        
+
         // Starting point for resolution choices
         int baseY = -170;
-        
+
         // Magic numbers for x values simply left align the res label
         minRes.setTranslateX(-270 * Game.getHRatio());
         minRes.setTranslateY(baseY * Game.getHRatio());
-        
+
         medRes.setTranslateX(-259 * Game.getHRatio());
         medRes.setTranslateY((baseY + 100) * Game.getHRatio());
-        
+
         maxRes.setTranslateX(-241 * Game.getHRatio());
         maxRes.setTranslateY((baseY + 200) * Game.getHRatio());
-        
+
         SimpleImage pointer = new SimpleImage("OptionPointer.png", false);
-        
-        
+
         SimpleImage container = new SimpleImage("OptionsContainer.png", true);
         SimpleImage heading = new SimpleImage("OptionsHeading.png", true);
 
@@ -168,80 +167,79 @@ public class Game extends Application {
 
         optionsMenu.getChildren().addAll(imgView, backBtn, logoView, container, 
                 heading, minRes, medRes, maxRes, pointer);
-        
+
         pointer.setTranslateX(-450 * Game.getHRatio());
-        
+
         // Always initialize pointer pointing to correct resolution
-        if(Game.getHeight() == 1080) {
+        if (Game.getHeight() == 1080) {
             pointer.setTranslateY((baseY + 200) * Game.getHRatio());
-        } else if(Game.getHeight() == 720) {
-        	pointer.setTranslateY((baseY + 100) * Game.getHRatio());
+        } else if (Game.getHeight() == 720) {
+            pointer.setTranslateY((baseY + 100) * Game.getHRatio());
         } else {
-        	pointer.setTranslateY(baseY * Game.getHRatio());
+            pointer.setTranslateY(baseY * Game.getHRatio());
         }
-        
+
         minRes.setupHandlers(optionsMenu, pointer);
         medRes.setupHandlers(optionsMenu, pointer);
         maxRes.setupHandlers(optionsMenu, pointer);
-        
+
         return optionsMenu;
     }
-    
-    
+
     // Class removes a lot of boilerplate for adding images
     public class SimpleImage extends ImageView {
-    	
-    	public SimpleImage(String path) {
-    		super(new Image(path));
-    	}
-    	
-    	// This constructor used if images need to be scaled based on resolution
-    	public SimpleImage(String path, boolean fitScreen) {
-    		super(new Image(path));
-    		// Stretch to entire screen or just scale based on hRatio
-    		if(fitScreen) {
+
+        public SimpleImage(String path) {
+            super(new Image(path));
+        }
+
+        // This constructor used if images need to be scaled based on resolution
+        public SimpleImage(String path, boolean fitScreen) {
+            super(new Image(path));
+            // Stretch to entire screen or just scale based on hRatio
+            if (fitScreen) {
                 this.setFitHeight(Game.getHeight());
                 this.setFitWidth(Game.getWidth());
-    		} else {
-    			double width = this.boundsInLocalProperty().getValue().getWidth() * Game.getHRatio();
-    			double height = this.boundsInLocalProperty().getValue().getHeight() * Game.getHRatio();
-    			this.setFitWidth(width);
-    			this.setFitHeight(height);
-    		}
-    	}
+            } else {
+                double width = this.boundsInLocalProperty().getValue().getWidth() * Game.getHRatio();
+                double height = this.boundsInLocalProperty().getValue().getHeight() * Game.getHRatio();
+                this.setFitWidth(width);
+                this.setFitHeight(height);
+            }
+        }
     }
-    
+
     public class OptionsButton extends Label {
-    	
-    	private int heightVal;
-    	
+
+        private int heightVal;
+
         public OptionsButton(String label) {
             super(label);
             this.heightVal = Integer.parseInt(label.split(" ")[2]);
             this.setupAppearence();
         }
-        
+
         private void setupAppearence() {
             this.setFont(Font.font("Myriad Pro", FontWeight.NORMAL, Game.getHRatio() * 54));
             this.setTextFill(Color.WHITE);
             this.setCursor(Cursor.HAND);
         }
-        
-        public void setupHandlers(StackPane optionsMenu, SimpleImage pointer){
+
+        public void setupHandlers(StackPane optionsMenu, SimpleImage pointer) {
             // B/c we lose reference to ourself inside event handler
-        	OptionsButton that = this;
-        	
-        	SimpleImage highlight = new SimpleImage("OptionHighlighter.png");
+            OptionsButton that = this;
+
+            SimpleImage highlight = new SimpleImage("OptionHighlighter.png");
             highlight.setFitHeight(highlight.boundsInLocalProperty().getValue().getHeight() * Game.getHRatio());
             highlight.setFitWidth(highlight.boundsInLocalProperty().getValue().getWidth() * Game.getHRatio());
-            
+
             this.addEventHandler(MouseEvent.MOUSE_ENTERED, new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent e) {
                     optionsMenu.getChildren().add(highlight);
                     highlight.setTranslateX(that.getTranslateX() + 170 * Game.getHRatio());
                     highlight.setTranslateY(that.getTranslateY());
-                    
+
                     // So that the highlight doesn't appear on top of us
                     that.toFront();
                 }
@@ -253,12 +251,12 @@ public class Game extends Application {
                     optionsMenu.getChildren().remove(highlight);
                 }
             });
-            
+
             this.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent e) {
-                	Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
-                	Game.setWindowSize(stage, that.heightVal);
+                    Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
+                    Game.setWindowSize(stage, that.heightVal);
                     getScene().setRoot(createOptionsMenu());
                 }
             });
@@ -327,8 +325,8 @@ public class Game extends Application {
     public class BackButton extends ImageView {
 
         public BackButton(Parent prevScene) {
-            super(new Image("BackIcon.png"));  
-            
+            super(new Image("BackIcon.png"));
+
             this.setCursor(Cursor.HAND);
             double side = Game.getHRatio() * new Image("BackIcon.png").getHeight();
             this.setFitHeight(side);
