@@ -10,8 +10,8 @@ public class FightingStage extends StackPane {
         Fighter falessi = new Fighter(Professor.Falessi);
         Fighter mammen = new Fighter(Professor.Mammen);
         
-        falessi.getSprite().setTranslateX(350);
-        mammen.getSprite().setTranslateX(-350);
+        falessi.getSprite().setTranslateX(550 * Game.getHRatio());
+        mammen.getSprite().setTranslateX(-550 * Game.getHRatio());
         mammen.getSprite().setScaleX(-1);
 
         this.getChildren().addAll(background, falessi.getSprite(), mammen.getSprite(), backBtn);

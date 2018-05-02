@@ -17,6 +17,7 @@ public class Game extends Application {
     private final static int INIT_HEIGHT = 720;
     private final static int INIT_WIDTH = INIT_HEIGHT * 16 / 9;
     
+    // Framerate information
     private static final int FRAMES_PER_SECOND = 60;
     private static final int MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
     private static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
@@ -68,7 +69,7 @@ public class Game extends Application {
         } else if (pressedKeys.contains(KeyCode.A) && !pressedKeys.contains(KeyCode.D)) {
             fighterFalessi.moveLeft();
         } else {
-            // fighterFalessi.stall();
+            // Some more shit goes here
         }
     }
 

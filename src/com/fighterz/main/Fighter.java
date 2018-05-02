@@ -6,7 +6,7 @@ import javafx.util.Duration;
 
 public class Fighter {
     
-    private final int SPEED = 6;
+    private final int SPEED = 10;
 
     private Professor professor;
     private SimpleImage sprite;
@@ -32,12 +32,12 @@ public class Fighter {
     
     public void moveRight() {
         SimpleImage sprite = this.getSprite();
-        sprite.setTranslateX(sprite.getTranslateX() + SPEED);
+        sprite.setTranslateX(sprite.getTranslateX() + SPEED * Game.getHRatio());
     }
     
     public void moveLeft() {
         SimpleImage sprite = this.getSprite();
-        sprite.setTranslateX(sprite.getTranslateX() - SPEED);
+        sprite.setTranslateX(sprite.getTranslateX() - SPEED * Game.getHRatio());
     }
     
     public HitBox getHitBox() {
