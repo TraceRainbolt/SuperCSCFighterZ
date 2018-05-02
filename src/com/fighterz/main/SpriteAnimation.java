@@ -15,15 +15,12 @@ public class SpriteAnimation extends Transition {
 
     private int lastIndex;
 
-    public SpriteAnimation(
-            ImageView imageView, 
-            Duration duration, 
-            int count) {
+    public SpriteAnimation(ImageView imageView, Duration duration, int count) {
         this.imageView = imageView;
-        this.count     = count;
-        this.width     = (int) (imageView.getImage().getWidth() / count);
-        this.height    = (int) (imageView.getImage().getHeight());
-        
+        this.count = count;
+        this.width = (int) (imageView.getImage().getWidth() / count);
+        this.height = (int) (imageView.getImage().getHeight());
+
         imageView.setViewport(new Rectangle2D(0, 0, width, height));
         setCycleDuration(duration);
         setInterpolator(Interpolator.LINEAR);

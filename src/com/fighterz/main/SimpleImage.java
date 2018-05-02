@@ -5,9 +5,9 @@ import javafx.scene.image.ImageView;
 
 // Class removes a lot of boilerplate for adding images
 public class SimpleImage extends ImageView {
-	private int height;
-	private int width;
-	
+    private int height;
+    private int width;
+
     public SimpleImage(String path) {
         this(new Image(path));
     }
@@ -27,29 +27,29 @@ public class SimpleImage extends ImageView {
             this.setPreserveRatio(true);
         }
     }
-    
+
     // Grab width/height
     private SimpleImage(Image img) {
-    	super(img);
-    	this.height = (int) img.getHeight();
-    	this.width = (int) img.getWidth();
+        super(img);
+        this.height = (int) img.getHeight();
+        this.width = (int) img.getWidth();
     }
-    
+
     public int getHeight() {
-    	return this.height;
+        return this.height;
     }
-    
+
     public int getWidth() {
-    	return this.width;
+        return this.width;
     }
-    
+
     public void setHeight(int height) {
-    	this.setFitHeight(height);
-    	this.height = height;
+        this.setFitHeight(height);
+        this.height = height;
     }
-    
+
     public void setWidth(int width) {
         this.setFitWidth(width);
-    	this.width = width;
+        this.width = width;
     }
 }

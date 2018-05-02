@@ -11,10 +11,10 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
 public class OptionsMenu extends StackPane {
-    
+
     private final int MIN_BTN_Y = -170;
-	
-	public OptionsMenu() {
+
+    public OptionsMenu() {
         SimpleImage imgView = new SimpleImage("OptionsMenu.png", true);
 
         ImageView logoView = MainMenu.setupLogo();
@@ -40,8 +40,7 @@ public class OptionsMenu extends StackPane {
         SimpleImage heading = new SimpleImage("OptionsHeading.png", true);
         BackButton backBtn = new BackButton();
 
-        this.getChildren().addAll(imgView, backBtn, logoView, container, 
-                heading, minRes, medRes, maxRes, pointer);
+        this.getChildren().addAll(imgView, backBtn, logoView, container, heading, minRes, medRes, maxRes, pointer);
 
         pointer.setTranslateX(-450 * Game.getHRatio());
 
@@ -59,55 +58,55 @@ public class OptionsMenu extends StackPane {
         maxRes.setupHandlers(this, pointer);
     }
 
-	private class OptionsButton extends Label {
+    private class OptionsButton extends Label {
 
-	    private int heightVal;
-	
-	    public OptionsButton(String label) {
-	        super(label);
-	        this.heightVal = Integer.parseInt(label.split(" ")[2]);
-	        this.setupAppearence();
-	    }
-	
-	    private void setupAppearence() {
-	        this.setFont(Font.font("Myriad Pro", FontWeight.NORMAL, Game.getHRatio() * 54));
-	        this.setTextFill(Color.WHITE);
-	        this.setCursor(Cursor.HAND);
-	    }
-	
-	    public void setupHandlers(StackPane optionsMenu, SimpleImage pointer) {
-	        OptionsButton that = this;
-	
-	        SimpleImage highlight = new SimpleImage("OptionHighlighter.png");
-	        highlight.setFitHeight(highlight.boundsInLocalProperty().getValue().getHeight() * Game.getHRatio());
-	        highlight.setFitWidth(highlight.boundsInLocalProperty().getValue().getWidth() * Game.getHRatio());
-	
-	        this.addEventHandler(MouseEvent.MOUSE_ENTERED, new EventHandler<MouseEvent>() {
-	            @Override
-	            public void handle(MouseEvent e) {
-	                optionsMenu.getChildren().add(highlight);
-	                highlight.setTranslateX(that.getTranslateX() + (-MIN_BTN_Y) * Game.getHRatio());
-	                highlight.setTranslateY(that.getTranslateY());
-	
-	                // So that the highlight doesn't appear on top of us
-	                that.toFront();
-	            }
-	        });
-	
-	        this.addEventHandler(MouseEvent.MOUSE_EXITED, new EventHandler<MouseEvent>() {
-	            @Override
-	            public void handle(MouseEvent e) {
-	                optionsMenu.getChildren().remove(highlight);
-	            }
-	        });
-	
-	        this.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-	            @Override
-	            public void handle(MouseEvent e) {
-	                Game.setWindowSize(that.heightVal);
-	                getScene().setRoot(new OptionsMenu());
-	            }
-	        });
-	    }
-	}
+        private int heightVal;
+
+        public OptionsButton(String label) {
+            super(label);
+            this.heightVal = Integer.parseInt(label.split(" ")[2]);
+            this.setupAppearence();
+        }
+
+        private void setupAppearence() {
+            this.setFont(Font.font("Myriad Pro", FontWeight.NORMAL, Game.getHRatio() * 54));
+            this.setTextFill(Color.WHITE);
+            this.setCursor(Cursor.HAND);
+        }
+
+        public void setupHandlers(StackPane optionsMenu, SimpleImage pointer) {
+            OptionsButton that = this;
+
+            SimpleImage highlight = new SimpleImage("OptionHighlighter.png");
+            highlight.setFitHeight(highlight.boundsInLocalProperty().getValue().getHeight() * Game.getHRatio());
+            highlight.setFitWidth(highlight.boundsInLocalProperty().getValue().getWidth() * Game.getHRatio());
+
+            this.addEventHandler(MouseEvent.MOUSE_ENTERED, new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent e) {
+                    optionsMenu.getChildren().add(highlight);
+                    highlight.setTranslateX(that.getTranslateX() + (-MIN_BTN_Y) * Game.getHRatio());
+                    highlight.setTranslateY(that.getTranslateY());
+
+                    // So that the highlight doesn't appear on top of us
+                    that.toFront();
+                }
+            });
+
+            this.addEventHandler(MouseEvent.MOUSE_EXITED, new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent e) {
+                    optionsMenu.getChildren().remove(highlight);
+                }
+            });
+
+            this.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent e) {
+                    Game.setWindowSize(that.heightVal);
+                    getScene().setRoot(new OptionsMenu());
+                }
+            });
+        }
+    }
 }

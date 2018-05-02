@@ -11,14 +11,15 @@ public class Game extends Application {
     private final static int INIT_HEIGHT = 720;
     private final static int INIT_WIDTH = INIT_HEIGHT * 16 / 9;
 
-    // Used to determine values based off ratio of current res (HEIGHT) to standard res (1080p)
+    // Used to determine values based off ratio of current res (HEIGHT) to standard
+    // res (1080p)
     private static double hRatio = INIT_HEIGHT / 1080.0;
 
     // Mutable height and with variables
     private static int height = INIT_HEIGHT, width = INIT_WIDTH;
-    
+
     private static Stage pStage;
-    
+
     private static int previousScene;
 
     public static void main(String[] args) {
@@ -65,18 +66,19 @@ public class Game extends Application {
     public static double getHRatio() {
         return hRatio;
     }
-    
+
     public static Stage getStage() {
         return pStage;
     }
-    
+
     public static void setPreviousScene(int scene) {
-    	previousScene = scene;
+        previousScene = scene;
     }
-    
+
+    // TODO add return for scenes other than 0
     public static Parent getPreviousScene() {
-    	if(previousScene == 1)
-    		return null;
-    	return new MainMenu();
+        if (previousScene == 1)
+            return null;
+        return new MainMenu();
     }
 }

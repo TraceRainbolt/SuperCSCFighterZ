@@ -5,7 +5,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 
 public class CharacterSelectScreen extends StackPane {
-	public CharacterSelectScreen() {
+    public CharacterSelectScreen() {
         Image background = new Image("CharacterSelect.png");
         ImageView imgView = new ImageView(background);
         imgView.setFitHeight(Game.getHeight());
@@ -14,5 +14,5 @@ public class CharacterSelectScreen extends StackPane {
         BackButton backBtn = new BackButton();
 
         this.getChildren().addAll(imgView, backBtn);
-	}
+    }
 }
