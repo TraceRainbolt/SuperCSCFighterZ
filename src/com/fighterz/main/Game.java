@@ -6,6 +6,7 @@ import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.event.EventHandler;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -65,15 +66,15 @@ public class Game extends Application {
         stage.setWidth(width);
     }
 
-    private static int getWidth() {
+    public static int getWidth() {
         return width;
     }
 
-    private static int getHeight() {
+    public static int getHeight() {
         return height;
     }
 
-    private static double getHRatio() {
+    public static double getHRatio() {
         return hRatio;
     }
 
@@ -81,13 +82,13 @@ public class Game extends Application {
         StackPane mainMenuLayout = new StackPane();
 
         SimpleImage background = new SimpleImage("MainMenuBG.png", true);
-        background.setFitHeight(Game.getHeight());
-        background.setFitWidth(Game.getWidth());
+        background.setHeight(Game.getHeight());
+        background.setWidth(Game.getWidth());
 
         ImageView logoView = setupLogo();
 
         MainMenuButton play = new MainMenuButton("Play", createCharacterSelect());
-        MainMenuButton leaderboards = new MainMenuButton("Leaderboards", createCharacterSelect());
+        MainMenuButton leaderboards = new MainMenuButton("Leaderboards", createFightingStage());
         MainMenuButton options = new MainMenuButton("Options", createOptionsMenu());
         MainMenuButton exit = new MainMenuButton("Exit");
 
@@ -133,6 +134,17 @@ public class Game extends Application {
         return characterSelectLayout;
     }
 
+    private StackPane createFightingStage() {
+    	StackPane fightingStage = new StackPane();
+    	BackButton backBtn = new BackButton(null);
+    	
+    	Fighter falessi = new Fighter(Professor.Falessi);
+    	
+        fightingStage.getChildren().addAll(falessi.getSprite(), backBtn);
+
+    	return fightingStage;
+    }
+    
     private StackPane createOptionsMenu() {
         StackPane optionsMenu = new StackPane();
         SimpleImage imgView = new SimpleImage("OptionsMenu.png", true);
@@ -184,29 +196,6 @@ public class Game extends Application {
         maxRes.setupHandlers(optionsMenu, pointer);
 
         return optionsMenu;
-    }
-
-    // Class removes a lot of boilerplate for adding images
-    public class SimpleImage extends ImageView {
-
-        public SimpleImage(String path) {
-            super(new Image(path));
-        }
-
-        // This constructor used if images need to be scaled based on resolution
-        public SimpleImage(String path, boolean fitScreen) {
-            super(new Image(path));
-            // Stretch to entire screen or just scale based on hRatio
-            if (fitScreen) {
-                this.setFitHeight(Game.getHeight());
-                this.setFitWidth(Game.getWidth());
-            } else {
-                double width = this.boundsInLocalProperty().getValue().getWidth() * Game.getHRatio();
-                double height = this.boundsInLocalProperty().getValue().getHeight() * Game.getHRatio();
-                this.setFitWidth(width);
-                this.setFitHeight(height);
-            }
-        }
     }
 
     public class OptionsButton extends Label {
@@ -362,7 +351,7 @@ public class Game extends Application {
             });
 
             // Place back button in left corner relative to window size
-            this.setTranslateY(Game.getHeight() / 2 - Game.getHRatio() * 110);
+            this.setTranslateY(Game.getHeight() / 2 - Game.getHRatio() * 130);
             this.setTranslateX(-Game.getWidth() / 2 + Game.getHRatio() * 110);
         }
     }
