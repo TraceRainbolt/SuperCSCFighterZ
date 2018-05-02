@@ -20,14 +20,15 @@ public class Game extends Application {
     // Framerate information
     private static final int FRAMES_PER_SECOND = 60;
     private static final int MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
-    private static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
+    // private static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
 
     // Used to determine values based off ratio of current res (HEIGHT) to standard
     // res (1080p)
     private static double hRatio = INIT_HEIGHT / 1080.0;
 
     // Mutable height and with variables
-    private static int height = INIT_HEIGHT, width = INIT_WIDTH;
+    private static int height = INIT_HEIGHT;
+    private static int width = INIT_WIDTH;
 
     private static Stage pStage;
 
