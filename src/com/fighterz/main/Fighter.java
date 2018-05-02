@@ -6,7 +6,7 @@ import javafx.util.Duration;
 
 public class Fighter {
     
-    private final int SPEED = 10;
+    private static final int SPEED = 10;
 
     private Professor professor;
     private SimpleImage sprite;
