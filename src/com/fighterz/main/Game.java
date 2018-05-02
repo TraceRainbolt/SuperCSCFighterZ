@@ -14,8 +14,8 @@ import javafx.util.Duration;
 
 public class Game extends Application {
     // 16 : 9 Ratio based off height
-    private final static int INIT_HEIGHT = 720;
-    private final static int INIT_WIDTH = INIT_HEIGHT * 16 / 9;
+    private static final int INIT_HEIGHT = 720;
+    private static final int INIT_WIDTH = INIT_HEIGHT * 16 / 9;
     
     // Framerate information
     private static final int FRAMES_PER_SECOND = 60;
