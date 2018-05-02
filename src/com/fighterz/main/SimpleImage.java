@@ -20,10 +20,10 @@ public class SimpleImage extends ImageView {
             this.setWidth(Game.getWidth());
             this.setHeight(Game.getHeight());
         } else {
-            int width = (int) (this.getWidth() * Game.getHRatio());
-            int height = (int) (this.getHeight() * Game.getHRatio());
-            this.setWidth(width);
-            this.setHeight(height);
+            int init_width = (int) (this.getWidth() * Game.getHRatio());
+            int init_height = (int) (this.getHeight() * Game.getHRatio());
+            this.setWidth(init_width);
+            this.setHeight(init_height);
             this.setPreserveRatio(true);
         }
     }

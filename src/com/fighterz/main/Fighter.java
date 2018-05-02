@@ -30,11 +30,11 @@ public class Fighter {
     }
     
     public void moveRight() {
-        sprite.setTranslateX(sprite.getTranslateX() + SPEED * Game.getHRatio());
+        this.sprite.setTranslateX(this.sprite.getTranslateX() + SPEED * Game.getHRatio());
     }
     
     public void moveLeft() {
-        sprite.setTranslateX(sprite.getTranslateX() - SPEED * Game.getHRatio());
+        this.sprite.setTranslateX(this.sprite.getTranslateX() - SPEED * Game.getHRatio());
     }
     
     public HitBox getHitBox() {

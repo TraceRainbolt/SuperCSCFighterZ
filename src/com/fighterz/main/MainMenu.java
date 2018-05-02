@@ -1,5 +1,6 @@
 package com.fighterz.main;
 
+import javafx.scene.Node;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -52,6 +53,22 @@ public class MainMenu extends StackPane {
         timeline.setCycleCount(Animation.INDEFINITE);
         timeline.play();
         return logo;
+    }
+    
+    public static void addGlowEffect(Node button) {
+        button.addEventHandler(MouseEvent.MOUSE_ENTERED, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent e) {
+                button.setEffect(new Glow(0.8));
+            }
+        });
+
+        button.addEventHandler(MouseEvent.MOUSE_EXITED, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent e) {
+                button.setEffect(null);
+            }
+        });
     }
 
     private class MainMenuButton extends Label {
@@ -110,6 +127,8 @@ public class MainMenu extends StackPane {
                     that.setEffect(null);
                 }
             });
+            
+            addGlowEffect(this);
         }
     }
 }

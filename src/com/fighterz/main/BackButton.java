@@ -31,20 +31,8 @@ public class BackButton extends ImageView {
                 getScene().setRoot(Game.getPreviousScene());
             }
         });
-
-        this.addEventHandler(MouseEvent.MOUSE_ENTERED, new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent e) {
-                that.setEffect(new Glow(0.8));
-            }
-        });
-
-        this.addEventHandler(MouseEvent.MOUSE_EXITED, new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent e) {
-                that.setEffect(null);
-            }
-        });
+        
+        MainMenu.addGlowEffect(this);
 
         // Place back button in left corner relative to window size
         this.setTranslateY((float) Game.getHeight() / 2 - Game.getHRatio() * 130);
