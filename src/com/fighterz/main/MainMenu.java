@@ -26,7 +26,8 @@ public class MainMenu extends StackPane {
         ImageView logoView = setupLogo();
 
         MainMenuButton play = new MainMenuButton("Play", new CharacterSelectScreen());
-        MainMenuButton leaderboards = new MainMenuButton("Leaderboards", new FightingStage(Professor.Falessi, (Professor.Mammen)));
+        MainMenuButton leaderboards = new MainMenuButton("Leaderboards", 
+                new FightingStage(Professor.Falessi, (Professor.Mammen)));
         MainMenuButton options = new MainMenuButton("Options", new OptionsMenu());
         MainMenuButton exit = new MainMenuButton("Exit");
 

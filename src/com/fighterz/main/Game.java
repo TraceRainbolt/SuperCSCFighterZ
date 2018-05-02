@@ -17,6 +17,8 @@ public class Game extends Application {
     // Mutable height and with variables
     private static int height = INIT_HEIGHT, width = INIT_WIDTH;
     
+    private static Stage pStage;
+    
     private static int previousScene;
 
     public static void main(String[] args) {
@@ -33,6 +35,7 @@ public class Game extends Application {
         previousScene = 0;
 
         Scene root = new Scene(mainMenuLayout);
+        pStage = stage;
 
         stage.setResizable(false);
         stage.setTitle("Super CSC FighterZ");
@@ -42,13 +45,13 @@ public class Game extends Application {
         stage.show();
     }
 
-    public static void setWindowSize(Stage stage, int newHeight) {
+    public static void setWindowSize(int newHeight) {
         Game.height = newHeight;
         Game.width = newHeight * 16 / 9;
         Game.hRatio = newHeight / 1080.0;
 
-        stage.setHeight(height);
-        stage.setWidth(width);
+        getStage().setHeight(height);
+        getStage().setWidth(width);
     }
 
     public static int getWidth() {
@@ -61,6 +64,10 @@ public class Game extends Application {
 
     public static double getHRatio() {
         return hRatio;
+    }
+    
+    public static Stage getStage() {
+        return pStage;
     }
     
     public static void setPreviousScene(int scene) {

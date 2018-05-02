@@ -11,8 +11,6 @@ public class CharacterSelectScreen extends StackPane {
         imgView.setFitHeight(Game.getHeight());
         imgView.setFitWidth(Game.getWidth());
 
-        // Eventually will be replaced with a reference to the previous scene
-        // For now we assume mainMenu
         BackButton backBtn = new BackButton();
 
         this.getChildren().addAll(imgView, backBtn);

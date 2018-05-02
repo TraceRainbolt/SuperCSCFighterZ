@@ -2,7 +2,6 @@ package com.fighterz.main;
 
 import javafx.event.EventHandler;
 import javafx.scene.Cursor;
-import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -10,9 +9,10 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-import javafx.stage.Stage;
 
 public class OptionsMenu extends StackPane {
+    
+    private final int MIN_BTN_Y = -170;
 	
 	public OptionsMenu() {
         SimpleImage imgView = new SimpleImage("OptionsMenu.png", true);
@@ -24,23 +24,20 @@ public class OptionsMenu extends StackPane {
         OptionsButton maxRes = new OptionsButton("1920 x 1080");
 
         // Starting point for resolution choices
-        int baseY = -170;
 
         // Magic numbers for x values simply left align the res label
         minRes.setTranslateX(-270 * Game.getHRatio());
-        minRes.setTranslateY(baseY * Game.getHRatio());
+        minRes.setTranslateY(MIN_BTN_Y * Game.getHRatio());
 
         medRes.setTranslateX(-259 * Game.getHRatio());
-        medRes.setTranslateY((baseY + 100) * Game.getHRatio());
+        medRes.setTranslateY((MIN_BTN_Y + 100) * Game.getHRatio());
 
         maxRes.setTranslateX(-241 * Game.getHRatio());
-        maxRes.setTranslateY((baseY + 200) * Game.getHRatio());
+        maxRes.setTranslateY((MIN_BTN_Y + 200) * Game.getHRatio());
 
         SimpleImage pointer = new SimpleImage("OptionPointer.png", false);
-
         SimpleImage container = new SimpleImage("OptionsContainer.png", true);
         SimpleImage heading = new SimpleImage("OptionsHeading.png", true);
-
         BackButton backBtn = new BackButton();
 
         this.getChildren().addAll(imgView, backBtn, logoView, container, 
@@ -50,11 +47,11 @@ public class OptionsMenu extends StackPane {
 
         // Always initialize pointer pointing to correct resolution
         if (Game.getHeight() == 1080) {
-            pointer.setTranslateY((baseY + 200) * Game.getHRatio());
+            pointer.setTranslateY((MIN_BTN_Y + 200) * Game.getHRatio());
         } else if (Game.getHeight() == 720) {
-            pointer.setTranslateY((baseY + 100) * Game.getHRatio());
+            pointer.setTranslateY((MIN_BTN_Y + 100) * Game.getHRatio());
         } else {
-            pointer.setTranslateY(baseY * Game.getHRatio());
+            pointer.setTranslateY(MIN_BTN_Y * Game.getHRatio());
         }
 
         minRes.setupHandlers(this, pointer);
@@ -79,7 +76,6 @@ public class OptionsMenu extends StackPane {
 	    }
 	
 	    public void setupHandlers(StackPane optionsMenu, SimpleImage pointer) {
-	        // B/c we lose reference to ourself inside event handler
 	        OptionsButton that = this;
 	
 	        SimpleImage highlight = new SimpleImage("OptionHighlighter.png");
@@ -90,7 +86,7 @@ public class OptionsMenu extends StackPane {
 	            @Override
 	            public void handle(MouseEvent e) {
 	                optionsMenu.getChildren().add(highlight);
-	                highlight.setTranslateX(that.getTranslateX() + 170 * Game.getHRatio());
+	                highlight.setTranslateX(that.getTranslateX() + (-MIN_BTN_Y) * Game.getHRatio());
 	                highlight.setTranslateY(that.getTranslateY());
 	
 	                // So that the highlight doesn't appear on top of us
@@ -108,8 +104,7 @@ public class OptionsMenu extends StackPane {
 	        this.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
 	            @Override
 	            public void handle(MouseEvent e) {
-	                Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
-	                Game.setWindowSize(stage, that.heightVal);
+	                Game.setWindowSize(that.heightVal);
 	                getScene().setRoot(new OptionsMenu());
 	            }
 	        });

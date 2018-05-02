@@ -22,6 +22,7 @@ public class Fighter {
 		return this.sprite;
 	}
 	
+	// TODO a way to get frameCount from state + name
 	public void setAnimation(AnimationState state) {
 		StringBuilder filePath = new StringBuilder("Sprite");
 		filePath.append(this.getProfessor());
