@@ -1,7 +1,6 @@
 package com.fighterz.main;
 
 import javafx.animation.Animation;
-import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 
 public class Fighter {
@@ -31,12 +30,10 @@ public class Fighter {
     }
     
     public void moveRight() {
-        SimpleImage sprite = this.getSprite();
         sprite.setTranslateX(sprite.getTranslateX() + SPEED * Game.getHRatio());
     }
     
     public void moveLeft() {
-        SimpleImage sprite = this.getSprite();
         sprite.setTranslateX(sprite.getTranslateX() - SPEED * Game.getHRatio());
     }
     
@@ -45,7 +42,7 @@ public class Fighter {
     }
     
     public void showHitBox() {
-        
+        // Stub for displaying hitbox boundries
     }
 
     // TODO a way to get frameCount from state + name
@@ -60,12 +57,12 @@ public class Fighter {
         if(this.getProfessor() == Professor.Mammen)
             filePath = new StringBuilder("SpriteFalessiIdle.png");
 
-        final SimpleImage sprite = new SimpleImage(filePath.toString(), false);
+        final SimpleImage fighterSprite = new SimpleImage(filePath.toString(), false);
         final int frameCount = 29;
-        final Animation animation = new SpriteAnimation(sprite, Duration.millis(1000), frameCount);
+        final Animation animation = new SpriteAnimation(fighterSprite, Duration.millis(1000), frameCount);
 
         animation.setCycleCount(Animation.INDEFINITE);
         animation.play();
-        this.sprite = sprite;
+        this.sprite = fighterSprite;
     }
 }

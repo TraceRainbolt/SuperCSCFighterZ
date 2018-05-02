@@ -12,7 +12,7 @@ import javafx.scene.text.FontWeight;
 
 public class OptionsMenu extends StackPane {
 
-    private final int MIN_BTN_Y = -170;
+    private static final int MIN_BTN_Y = -170;
 
     public OptionsMenu() {
         SimpleImage imgView = new SimpleImage("OptionsMenu.png", true);

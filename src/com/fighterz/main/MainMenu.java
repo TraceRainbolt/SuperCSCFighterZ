@@ -27,13 +27,13 @@ public class MainMenu extends StackPane {
 
         MainMenuButton play = new MainMenuButton("Play", new CharacterSelectScreen());
         MainMenuButton leaderboards = new MainMenuButton("Leaderboards",
-                new FightingStage(Professor.Falessi, (Professor.Mammen)));
+                new FightingStage(Professor.Falessi, Professor.Mammen));
         MainMenuButton options = new MainMenuButton("Options", new OptionsMenu());
         MainMenuButton exit = new MainMenuButton("Exit");
 
         int maxX = (int) (Game.getHRatio() * 420);
         play.setTranslateX(-maxX);
-        leaderboards.setTranslateX(-maxX / 2 + Game.getHRatio() * 90); // Leaderboard btn is offset b/c it's so long
+        leaderboards.setTranslateX((float) -maxX / 2 + Game.getHRatio() * 90); // Leaderboard btn is offset b/c it's so long
         options.setTranslateX(maxX / 2);
         exit.setTranslateX(maxX);
 

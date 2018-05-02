@@ -47,7 +47,7 @@ public class BackButton extends ImageView {
         });
 
         // Place back button in left corner relative to window size
-        this.setTranslateY(Game.getHeight() / 2 - Game.getHRatio() * 130);
-        this.setTranslateX(-Game.getWidth() / 2 + Game.getHRatio() * 110);
+        this.setTranslateY((float) Game.getHeight() / 2 - Game.getHRatio() * 130);
+        this.setTranslateX((float) -Game.getWidth() / 2 + Game.getHRatio() * 110);
     }
 }

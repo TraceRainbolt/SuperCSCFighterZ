@@ -33,9 +33,10 @@ public class Game extends Application {
 
     private static int previousScene;
     
-    private HashSet<KeyCode> pressedKeys;
+    private static HashSet<KeyCode> pressedKeys;
     
-    private static Fighter fighterFalessi, fighterMammen;
+    private static Fighter fighterFalessi;
+    private static Fighter fighterMammen;
 
     public static void main(String[] args) {
         launch(args);
@@ -60,6 +61,7 @@ public class Game extends Application {
     private void resolveKeyPresses() {
         if(fighterFalessi != null) {
             handleFighterFalessi();
+            handleFighterMammen();
         }
     }
     
@@ -72,8 +74,18 @@ public class Game extends Application {
             // Some more shit goes here
         }
     }
+    
+    private void handleFighterMammen() {
+        if (pressedKeys.contains(KeyCode.RIGHT) && !pressedKeys.contains(KeyCode.LEFT)) {
+            fighterMammen.moveRight();
+        } else if (pressedKeys.contains(KeyCode.LEFT) && !pressedKeys.contains(KeyCode.RIGHT)) {
+            fighterMammen.moveLeft();
+        } else {
+            // Some more shit goes here
+        }
+    }
 
-    private void initUI(Stage stage) {
+    private static void initUI(Stage stage) {
         StackPane mainMenuLayout = new MainMenu();
         previousScene = 0;
 
@@ -87,7 +99,7 @@ public class Game extends Application {
         stage.setScene(root);
         stage.show();
         
-        pressedKeys = new HashSet<KeyCode>();
+        pressedKeys = new HashSet<>();
         root.setOnKeyPressed(e -> pressedKeys.add(e.getCode()));
         root.setOnKeyReleased(e -> pressedKeys.remove(e.getCode()));
     }
