@@ -19,17 +19,26 @@ import javafx.scene.text.FontWeight;
 import javafx.util.Duration;
 
 public class MainMenu extends StackPane {
-    public MainMenu() {
+    public MainMenu(CharacterSelectScreen charSelectScreen, FightingStage fightingStage, OptionsMenu optionsMenu) {
+    	
+    	initUi(charSelectScreen, fightingStage, optionsMenu);
+        
+        this.heightProperty().addListener((obs, oldVal, newVal) -> {
+        	this.getChildren().removeAll();
+        	initUi(charSelectScreen, fightingStage, optionsMenu);
+        });
+    }
+    
+    private void initUi(CharacterSelectScreen charSelectScreen, FightingStage fightingStage, OptionsMenu optionsMenu) {
         SimpleImage background = new SimpleImage("MainMenuBG.png", true);
         background.setHeight(Game.getHeight());
         background.setWidth(Game.getWidth());
 
         ImageView logoView = setupLogo();
 
-        MainMenuButton play = new MainMenuButton("Play", new CharacterSelectScreen());
-        MainMenuButton leaderboards = new MainMenuButton("Leaderboards",
-                new FightingStage(Professor.Falessi, Professor.Mammen));
-        MainMenuButton options = new MainMenuButton("Options", new OptionsMenu());
+        MainMenuButton play = new MainMenuButton("Play", charSelectScreen);
+        MainMenuButton leaderboards = new MainMenuButton("Leaderboards", fightingStage);
+        MainMenuButton options = new MainMenuButton("Options", optionsMenu);
         MainMenuButton exit = new MainMenuButton("Exit");
 
         int maxX = (int) (Game.getHRatio() * 420);

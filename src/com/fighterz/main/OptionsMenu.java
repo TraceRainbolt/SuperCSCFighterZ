@@ -15,6 +15,14 @@ public class OptionsMenu extends StackPane {
     private static final int MIN_BTN_Y = -170;
 
     public OptionsMenu() {
+    	initUi();
+        this.heightProperty().addListener((obs, oldVal, newVal) -> {
+        	this.getChildren().removeAll();
+        	initUi();
+        });
+    }
+    
+    private void initUi() {
         SimpleImage imgView = new SimpleImage("OptionsMenu.png", true);
 
         ImageView logoView = MainMenu.setupLogo();

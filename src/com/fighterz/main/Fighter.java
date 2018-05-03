@@ -5,7 +5,7 @@ import javafx.util.Duration;
 
 public class Fighter {
     
-    private static final int SPEED = 10;
+    private static final int SPEED = (int) (10 * Game.getHRatio());
 
     private Professor professor;
     private SimpleImage sprite;
@@ -17,8 +17,7 @@ public class Fighter {
         this.setAnimation(AnimationState.Idle);
         Game.addFighter(this);
         
-        this.hitBox = new HitBox(this.getSprite().getWidth(),
-                this.getSprite().getHeight());
+        this.hitBox = new HitBox(this);
     }
 
     public Professor getProfessor() {
@@ -30,11 +29,27 @@ public class Fighter {
     }
     
     public void moveRight() {
-        this.sprite.setTranslateX(this.sprite.getTranslateX() + SPEED * Game.getHRatio());
+    	this.setX(this.getX() + SPEED);
     }
     
     public void moveLeft() {
-        this.sprite.setTranslateX(this.sprite.getTranslateX() - SPEED * Game.getHRatio());
+        this.setX(this.getX() - SPEED);
+    }
+    
+    public void setX(double x) {
+    	this.sprite.setTranslateX(x);
+    }
+    
+    public void setY(double y) {
+    	this.sprite.setTranslateY(y);
+    }
+    
+    public double getX() {
+    	return this.sprite.getTranslateX();
+    }
+    
+    public double getY() {
+    	return this.sprite.getTranslateY();
     }
     
     public HitBox getHitBox() {
@@ -42,7 +57,7 @@ public class Fighter {
     }
     
     public void showHitBox() {
-        // Stub for displaying hitbox boundries
+        this.hitBox.display();
     }
 
     // TODO a way to get frameCount from state + name

@@ -4,6 +4,14 @@ import javafx.scene.layout.StackPane;
 
 public class FightingStage extends StackPane {
     public FightingStage(Professor player1, Professor player2) {
+    	initUi(player1, player2);
+        this.heightProperty().addListener((obs, oldVal, newVal) -> {
+        	this.getChildren().removeAll();
+        	initUi(player1, player2);
+        });
+    }
+    
+    private void initUi(Professor player1, Professor player2) {
         BackButton backBtn = new BackButton();
         SimpleImage background = new SimpleImage("StageBasketball.jpg", true);
 

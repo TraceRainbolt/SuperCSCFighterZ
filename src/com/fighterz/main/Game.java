@@ -5,6 +5,7 @@ import java.util.HashSet;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
@@ -38,6 +39,11 @@ public class Game extends Application {
     
     private static Fighter fighterFalessi;
     private static Fighter fighterMammen;
+    
+    private static MainMenu mainMenu;
+    private static final CharacterSelectScreen charSelectScreen = new CharacterSelectScreen();
+    private static final FightingStage fightingStage = new FightingStage(Professor.Falessi, Professor.Mammen);
+    private static final OptionsMenu optionsMenu = new OptionsMenu();
 
     public static void main(String[] args) {
         launch(args);
@@ -87,10 +93,10 @@ public class Game extends Application {
     }
 
     private static void initUI(Stage stage) {
-        StackPane mainMenuLayout = new MainMenu();
+        mainMenu = new MainMenu(charSelectScreen, fightingStage, optionsMenu);
         previousScene = 0;
 
-        Scene root = new Scene(mainMenuLayout);
+        Scene root = new Scene(mainMenu);
         pStage = stage;
 
         stage.setResizable(false);
@@ -142,9 +148,9 @@ public class Game extends Application {
     }
 
     // TODO add return for scenes other than 0
-    public static Parent getPreviousScene() {
+    public static Node getPreviousScene() {
         if (previousScene == 1)
             return null;
-        return new MainMenu();
+        return (Node) mainMenu;
     }
 }

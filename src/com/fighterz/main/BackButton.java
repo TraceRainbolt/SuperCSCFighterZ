@@ -2,6 +2,7 @@ package com.fighterz.main;
 
 import javafx.event.EventHandler;
 import javafx.scene.Cursor;
+import javafx.scene.Parent;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -27,7 +28,7 @@ public class BackButton extends ImageView {
         this.addEventHandler(MouseEvent.MOUSE_RELEASED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent e) {
-                getScene().setRoot(Game.getPreviousScene());
+                getScene().setRoot((Parent) (Game.getPreviousScene()));
             }
         });
         
