@@ -17,11 +17,11 @@ public class SimpleImage extends ImageView {
         this(new Image(path));
         // Stretch to entire screen or just scale based on hRatio
         if (fitScreen) {
-            this.setWidth(Game.getWidth());
-            this.setHeight(Game.getHeight());
+            this.setWidth(Window.getWidth());
+            this.setHeight(Window.getHeight());
         } else {
-            int initWidth = (int) (this.getWidth() * Game.getHRatio());
-            int initHeight = (int) (this.getHeight() * Game.getHRatio());
+            int initWidth = (int) (this.getWidth() * Window.getHRatio());
+            int initHeight = (int) (this.getHeight() * Window.getHRatio());
             this.setWidth(initWidth);
             this.setHeight(initHeight);
             this.setPreserveRatio(true);

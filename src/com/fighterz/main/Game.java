@@ -2,67 +2,65 @@ package com.fighterz.main;
 
 import java.util.HashSet;
 
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
-import javafx.application.Application;
 import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 
-public class Game extends Application {
-    // 16 : 9 Ratio based off height
-    private static final int INIT_HEIGHT = 720;
-    private static final int INIT_WIDTH = INIT_HEIGHT * 16 / 9;
+public class Game {
     
-    // Framerate information
-    private static final int FRAMES_PER_SECOND = 60;
-    private static final int MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
-    // private static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
-
-    // Used to determine values based off ratio of current res (HEIGHT) to standard
-    // res (1080p)
-    private static double hRatio = INIT_HEIGHT / 1080.0;
-
-    // Mutable height and with variables
-    private static int height = INIT_HEIGHT;
-    private static int width = INIT_WIDTH;
-
-    private static Stage pStage;
-
-    private static int previousScene;
+    private Handler handler;
     
-    private static HashSet<KeyCode> pressedKeys;
+    private HashSet<KeyCode> pressedKeys;
     
-    private static Fighter fighterFalessi;
-    private static Fighter fighterMammen;
+    private Fighter fighterFalessi;
+    private Fighter fighterMammen;
     
-    private static MainMenu mainMenu;
-    private static final CharacterSelectScreen charSelectScreen = new CharacterSelectScreen();
-    private static final FightingStage fightingStage = new FightingStage(Professor.Falessi, Professor.Mammen);
-    private static final OptionsMenu optionsMenu = new OptionsMenu();
-
-    public static void main(String[] args) {
-        launch(args);
-    }
-
-    @Override
-    public void start(Stage stage) {
-        initUI(stage);
-        
-        KeyFrame frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY),
-                e -> update());
-        Timeline animation = new Timeline();
-        animation.setCycleCount(Timeline.INDEFINITE);
-        animation.getKeyFrames().add(frame);
-        animation.play();
+    private CharacterSelectScreen charSelectScreen;
+    private FightingStage fightingStage;
+    private OptionsMenu optionsMenu;
+    private MainMenu mainMenu;
+    
+    private Scene scene;
+    
+    public Game(int width, int height) {
+    	
+    	this.handler = new Handler();
+    	this.pressedKeys = new HashSet<>();
+    	initUI();
     }
     
-    private void update() {
+    private void initUI() {
+    	this.charSelectScreen = new CharacterSelectScreen();
+    	this.fightingStage = new FightingStage(Professor.Falessi, Professor.Mammen);
+    	this.optionsMenu = new OptionsMenu();
+    	this.mainMenu = new MainMenu(charSelectScreen, fightingStage, optionsMenu);
+    	
+        this.scene = new Scene(mainMenu);
+        Window.initCurrentScene(mainMenu);
+
+        pressedKeys = new HashSet<>();
+        this.scene.setOnKeyPressed(e -> pressedKeys.add(e.getCode()));
+        this.scene.setOnKeyReleased(e -> pressedKeys.remove(e.getCode()));
+    }
+    
+    public void update(double elapsedTime) {
+    	handler.tick();
         resolveKeyPresses();
+    }
+    
+    public void addObjects(GameObject ... objects) {
+    	for(GameObject object : objects) {
+    		Window.getGameScene().getNodes().addAll(object.getSprite());
+    		if(object.getHitBox() != null) {
+    			handler.addHitBox(object.getHitBox());
+    		}
+    	}
+    	handler.addObjects(objects);
+    }
+    
+    public Scene getScene() {
+        return scene;
     }
     
     private void resolveKeyPresses() {
@@ -91,66 +89,23 @@ public class Game extends Application {
             // Some more shit goes here
         }
     }
-
-    private static void initUI(Stage stage) {
-        mainMenu = new MainMenu(charSelectScreen, fightingStage, optionsMenu);
-        previousScene = 0;
-
-        Scene root = new Scene(mainMenu);
-        pStage = stage;
-
-        stage.setResizable(false);
-        stage.setTitle("Super CSC FighterZ");
-        stage.setHeight(INIT_HEIGHT);
-        stage.setWidth(INIT_WIDTH);
-        stage.setScene(root);
-        stage.show();
-        
-        pressedKeys = new HashSet<>();
-        root.setOnKeyPressed(e -> pressedKeys.add(e.getCode()));
-        root.setOnKeyReleased(e -> pressedKeys.remove(e.getCode()));
-    }
-
-    public static void setWindowSize(int newHeight) {
-        Game.height = newHeight;
-        Game.width = newHeight * 16 / 9;
-        Game.hRatio = newHeight / 1080.0;
-
-        getStage().setHeight(height);
-        getStage().setWidth(width);
-    }
     
-    public static void addFighter(Fighter fighter) {
+    public void addFighter(Fighter fighter) {
+    	handler.addObject(fighter);
         if(fighter.getProfessor() == Professor.Falessi)
             fighterFalessi = fighter;
         else
             fighterMammen = fighter;
     }
 
-    public static int getWidth() {
-        return width;
+
+    public Stage getStage() {
+        return Window.getStage();
     }
 
-    public static int getHeight() {
-        return height;
+    
+    public Handler getHandler() {
+    	return handler;
     }
-
-    public static double getHRatio() {
-        return hRatio;
-    }
-
-    public static Stage getStage() {
-        return pStage;
-    }
-
-    public static void setPreviousScene(int scene) {
-        previousScene = scene;
-    }
-
-    // TODO add return for scenes other than 0
-    public static Node getPreviousScene() {
-        if (previousScene == 1)
-            return null;
-        return (Node) mainMenu;
-    }
+    
 }

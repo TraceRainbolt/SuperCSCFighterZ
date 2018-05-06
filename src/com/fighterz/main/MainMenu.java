@@ -1,13 +1,13 @@
 package com.fighterz.main;
 
-import javafx.scene.Node;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
+import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.scene.Cursor;
-import javafx.scene.Parent;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.effect.Glow;
 import javafx.scene.image.ImageView;
@@ -18,7 +18,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.util.Duration;
 
-public class MainMenu extends StackPane {
+public class MainMenu extends StackPane  implements GameScene {
     public MainMenu(CharacterSelectScreen charSelectScreen, FightingStage fightingStage, OptionsMenu optionsMenu) {
     	
     	initUi(charSelectScreen, fightingStage, optionsMenu);
@@ -29,10 +29,14 @@ public class MainMenu extends StackPane {
         });
     }
     
+    public ObservableList<Node> getNodes() {
+    	return this.getChildren();
+    }
+    
     private void initUi(CharacterSelectScreen charSelectScreen, FightingStage fightingStage, OptionsMenu optionsMenu) {
         SimpleImage background = new SimpleImage("MainMenuBG.png", true);
-        background.setHeight(Game.getHeight());
-        background.setWidth(Game.getWidth());
+        background.setHeight(Window.getHeight());
+        background.setWidth(Window.getWidth());
 
         ImageView logoView = setupLogo();
 
@@ -41,9 +45,9 @@ public class MainMenu extends StackPane {
         MainMenuButton options = new MainMenuButton("Options", optionsMenu);
         MainMenuButton exit = new MainMenuButton("Exit");
 
-        int maxX = (int) (Game.getHRatio() * 420);
+        int maxX = (int) (Window.getHRatio() * 420);
         play.setTranslateX(-maxX);
-        leaderboards.setTranslateX((float) -maxX / 2 + Game.getHRatio() * 90); // Leaderboard btn is offset b/c it's so long
+        leaderboards.setTranslateX((float) -maxX / 2 + Window.getHRatio() * 90); // Leaderboard btn is offset b/c it's so long
         options.setTranslateX(maxX / 2);
         exit.setTranslateX(maxX);
 
@@ -52,8 +56,8 @@ public class MainMenu extends StackPane {
 
     protected static ImageView setupLogo() {
         SimpleImage logo = new SimpleImage("MainMenuLogo.png");
-        logo.setFitHeight(Game.getHeight());
-        logo.setFitWidth(Game.getWidth());
+        logo.setFitHeight(Window.getHeight());
+        logo.setFitWidth(Window.getWidth());
 
         Timeline timeline = new Timeline();
         timeline.getKeyFrames().addAll(new KeyFrame(Duration.ZERO, new KeyValue(logo.rotateProperty(), -2)),
@@ -82,7 +86,7 @@ public class MainMenu extends StackPane {
 
     private class MainMenuButton extends Label {
 
-        public MainMenuButton(String label, Parent newScene) {
+        public MainMenuButton(String label, GameScene newScene) {
             super(label);
 
             this.setupAppearence();
@@ -91,7 +95,7 @@ public class MainMenu extends StackPane {
             this.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent e) {
-                    getScene().setRoot(newScene);
+                	Window.setScene(newScene); 
                 }
             });
         }
@@ -112,12 +116,12 @@ public class MainMenu extends StackPane {
         }
 
         private void setupAppearence() {
-            this.setFont(Font.font("Myriad Pro", FontWeight.NORMAL, Game.getHRatio() * 54));
+            this.setFont(Font.font("Myriad Pro", FontWeight.NORMAL, Window.getHRatio() * 54));
             this.setTextFill(Color.WHITE);
             this.setCursor(Cursor.HAND);
 
             // Relative height to window size, 1/4 of the way up from the bottom
-            this.setTranslateY(Game.getHeight() / 2 - Game.getHeight() / 4);
+            this.setTranslateY(Window.getHeight() / 2 - Window.getHeight() / 4);
         }
 
         private void setupHandlers() {
@@ -140,4 +144,10 @@ public class MainMenu extends StackPane {
             addGlowEffect(this);
         }
     }
+
+	@Override
+	public void render() {
+		// TODO Auto-generated method stub
+		
+	}
 }

@@ -3,24 +3,32 @@ package com.fighterz.main;
 import javafx.animation.Animation;
 import javafx.util.Duration;
 
-public class Fighter {
+public class Fighter extends GameObject {
     
-    private static final int SPEED = (int) (10 * Game.getHRatio());
+    private static final int SPEED = (int) (10 * Window.getHRatio());
 
     private Professor professor;
     private SimpleImage sprite;
     
     private HitBox hitBox;
+    
+    private double x;
+    private double y;
 
     public Fighter(Professor professor) {
         this.professor = professor;
         this.setAnimation(AnimationState.Idle);
-        Game.addFighter(this);
+        Window.getGame().addFighter(this);
         
-        this.hitBox = new HitBox(this);
+        this.hitBox = new HitBox(this, 250, 820);
+        Window.getGame().addObjects(this.hitBox);
+    }
+    
+    public void tick() {
+
     }
 
-    public Professor getProfessor() {
+	public Professor getProfessor() {
         return this.professor;
     }
 
@@ -37,27 +45,25 @@ public class Fighter {
     }
     
     public void setX(double x) {
+    	this.x = x;
     	this.sprite.setTranslateX(x);
     }
     
     public void setY(double y) {
+    	this.y = y;
     	this.sprite.setTranslateY(y);
     }
     
     public double getX() {
-    	return this.sprite.getTranslateX();
+    	return this.x;
     }
     
     public double getY() {
-    	return this.sprite.getTranslateY();
+    	return this.y;
     }
     
     public HitBox getHitBox() {
         return this.hitBox;
-    }
-    
-    public void showHitBox() {
-        this.hitBox.display();
     }
 
     // TODO a way to get frameCount from state + name

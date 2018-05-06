@@ -2,7 +2,6 @@ package com.fighterz.main;
 
 import javafx.event.EventHandler;
 import javafx.scene.Cursor;
-import javafx.scene.Parent;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -13,7 +12,7 @@ public class BackButton extends ImageView {
         super(new Image("BackIcon.png"));
 
         this.setCursor(Cursor.HAND);
-        double side = Game.getHRatio() * new Image("BackIcon.png").getHeight();
+        double side = Window.getHRatio() * new Image("BackIcon.png").getHeight();
         this.setFitHeight(side);
         this.setFitWidth(side);
 
@@ -28,14 +27,14 @@ public class BackButton extends ImageView {
         this.addEventHandler(MouseEvent.MOUSE_RELEASED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent e) {
-                getScene().setRoot((Parent) (Game.getPreviousScene()));
+                Window.setScene(Window.getPreviousScene());
             }
         });
-        
+
         MainMenu.addGlowEffect(this);
 
         // Place back button in left corner relative to window size
-        this.setTranslateY((float) Game.getHeight() / 2 - Game.getHRatio() * 130);
-        this.setTranslateX((float) -Game.getWidth() / 2 + Game.getHRatio() * 110);
+        this.setTranslateY((float) Window.getHeight() / 2 - Window.getHRatio() * 130);
+        this.setTranslateX((float) -Window.getWidth() / 2 + Window.getHRatio() * 110);
     }
 }

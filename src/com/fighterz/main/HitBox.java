@@ -1,46 +1,54 @@
 package com.fighterz.main;
 
-import java.awt.Rectangle;
+import javafx.scene.Node;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 
-public class HitBox {
-    
-	private Fighter fighter;
+public class HitBox extends GameObject {
 	
-    private int width;
-    private int height;
-    
-    private int x;
-    private int y;
-    
-    public HitBox(Fighter fighter) {
-    	this.fighter = fighter;
-        this.width = fighter.getSprite().getWidth();
-        this.height = fighter.getSprite().getHeight();
-    }
-    
-    public boolean hitTest(HitBox hbox) {
-    	Rectangle rectMe = new Rectangle(getX(), getY(), width, height);
-        Rectangle rectThem = new Rectangle(hbox.getX(), hbox.getY(), hbox.getWidth(), hbox.getHeight());
-        return rectMe.intersects(rectThem);
-    }
-    
-    public int getHeight() {
-		return this.height;
+	private Rectangle hitBox;
+	private GameObject object;
+
+	public HitBox(GameObject object, double width, double height) {
+		this.object  = object;
+		this.hitBox = new Rectangle(object.getX(), object.getY(), width, height);
+        this.hitBox.setFill(Color.TRANSPARENT);
+        this.hitBox.setStrokeWidth(2);
 	}
 
-    public int getWidth() {
-		return this.width;
+	@Override
+	public void tick() {
+        this.hitBox.toFront();
+		updateHitboxLocation();
+	}
+	
+	private void updateHitboxLocation() {
+		this.hitBox.setTranslateX(this.object.getX());
+		this.hitBox.setTranslateY(this.object.getY());
+	}
+	
+	// get rekt
+	public Rectangle getRect() {
+		return this.hitBox;
 	}
 
-	public int getX() {
-    	return (int) fighter.getX();
-    }
-    
-    public int getY() {
-    	return (int) fighter.getY();
-    }
-    
-    public void display() {
-    	
-    }
+	@Override
+	public Node getSprite() {
+		return this.hitBox;
+	}
+
+	@Override
+	public double getX() {
+		return this.hitBox.getTranslateX();
+	}
+
+	@Override
+	public double getY() {
+		return this.hitBox.getTranslateY();
+	}
+
+	@Override
+	public HitBox getHitBox() {
+		return null;
+	}
 }
