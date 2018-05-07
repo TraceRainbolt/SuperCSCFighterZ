@@ -14,7 +14,7 @@ public class FightingStage extends StackPane implements GameScene {
 	private SimpleImage fullHealthBarLeft;
     
     public FightingStage(Professor falessi, Professor mammen) {
-
+        // Empty constructor
 	}
 
 	public void render() {

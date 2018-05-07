@@ -90,7 +90,7 @@ public class Fighter extends GameObject {
             frameCount = 29;
         }
 
-        final SimpleImage fighterSprite = new SimpleImage(filePath.toString(), false);
+        final SimpleImage fighterSprite = new SimpleImage(filePath, false);
         final Animation animation = new SpriteAnimation(fighterSprite, Duration.millis(1000), frameCount);
 
         animation.setCycleCount(Animation.INDEFINITE);

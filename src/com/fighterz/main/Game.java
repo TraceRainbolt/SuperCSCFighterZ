@@ -21,9 +21,9 @@ public class Game {
     private MainMenu mainMenu;
     
     private Scene scene;
+    private Stage pStage;
     
-    public Game(int width, int height) {
-    	
+    public Game() {
     	this.handler = new Handler();
     	this.pressedKeys = new HashSet<>();
     	initUI();
@@ -57,6 +57,10 @@ public class Game {
     		}
     	}
     	handler.addObjects(objects);
+    }
+    
+    public void setStage(Stage stage) {
+        pStage = stage;
     }
     
     public Scene getScene() {
@@ -104,7 +108,7 @@ public class Game {
 
 
     public Stage getStage() {
-        return Window.getStage();
+        return pStage;
     }
 
     

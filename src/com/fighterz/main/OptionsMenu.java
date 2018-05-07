@@ -17,7 +17,7 @@ public class OptionsMenu extends StackPane implements GameScene {
     private static final int MIN_BTN_Y = -170;
 
     public OptionsMenu() {
-
+        // Empty constructor
     }
     
     public ObservableList<Node> getNodes() {

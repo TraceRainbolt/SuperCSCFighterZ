@@ -8,7 +8,7 @@ import javafx.scene.layout.StackPane;
 
 public class CharacterSelectScreen extends StackPane implements GameScene {
     public CharacterSelectScreen() {
-
+        // Empty constructor
     }
     
     public ObservableList<Node> getNodes() {

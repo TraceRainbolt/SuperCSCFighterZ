@@ -18,7 +18,6 @@ public class Window extends Application {
     private static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
 
     private static Game game;
-    private static Stage pStage;
     
     private static int width;
     private static int height;
@@ -28,18 +27,16 @@ public class Window extends Application {
     private static GameScene previousScene;
     
     public static void main(String[] args) {
+        width = INIT_WIDTH;
+        height = INIT_HEIGHT;
+        hRatio = INIT_HEIGHT / 1080.0;
+        game = new Game();
         launch(args);
     }
 
     @Override
     public void start(Stage stage) {
-    	
-    	width = INIT_WIDTH;
-    	height = INIT_HEIGHT;
-    	hRatio = INIT_HEIGHT / 1080.0;
-    	pStage = stage;
-    	game = new Game(INIT_WIDTH, INIT_HEIGHT);
-    	
+        game.setStage(stage);
         stage.setResizable(false);
         stage.setTitle("Super CSC FighterZ");
         stage.setWidth(INIT_WIDTH);
@@ -59,10 +56,6 @@ public class Window extends Application {
     	return game;
     }
     
-    public static Stage getStage() {
-    	return pStage;
-    }
-    
     public static void initCurrentScene(GameScene scene) {
     	currentScene = scene;
     }
@@ -71,7 +64,7 @@ public class Window extends Application {
     	previousScene = currentScene;
     	currentScene = scene;
     	getGame().getHandler().switchScene(scene);
-    	getStage().getScene().setRoot((Parent) scene);
+    	getGame().getStage().getScene().setRoot((Parent) scene);
     }
     
     public static GameScene getPreviousScene() {
@@ -99,7 +92,7 @@ public class Window extends Application {
     	width = newHeight * 16 / 9;
     	hRatio = newHeight / 1080.0;
 
-        Window.getStage().setHeight(height);
-        Window.getStage().setWidth(width);
+        getGame().getStage().setHeight(height);
+        getGame().getStage().setWidth(width);
     }
 }
