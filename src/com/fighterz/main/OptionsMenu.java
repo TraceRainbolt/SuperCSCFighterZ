@@ -35,7 +35,6 @@ public class OptionsMenu extends StackPane implements GameScene {
         OptionsButton maxRes = new OptionsButton("1920 x 1080");
 
         // Starting point for resolution choices
-
         // Magic numbers for x values simply left align the res label
         minRes.setTranslateX(-270 * Window.getHRatio());
         minRes.setTranslateY(MIN_BTN_Y * Window.getHRatio());

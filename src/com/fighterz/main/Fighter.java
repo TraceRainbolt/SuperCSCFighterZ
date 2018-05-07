@@ -20,7 +20,7 @@ public class Fighter extends GameObject {
 
     public Fighter(Professor professor) {
         this.professor = professor;
-        this.setAnimation(AnimationState.Idle);
+        this.setAnimation(AnimationState.IDLE);
         Window.getGame().addFighter(this);
         
         if(this.professor == Professor.MAMMEN) {
@@ -100,9 +100,9 @@ public class Fighter extends GameObject {
         if(this.professor == Professor.MAMMEN) {
             Timeline timeline = new Timeline();
             timeline.getKeyFrames().addAll(
-            		new KeyFrame(Duration.ZERO, new KeyValue(this.sprite.translateYProperty(), -88)),
-            		new KeyFrame(new Duration(600), new KeyValue(this.sprite.translateYProperty(), -100)),
-                    new KeyFrame(new Duration(1200), new KeyValue(this.sprite.translateYProperty(), -88)));
+            		new KeyFrame(Duration.ZERO, new KeyValue(this.sprite.translateYProperty(), -88 * Window.getHRatio())),
+            		new KeyFrame(new Duration(600), new KeyValue(this.sprite.translateYProperty(), -100 * Window.getHRatio())),
+                    new KeyFrame(new Duration(1200), new KeyValue(this.sprite.translateYProperty(), -88 * Window.getHRatio())));
             timeline.setCycleCount(Animation.INDEFINITE);
             timeline.play();
         }

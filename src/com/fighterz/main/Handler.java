@@ -3,7 +3,6 @@ package com.fighterz.main;
 import java.util.LinkedList;
 
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Shape;
 
 public class Handler {
 	LinkedList<GameObject> objects = new LinkedList<>();

@@ -4,7 +4,6 @@ import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Polygon;
-import javafx.scene.shape.Rectangle;
 
 public class FightingStage extends StackPane implements GameScene {
 	
@@ -63,7 +62,7 @@ public class FightingStage extends StackPane implements GameScene {
         	0.0, 0.0,
         	(double) fullHealthBarRight.getWidth(), 0.0,
         	(double) fullHealthBarRight.getWidth(), (double) fullHealthBarRight.getHeight(),
-        	-39.0, (double) fullHealthBarRight.getHeight()
+        	-39.0 * Window.getHRatio(), (double) fullHealthBarRight.getHeight()
         });
         
         fullHealthBarRight.setClip(rightHealth);
@@ -84,7 +83,7 @@ public class FightingStage extends StackPane implements GameScene {
         	0.0, 0.0,
         	(double) fullHealthBarLeft.getWidth(), 0.0,
         	(double) fullHealthBarLeft.getWidth(), (double) fullHealthBarLeft.getHeight(),
-        	-39.0, (double) fullHealthBarLeft.getHeight()
+        	-39.0 * Window.getHRatio(), (double) fullHealthBarLeft.getHeight()
         });
         
         fullHealthBarLeft.setClip(leftHealth);
