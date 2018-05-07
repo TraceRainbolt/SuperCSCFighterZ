@@ -1,6 +1,5 @@
 package com.fighterz.main;
 
-import javafx.scene.Node;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
@@ -30,7 +29,7 @@ public class HitBox extends GameObject {
 	private void setColorProperties() {
 	    this.hitBoxRect.setFill(Color.TRANSPARENT);
 	    // Set stroke width to 2 to see hitBoxes
-	    this.hitBoxRect.setStrokeWidth(0);
+	    this.hitBoxRect.setStrokeWidth(2);
 	}
 
 	@Override
@@ -54,22 +53,12 @@ public class HitBox extends GameObject {
 	}
 
 	@Override
-	public double getX() {
-		return this.hitBoxRect.getTranslateX();
-	}
-
-	@Override
-	public double getY() {
-		return this.hitBoxRect.getTranslateY();
-	}
-
-	@Override
 	public HitBox getHitBox() {
 		return null;
 	}
 
 	@Override
 	public void onCollide(GameObject collider) {
-
+        // nothing
 	}
 }

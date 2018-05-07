@@ -20,9 +20,9 @@ public class Fighter extends GameObject {
         Window.getGame().addFighter(this);
         
         if(this.professor == Professor.MAMMEN) {
-        	this.hitBox = new HitBox(this, 290, 500, 0, -100);
+        	this.hitBox = new HitBox(this, 290, 510, 0, -100);
         } else {
-        	this.hitBox = new HitBox(this, 250, 820);
+        	this.hitBox = new HitBox(this, 250, 830);
         }
     }
     
@@ -55,7 +55,7 @@ public class Fighter extends GameObject {
     public void setAnimation(AnimationState state) {
     	String filePath;
     	int frameCount;
-        if(this.professor == Professor.MAMMEN) {
+        if(this.professor == Professor.MAMMEN && state == AnimationState.IDLE) {
             filePath = "SpriteMammenIdle.png";
             frameCount = 27;
             
