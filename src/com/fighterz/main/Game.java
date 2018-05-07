@@ -49,11 +49,15 @@ public class Game {
     public void addObjects(GameObject ... objects) {
     	for(GameObject object : objects) {
     		Window.getGameScene().getNodes().addAll(object.getSprite());
-    		if(object.getHitBox() != null) {
-    			handler.addHitBox(object.getHitBox());
-    		}
     	}
     	handler.addObjects(objects);
+    }
+    
+    public void addHitBox(HitBox ... hitBoxes) {
+        for(HitBox hitBox : hitBoxes) {
+            Window.getGameScene().getNodes().addAll(hitBox.getRect());
+            handler.addHitBox(hitBox);
+        }
     }
     
     public void setStage(Stage stage) {

@@ -1,5 +1,7 @@
 package com.fighterz.main;
 
+import java.util.LinkedList;
+
 import javafx.scene.Node;
 
 public abstract class GameObject {
@@ -10,9 +12,9 @@ public abstract class GameObject {
 
     public abstract void tick();
 
-	public abstract HitBox getHitBox();
+	public abstract LinkedList<HitBox> getHitBoxes();
 	
-	public abstract void onCollide(GameObject collider);
+	public abstract void onCollide(GameObject gameObject);
 	
 	public void setSprite(Node sprite) {
 	    this.sprite = sprite;

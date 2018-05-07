@@ -5,65 +5,74 @@ import java.util.LinkedList;
 import javafx.scene.paint.Color;
 
 public class Handler {
-	LinkedList<GameObject> objects = new LinkedList<>();
-	LinkedList<GameScene> scenes = new LinkedList<>();
-	LinkedList<HitBox> hitBoxes = new LinkedList<>();
+    LinkedList<GameObject> objects = new LinkedList<>();
+    LinkedList<GameScene> scenes = new LinkedList<>();
+    LinkedList<HitBox> hitBoxes = new LinkedList<>();
 
-	public void tick() {
-		for (int i = 0; i < objects.size(); i++) {
-			GameObject tempObject = objects.get(i);
-			tempObject.tick();
-			checkHitBoxes();
-		}
-	}
-	
-	public void addObjects(GameObject... objects) {
-		for (GameObject object : objects)
-			this.objects.add(object);
-	}
+    public void tick() {
+        for (int i = 0; i < objects.size(); i++) {
+            GameObject tempObject = objects.get(i);
+            tempObject.tick();
+            checkHitBoxes();
+        }
+    }
 
-	public void addObject(GameObject object) {
-		this.objects.add(object);
-	}
-	
+    public void addObjects(GameObject... objects) {
+        for (GameObject object : objects)
+            this.objects.add(object);
+    }
 
-	public void addHitBox(HitBox hitBox) {
-		this.hitBoxes.add(hitBox);
-	}
+    public void addObject(GameObject object) {
+        this.objects.add(object);
+    }
 
-	// TODO make this not O(n^2), probably can get O(nlogn)
-	public void checkHitBoxes() {
-		for(HitBox hitBox : hitBoxes) {
-			checkBounds(hitBox);
-		}
-	}
-	
-	public void checkBounds(HitBox block) {
-		boolean collisionDetected = false;
-		HitBox hit = null;
-		for (HitBox hitBox : hitBoxes) {
-			if (hitBox != block) {
-				hitBox.getRect().setStroke(Color.GREEN);
-				if (block.getRect().getBoundsInParent().intersects(
-						hitBox.getRect().getBoundsInParent())) {
-					collisionDetected = true;
-					hit = hitBox;
-				}
-			}
-		}
-		if (collisionDetected) {
-			block.getObject().onCollide(hit);
-			block.getRect().setStroke(Color.RED);
-			hit.getRect().setStroke(Color.RED);
-		}
-	}
+    public void addHitBox(HitBox hitBox) {
+        this.hitBoxes.add(hitBox);
+    }
 
-	public void switchScene(GameScene scene) {
-		this.hitBoxes.clear();
-		scene.getNodes().clear();
-		if(!this.scenes.contains(scene)) {
-			this.scenes.add(scene);
-		}
-		scene.render();
-	}
+    // TODO make this not O(n^2), probably can get O(nlogn)
+    public void checkHitBoxes() {
+        for (GameObject object : objects) {
+            if(object.getHitBoxes() != null) {
+                for(HitBox hitBox : object.getHitBoxes()) {
+                    hitBox.tick();
+                    checkBounds(hitBox);
+                }
+            }
+        }
+    }
+
+    public void checkBounds(HitBox hitBox) {
+        boolean collisionDetected = false;
+        LinkedList<HitBox> hits = new LinkedList<HitBox>();
+        for (HitBox otherHitBox : hitBoxes) {
+            if (otherHitBox.getObject() != hitBox.getObject()) {
+                Color hitBoxColor = otherHitBox.getType() == HitBoxType.HURT ? Color.GREEN : Color.BLUE;
+                otherHitBox.getRect().setStroke(hitBoxColor);
+                if (hitBox.getRect().getBoundsInParent().intersects(otherHitBox.getRect().getBoundsInParent())) {
+                    collisionDetected = true;
+                    hits.add(otherHitBox);
+                }
+            }
+        }
+        if (collisionDetected) {
+            for(HitBox hit : hits) {
+                if(hit.getType() == HitBoxType.HIT && hitBox.getType() == HitBoxType.HURT) {
+                    hitBox.getObject().onCollide(hit.getObject());
+                }
+                hit.getRect().setStroke(Color.RED);
+            }
+            hitBox.getRect().setStroke(Color.RED);
+        }
+    }
+
+    public void switchScene(GameScene scene) {
+        this.hitBoxes.clear();
+        scene.getNodes().clear();
+        this.objects.clear();
+        if (!this.scenes.contains(scene)) {
+            this.scenes.add(scene);
+        }
+        scene.render();
+    }
 }

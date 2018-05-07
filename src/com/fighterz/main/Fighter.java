@@ -1,5 +1,7 @@
 package com.fighterz.main;
 
+import java.util.LinkedList;
+
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -12,27 +14,37 @@ public class Fighter extends GameObject {
 
     private Professor professor;
     
-    private HitBox hitBox;
+    private LinkedList<HitBox> hitBoxes;
+    private String side;
 
-    public Fighter(Professor professor) {
+    public Fighter(Professor professor, String side) {
         this.professor = professor;
         this.setAnimation(AnimationState.IDLE);
         Window.getGame().addFighter(this);
+        this.side = side;
+        
+        hitBoxes = new LinkedList<HitBox>();
         
         if(this.professor == Professor.MAMMEN) {
-        	this.hitBox = new HitBox(this, 290, 510, 0, -65);
+        	HitBox hurtBox = new HitBox(this, HitBoxType.HURT, 290, 510, 0, -65);
+            HitBox hitBox = new HitBox(this, HitBoxType.HIT, 220, 190, 120, -95);
+        	hitBoxes.add(hurtBox);
+            hitBoxes.add(hitBox);
         } else {
-        	this.hitBox = new HitBox(this, 250, 830);
+        	HitBox hurtBox = new HitBox(this, HitBoxType.HURT, 250, 830);
+        	HitBox hitBox = new HitBox(this, HitBoxType.HIT, 70, 56, -120, -75);
+        	hitBoxes.add(hurtBox);
+        	hitBoxes.add(hitBox);
         }
     }
     
     public void tick() {
-        // Tick tock
+        // tick tock
     }
     
 	@Override
-	public void onCollide(GameObject collider) {
-		Window.getGame().getFightingStage().subtractLeftHealth(0.03);
+	public void onCollide(GameObject object) {
+	    Window.getGame().getFightingStage().subtractHealth(0.03, side);
 	}
 
 	public Professor getProfessor() {
@@ -47,8 +59,8 @@ public class Fighter extends GameObject {
         this.setX(this.getX() - SPEED);
     }
     
-    public HitBox getHitBox() {
-        return this.hitBox;
+    public LinkedList<HitBox> getHitBoxes() {
+        return this.hitBoxes;
     }
 
     // TODO a way to get frameCount from state + name
