@@ -15,7 +15,7 @@ public class Window extends Application {
     // Framerate information
     private static final int FRAMES_PER_SECOND = 60;
     private static final int MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
-    private static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
+    // private static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
 
     private static Game game;
     
@@ -45,7 +45,7 @@ public class Window extends Application {
         stage.show();
         
         KeyFrame frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY),
-                e -> game.update(SECOND_DELAY));
+                e -> game.update());
         Timeline animation = new Timeline();
         animation.setCycleCount(Timeline.INDEFINITE);
         animation.getKeyFrames().add(frame);

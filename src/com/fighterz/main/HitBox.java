@@ -6,7 +6,7 @@ import javafx.scene.shape.Rectangle;
 
 public class HitBox extends GameObject {
 	
-	private Rectangle hitBox;
+	private Rectangle hitBoxRect;
 	private GameObject object;
 	
 	private double offsetX = 0;
@@ -14,7 +14,8 @@ public class HitBox extends GameObject {
 
 	public HitBox(GameObject object, double width, double height) {
 		this.object  = object;
-		this.hitBox = new Rectangle(object.getX(), object.getY(), width * Window.getHRatio(), height * Window.getHRatio());
+		this.hitBoxRect = new Rectangle(object.getX(), object.getY(), width * Window.getHRatio(), height * Window.getHRatio());
+		this.setSprite(hitBoxRect);
 		setColorProperties();
         
         Window.getGame().addObjects(this);
@@ -27,14 +28,14 @@ public class HitBox extends GameObject {
 	}
 	
 	private void setColorProperties() {
-	    this.hitBox.setFill(Color.TRANSPARENT);
+	    this.hitBoxRect.setFill(Color.TRANSPARENT);
 	    // Set stroke width to 2 to see hitBoxes
-	    this.hitBox.setStrokeWidth(0);
+	    this.hitBoxRect.setStrokeWidth(0);
 	}
 
 	@Override
 	public void tick() {
-        this.hitBox.toFront();
+        this.hitBoxRect.toFront();
 		updateHitboxLocation();
 	}
 	
@@ -43,28 +44,23 @@ public class HitBox extends GameObject {
 	}
 	
 	private void updateHitboxLocation() {
-		this.hitBox.setTranslateX(this.object.getX() + offsetX);
-		this.hitBox.setTranslateY(this.object.getY() + offsetY);
+		this.hitBoxRect.setTranslateX(this.object.getX() + offsetX);
+		this.hitBoxRect.setTranslateY(this.object.getY() + offsetY);
 	}
 	
 	// get rekt
 	public Rectangle getRect() {
-		return this.hitBox;
-	}
-
-	@Override
-	public Node getSprite() {
-		return this.hitBox;
+		return this.hitBoxRect;
 	}
 
 	@Override
 	public double getX() {
-		return this.hitBox.getTranslateX();
+		return this.hitBoxRect.getTranslateX();
 	}
 
 	@Override
 	public double getY() {
-		return this.hitBox.getTranslateY();
+		return this.hitBoxRect.getTranslateY();
 	}
 
 	@Override

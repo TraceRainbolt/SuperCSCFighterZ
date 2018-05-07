@@ -44,7 +44,7 @@ public class Game {
         this.scene.setOnKeyReleased(e -> pressedKeys.remove(e.getCode()));
     }
     
-    public void update(double elapsedTime) {
+    public void update() {
     	handler.tick();
         resolveKeyPresses();
     }

@@ -11,12 +11,8 @@ public class Fighter extends GameObject {
     private static final int SPEED = (int) (10 * Window.getHRatio());
 
     private Professor professor;
-    private SimpleImage sprite;
     
     private HitBox hitBox;
-    
-    private double x;
-    private double y;
 
     public Fighter(Professor professor) {
         this.professor = professor;
@@ -31,7 +27,7 @@ public class Fighter extends GameObject {
     }
     
     public void tick() {
-
+        // Tick tock
     }
     
 	@Override
@@ -42,10 +38,6 @@ public class Fighter extends GameObject {
 	public Professor getProfessor() {
         return this.professor;
     }
-
-    public SimpleImage getSprite() {
-        return this.sprite;
-    }
     
     public void moveRight() {
     	this.setX(this.getX() + SPEED);
@@ -53,24 +45,6 @@ public class Fighter extends GameObject {
     
     public void moveLeft() {
         this.setX(this.getX() - SPEED);
-    }
-    
-    public void setX(double x) {
-    	this.x = x;
-    	this.sprite.setTranslateX(x);
-    }
-    
-    public void setY(double y) {
-    	this.y = y;
-    	this.sprite.setTranslateY(y);
-    }
-    
-    public double getX() {
-    	return this.x;
-    }
-    
-    public double getY() {
-    	return this.y;
     }
     
     public HitBox getHitBox() {
@@ -95,14 +69,14 @@ public class Fighter extends GameObject {
 
         animation.setCycleCount(Animation.INDEFINITE);
         animation.play();
-        this.sprite = fighterSprite;
+        this.setSprite(fighterSprite);
         
         if(this.professor == Professor.MAMMEN) {
             Timeline timeline = new Timeline();
             timeline.getKeyFrames().addAll(
-            		new KeyFrame(Duration.ZERO, new KeyValue(this.sprite.translateYProperty(), -88 * Window.getHRatio())),
-            		new KeyFrame(new Duration(600), new KeyValue(this.sprite.translateYProperty(), -100 * Window.getHRatio())),
-                    new KeyFrame(new Duration(1200), new KeyValue(this.sprite.translateYProperty(), -88 * Window.getHRatio())));
+            		new KeyFrame(Duration.ZERO, new KeyValue(this.getSprite().translateYProperty(), -88 * Window.getHRatio())),
+            		new KeyFrame(new Duration(600), new KeyValue(this.getSprite().translateYProperty(), -100 * Window.getHRatio())),
+                    new KeyFrame(new Duration(1200), new KeyValue(this.getSprite().translateYProperty(), -88 * Window.getHRatio())));
             timeline.setCycleCount(Animation.INDEFINITE);
             timeline.play();
         }
