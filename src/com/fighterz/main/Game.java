@@ -15,10 +15,7 @@ public class Game {
     private Fighter fighterFalessi;
     private Fighter fighterMammen;
     
-    private CharacterSelectScreen charSelectScreen;
     private FightingStage fightingStage;
-    private OptionsMenu optionsMenu;
-    private MainMenu mainMenu;
     
     private Scene scene;
     private Stage pStage;
@@ -30,10 +27,10 @@ public class Game {
     }
     
     private void initUI() {
-    	this.charSelectScreen = new CharacterSelectScreen();
-    	this.fightingStage = new FightingStage(Professor.FALESSI, Professor.MAMMEN);
-    	this.optionsMenu = new OptionsMenu();
-    	this.mainMenu = new MainMenu(charSelectScreen, fightingStage, optionsMenu);
+        CharacterSelectScreen charSelectScreen = new CharacterSelectScreen();
+        OptionsMenu optionsMenu = new OptionsMenu();
+        this.fightingStage = new FightingStage(Professor.FALESSI, Professor.MAMMEN);
+        MainMenu mainMenu = new MainMenu(charSelectScreen, fightingStage, optionsMenu);
     	
         this.scene = new Scene(mainMenu);
         Window.initCurrentScene(mainMenu);
