@@ -17,18 +17,15 @@ public class OptionsMenu extends StackPane implements GameScene {
     private static final int MIN_BTN_Y = -170;
 
     public OptionsMenu() {
-    	initUi();
-        this.heightProperty().addListener((obs, oldVal, newVal) -> {
-        	this.getChildren().removeAll();
-        	initUi();
-        });
+
     }
     
     public ObservableList<Node> getNodes() {
     	return this.getChildren();
     }
     
-    private void initUi() {
+    @Override
+    public void render() {
         SimpleImage imgView = new SimpleImage("OptionsMenu.png", true);
 
         ImageView logoView = MainMenu.setupLogo();
@@ -118,15 +115,10 @@ public class OptionsMenu extends StackPane implements GameScene {
                 @Override
                 public void handle(MouseEvent e) {
                 	Window.setWindowSize(that.heightVal);
-                    getScene().setRoot(new OptionsMenu());
+                    that.getChildren().clear();
+                    render();
                 }
             });
         }
     }
-
-	@Override
-	public void render() {
-		// TODO Auto-generated method stub
-		
-	}
 }

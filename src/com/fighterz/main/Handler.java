@@ -59,9 +59,10 @@ public class Handler {
 	}
 
 	public void addScene(GameScene scene) {
+		scene.getNodes().clear();
 		if(!this.scenes.contains(scene)) {
 			this.scenes.add(scene);
-			scene.render();
 		}
+		scene.render();
 	}
 }

@@ -11,7 +11,7 @@ public class HitBox extends GameObject {
 
 	public HitBox(GameObject object, double width, double height) {
 		this.object  = object;
-		this.hitBox = new Rectangle(object.getX(), object.getY(), width, height);
+		this.hitBox = new Rectangle(object.getX(), object.getY(), width * Window.getHRatio(), height * Window.getHRatio());
         this.hitBox.setFill(Color.TRANSPARENT);
         this.hitBox.setStrokeWidth(2);
 	}

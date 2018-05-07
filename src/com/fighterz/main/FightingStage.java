@@ -8,7 +8,7 @@ public class FightingStage extends StackPane implements GameScene {
 	
     public FightingStage(Professor player1, Professor player2) {
         this.heightProperty().addListener((obs, oldVal, newVal) -> {
-
+        	
         });
     }
     

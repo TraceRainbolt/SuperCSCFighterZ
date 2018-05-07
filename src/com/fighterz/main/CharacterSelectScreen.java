@@ -8,18 +8,15 @@ import javafx.scene.layout.StackPane;
 
 public class CharacterSelectScreen extends StackPane implements GameScene {
     public CharacterSelectScreen() {
-        initUi();
-        this.heightProperty().addListener((obs, oldVal, newVal) -> {
-        	this.getChildren().removeAll();
-        	initUi();
-        });
+
     }
     
     public ObservableList<Node> getNodes() {
     	return this.getChildren();
     }
     
-    private void initUi() {
+	@Override
+	public void render() {
         Image background = new Image("CharacterSelect.png");
         ImageView imgView = new ImageView(background);
         imgView.setFitHeight(Window.getHeight());
@@ -30,9 +27,4 @@ public class CharacterSelectScreen extends StackPane implements GameScene {
         this.getChildren().addAll(imgView, backBtn);
     }
 
-	@Override
-	public void render() {
-		// TODO Auto-generated method stub
-		
-	}
 }

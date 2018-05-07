@@ -38,6 +38,7 @@ public class Game {
     	
         this.scene = new Scene(mainMenu);
         Window.initCurrentScene(mainMenu);
+        handler.addScene(mainMenu);
 
         pressedKeys = new HashSet<>();
         this.scene.setOnKeyPressed(e -> pressedKeys.add(e.getCode()));

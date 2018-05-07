@@ -19,21 +19,23 @@ import javafx.scene.text.FontWeight;
 import javafx.util.Duration;
 
 public class MainMenu extends StackPane  implements GameScene {
+	
+	private CharacterSelectScreen charSelectScreen;
+	private FightingStage fightingStage;
+	private OptionsMenu optionsMenu;
+	
     public MainMenu(CharacterSelectScreen charSelectScreen, FightingStage fightingStage, OptionsMenu optionsMenu) {
-    	
-    	initUi(charSelectScreen, fightingStage, optionsMenu);
-        
-        this.heightProperty().addListener((obs, oldVal, newVal) -> {
-        	this.getChildren().removeAll();
-        	initUi(charSelectScreen, fightingStage, optionsMenu);
-        });
+    	this.charSelectScreen = charSelectScreen;
+    	this.fightingStage = fightingStage;
+    	this.optionsMenu = optionsMenu;
     }
     
     public ObservableList<Node> getNodes() {
     	return this.getChildren();
     }
     
-    private void initUi(CharacterSelectScreen charSelectScreen, FightingStage fightingStage, OptionsMenu optionsMenu) {
+	@Override
+	public void render() {
         SimpleImage background = new SimpleImage("MainMenuBG.png", true);
         background.setHeight(Window.getHeight());
         background.setWidth(Window.getWidth());
@@ -52,8 +54,8 @@ public class MainMenu extends StackPane  implements GameScene {
         exit.setTranslateX(maxX);
 
         this.getChildren().addAll(background, logoView, play, leaderboards, options, exit);
-    }
-
+	}
+   
     protected static ImageView setupLogo() {
         SimpleImage logo = new SimpleImage("MainMenuLogo.png");
         logo.setFitHeight(Window.getHeight());
@@ -140,14 +142,8 @@ public class MainMenu extends StackPane  implements GameScene {
                     that.setEffect(null);
                 }
             });
-            
+ 
             addGlowEffect(this);
         }
     }
-
-	@Override
-	public void render() {
-		// TODO Auto-generated method stub
-		
-	}
 }
