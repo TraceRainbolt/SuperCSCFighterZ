@@ -29,11 +29,12 @@ public class FightingStage extends StackPane implements GameScene {
         mammen.setX(-550 * Window.getHRatio());
         mammen.getSprite().setScaleX(-1);
 
-        this.getNodes().addAll(background, backBtn);
+        this.getNodes().add(background);
         
         setupHealthBars();
         
         Window.getGame().addObjects(mammen, falessi);
+        this.getNodes().add(backBtn);
     }
     
     public void subtractRightHealth(double amount) {

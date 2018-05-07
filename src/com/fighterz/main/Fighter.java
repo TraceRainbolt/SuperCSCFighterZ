@@ -36,7 +36,7 @@ public class Fighter extends GameObject {
     
 	@Override
 	public void onCollide(GameObject collider) {
-		Window.getGame().getFightingStage().subtractLeftHealth(0.05);
+		Window.getGame().getFightingStage().subtractLeftHealth(0.03);
 	}
 
 	public Professor getProfessor() {
