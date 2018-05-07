@@ -20,7 +20,7 @@ public class Fighter extends GameObject {
         Window.getGame().addFighter(this);
         
         if(this.professor == Professor.MAMMEN) {
-        	this.hitBox = new HitBox(this, 290, 510, 0, -100);
+        	this.hitBox = new HitBox(this, 290, 510, 0, -65);
         } else {
         	this.hitBox = new HitBox(this, 250, 830);
         }
