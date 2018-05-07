@@ -28,8 +28,9 @@ public class HitBox extends GameObject {
 	
 	private void setColorProperties() {
 	    this.hitBoxRect.setFill(Color.TRANSPARENT);
-	    // Set stroke width to 2 to see hitBoxes
-	    this.hitBoxRect.setStrokeWidth(2);
+	    // Show hitboxes if in debug mode
+	    int strokeWidth = Window.DEBUG ? 2 : 0;
+	    this.hitBoxRect.setStrokeWidth(strokeWidth);
 	}
 
 	@Override
