@@ -32,13 +32,13 @@ public class Game {
     
     private void initUI() {
     	this.charSelectScreen = new CharacterSelectScreen();
-    	this.fightingStage = new FightingStage(Professor.Falessi, Professor.Mammen);
+    	this.fightingStage = new FightingStage(Professor.FALESSI, Professor.MAMMEN);
     	this.optionsMenu = new OptionsMenu();
     	this.mainMenu = new MainMenu(charSelectScreen, fightingStage, optionsMenu);
     	
         this.scene = new Scene(mainMenu);
         Window.initCurrentScene(mainMenu);
-        handler.addScene(mainMenu);
+        handler.switchScene(mainMenu);
 
         pressedKeys = new HashSet<>();
         this.scene.setOnKeyPressed(e -> pressedKeys.add(e.getCode()));
@@ -62,6 +62,10 @@ public class Game {
     
     public Scene getScene() {
         return scene;
+    }
+    
+    public FightingStage getFightingStage() {
+    	return fightingStage;
     }
     
     private void resolveKeyPresses() {
@@ -93,7 +97,7 @@ public class Game {
     
     public void addFighter(Fighter fighter) {
     	handler.addObject(fighter);
-        if(fighter.getProfessor() == Professor.Falessi)
+        if(fighter.getProfessor() == Professor.FALESSI)
             fighterFalessi = fighter;
         else
             fighterMammen = fighter;

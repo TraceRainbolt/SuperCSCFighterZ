@@ -1,6 +1,9 @@
 package com.fighterz.main;
 
 import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.util.Duration;
 
 public class Fighter extends GameObject {
@@ -20,13 +23,21 @@ public class Fighter extends GameObject {
         this.setAnimation(AnimationState.Idle);
         Window.getGame().addFighter(this);
         
-        this.hitBox = new HitBox(this, 250, 820);
-        Window.getGame().addObjects(this.hitBox);
+        if(this.professor == Professor.MAMMEN) {
+        	this.hitBox = new HitBox(this, 290, 500, 0, -100);
+        } else {
+        	this.hitBox = new HitBox(this, 250, 820);
+        }
     }
     
     public void tick() {
 
     }
+    
+	@Override
+	public void onCollide(GameObject collider) {
+		Window.getGame().getFightingStage().subtractLeftHealth(0.05);
+	}
 
 	public Professor getProfessor() {
         return this.professor;
@@ -68,22 +79,32 @@ public class Fighter extends GameObject {
 
     // TODO a way to get frameCount from state + name
     public void setAnimation(AnimationState state) {
-        StringBuilder filePath = new StringBuilder("Sprite");
-       
-        filePath.append(this.getProfessor().name());
-        filePath.append(state.name());
-        filePath.append(".png");
-        
-        // Remove this once mammen sprites are in
-        if(this.getProfessor() == Professor.Mammen)
-            filePath = new StringBuilder("SpriteFalessiIdle.png");
+    	String filePath;
+    	int frameCount;
+        if(this.professor == Professor.MAMMEN) {
+            filePath = "SpriteMammenIdle.png";
+            frameCount = 27;
+            
+        } else {
+            filePath = "SpriteFalessiIdle.png";
+            frameCount = 29;
+        }
 
         final SimpleImage fighterSprite = new SimpleImage(filePath.toString(), false);
-        final int frameCount = 29;
         final Animation animation = new SpriteAnimation(fighterSprite, Duration.millis(1000), frameCount);
 
         animation.setCycleCount(Animation.INDEFINITE);
         animation.play();
         this.sprite = fighterSprite;
+        
+        if(this.professor == Professor.MAMMEN) {
+            Timeline timeline = new Timeline();
+            timeline.getKeyFrames().addAll(
+            		new KeyFrame(Duration.ZERO, new KeyValue(this.sprite.translateYProperty(), -88)),
+            		new KeyFrame(new Duration(600), new KeyValue(this.sprite.translateYProperty(), -100)),
+                    new KeyFrame(new Duration(1200), new KeyValue(this.sprite.translateYProperty(), -88)));
+            timeline.setCycleCount(Animation.INDEFINITE);
+            timeline.play();
+        }
     }
 }

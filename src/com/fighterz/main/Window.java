@@ -9,7 +9,7 @@ import javafx.util.Duration;
 
 public class Window extends Application {
     // 16 : 9 Ratio based off height
-    private static final int INIT_HEIGHT = 720;
+    private static final int INIT_HEIGHT = 1080;
     private static final int INIT_WIDTH = INIT_HEIGHT * 16 / 9;
     
     // Framerate information
@@ -67,10 +67,10 @@ public class Window extends Application {
     	currentScene = scene;
     }
     
-    public static void setScene(GameScene scene) {
+    public static void switchScene(GameScene scene) {
     	previousScene = currentScene;
     	currentScene = scene;
-    	getGame().getHandler().addScene(scene);
+    	getGame().getHandler().switchScene(scene);
     	getStage().getScene().setRoot((Parent) scene);
     }
     

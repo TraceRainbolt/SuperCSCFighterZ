@@ -8,4 +8,5 @@ public abstract class GameObject {
 	public abstract double getX();
 	public abstract double getY();
 	public abstract HitBox getHitBox();
+	public abstract void onCollide(GameObject collider);
 }

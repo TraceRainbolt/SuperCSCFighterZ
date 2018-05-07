@@ -53,12 +53,14 @@ public class Handler {
 			}
 		}
 		if (collisionDetected) {
+			block.getObject().onCollide(hit);
 			block.getRect().setStroke(Color.RED);
 			hit.getRect().setStroke(Color.RED);
 		}
 	}
 
-	public void addScene(GameScene scene) {
+	public void switchScene(GameScene scene) {
+		this.hitBoxes.clear();
 		scene.getNodes().clear();
 		if(!this.scenes.contains(scene)) {
 			this.scenes.add(scene);

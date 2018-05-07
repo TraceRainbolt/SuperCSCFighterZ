@@ -27,7 +27,7 @@ public class BackButton extends ImageView {
         this.addEventHandler(MouseEvent.MOUSE_RELEASED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent e) {
-                Window.setScene(Window.getPreviousScene());
+                Window.switchScene(Window.getPreviousScene());
             }
         });
 

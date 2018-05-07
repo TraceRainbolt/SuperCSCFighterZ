@@ -97,7 +97,7 @@ public class MainMenu extends StackPane  implements GameScene {
             this.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent e) {
-                	Window.setScene(newScene); 
+                	Window.switchScene(newScene); 
                 }
             });
         }
