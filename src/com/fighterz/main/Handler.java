@@ -65,6 +65,10 @@ public class Handler {
             hitBox.getRect().setStroke(Color.RED);
         }
     }
+    
+    public void removeHitBox(HitBox hitBox) {
+    	this.hitBoxes.remove(hitBox);
+    }
 
     public void switchScene(GameScene scene) {
         this.hitBoxes.clear();

@@ -2,11 +2,11 @@ package com.fighterz.main;
 
 import java.util.LinkedList;
 
-import javafx.scene.Node;
+import javafx.scene.image.Image;
 
 public abstract class GameObject {
     
-	private Node sprite;
+	private SimpleImage sprite = new SimpleImage("spriteFalessiIdle.png");
 	private double x;
 	private double y;
 
@@ -16,11 +16,11 @@ public abstract class GameObject {
 	
 	public abstract void onCollide(GameObject gameObject);
 	
-	public void setSprite(Node sprite) {
-	    this.sprite = sprite;
+	public void setSprite(Image image) {
+	    this.sprite.setImage(image);
 	}
 
-    public Node getSprite() {
+    public SimpleImage getSprite() {
         return this.sprite;
     }
 	

@@ -29,13 +29,19 @@ public class SimpleImage extends ImageView {
     }
 
     // Grab width/height
-    private SimpleImage(Image img) {
-        super(img);
-        this.height = (int) img.getHeight();
-        this.width = (int) img.getWidth();
+    private SimpleImage(Image image) {
+        super(image);
+        this.height = (int) image.getHeight();
+        this.width = (int) image.getWidth();
     }
 
-    public int getHeight() {
+    public SimpleImage(Image image, boolean fitScreen) {
+		super(image);
+        this.height = (int) image.getHeight();
+        this.width = (int) image.getWidth();
+	}
+    
+	public int getHeight() {
         return this.height;
     }
 

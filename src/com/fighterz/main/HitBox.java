@@ -1,5 +1,8 @@
 package com.fighterz.main;
 
+import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
+
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
@@ -52,6 +55,12 @@ public class HitBox {
 	
 	public HitBoxType getType() {
 	    return this.type;
+	}
+	
+	public void markForDeletion() {
+		Window.getGame().getHandler().removeHitBox(this);
+		this.getObject().getHitBoxes().remove(this);
+		Window.getGameScene().getNodes().remove(this.getRect());
 	}
 	
 	// get rekt

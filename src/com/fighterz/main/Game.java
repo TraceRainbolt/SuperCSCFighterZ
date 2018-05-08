@@ -20,6 +20,8 @@ public class Game {
     private Scene scene;
     private Stage pStage;
     
+    private boolean lock = false;
+    
     public Game() {
     	this.handler = new Handler();
     	this.pressedKeys = new HashSet<>();
@@ -43,7 +45,12 @@ public class Game {
     
     public void update() {
     	handler.tick();
-        resolveKeyPresses();
+    	if(!lock)
+    		resolveKeyPresses();
+    }
+    
+    public void setLock(boolean value) {
+    	lock = value;
     }
     
     public void addObjects(GameObject ... objects) {
@@ -84,8 +91,8 @@ public class Game {
             fighterFalessi.moveRight();
         } else if (pressedKeys.contains(KeyCode.A) && !pressedKeys.contains(KeyCode.D)) {
             fighterFalessi.moveLeft();
-        } else {
-            // Some more shit goes here
+        } else if (pressedKeys.contains(KeyCode.E) && !lock) {
+        	fighterFalessi.setAnimation(AnimationState.POWER_BALL);
         }
     }
     
