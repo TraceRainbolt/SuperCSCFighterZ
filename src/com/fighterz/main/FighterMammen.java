@@ -16,8 +16,8 @@ public class FighterMammen extends Fighter {
     	super(side);
         this.setAnimation(AnimationState.IDLE);
         
-    	HitBox hurtBox = new HitBox(this, HitBoxType.HURT, 292, 510, 0, -65);
-    	hitBoxes.add(hurtBox);
+    	HitBox hurtBox = new HitBox(this, HitBoxType.HURT, 292, 510, 0, -85);
+    	this.addHitBox(hurtBox);
     }
     
     public void setAnimation(AnimationState state) {
@@ -58,7 +58,7 @@ public class FighterMammen extends Fighter {
     
     private void setPointerVision() {
 		HitBox hitBox = createPointerVisionHitbox();
-		this.hitBoxes.add(hitBox);
+		this.addHitBox(hitBox);
     	this.setSprite(pointerVision);
     	this.getSprite().setX(this.getSprite().getX() + 100);
     	currentAnimation = new SpriteAnimation(this.getSprite(), Duration.millis(1000), 25, (int) (-375 * Window.getHRatio()));
@@ -68,7 +68,8 @@ public class FighterMammen extends Fighter {
     }
     
     private HitBox createPointerVisionHitbox() {
-    	HitBox hitBox = new HitBox(this, HitBoxType.HIT, 800, 140, 500, -110);
+    	HitBox hitBox = new HitBox(this, HitBoxType.HIT, 700, 140, 500, -110);
+    	hitBox.setDelay(0.2);
     	hitBox.setMaxDuration(8.5);
 		return hitBox;
     }

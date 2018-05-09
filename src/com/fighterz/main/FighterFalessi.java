@@ -13,8 +13,8 @@ public class FighterFalessi extends Fighter {
     	super(side);
         this.setAnimation(AnimationState.IDLE);
         
-    	HitBox hurtBox = new HitBox(this, HitBoxType.HURT, 220, 750);
-    	hitBoxes.add(hurtBox);
+    	HitBox hurtBox = new HitBox(this, HitBoxType.HURT, 240, 750, 20, 0);
+        this.addHitBox(hurtBox);
     }
     
     public void setAnimation(AnimationState state) {
@@ -45,7 +45,7 @@ public class FighterFalessi extends Fighter {
     
     private void setPowerBall() {
 		HitBox hitBox = createPowerBallHitbox();
-		this.hitBoxes.add(hitBox);
+        this.addHitBox(hitBox);
     	this.setSprite(powerBallImage);
     	this.getSprite().setX(this.getSprite().getX() + 100);
     	currentAnimation = new SpriteAnimation(this.getSprite(), Duration.millis(1000), 29, (int) (375 * Window.getHRatio()));

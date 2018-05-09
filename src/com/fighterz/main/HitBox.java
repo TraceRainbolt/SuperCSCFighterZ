@@ -21,12 +21,17 @@ public class HitBox {
 
 	public HitBox(GameObject object, HitBoxType type, double width, double height) {
 		this.object  = object;
-		this.hitBoxRect = new Rectangle(object.getX(), object.getY(), 
+		this.hitBoxRect = new Rectangle(0, 0, 
 		        width * Window.getHRatio(), height * Window.getHRatio());
 		this.type = type;
+		
+		// Super jank but it works. Basically the rectangle is always instantiated at 0, 0
+		// This means that it will briefly contact any hitboxes at 0, 0, which is bad.
+		// So we translate it down before hitBox detection is activated.
+		// In the tick method we are brought to our correct location.
+		this.hitBoxRect.setTranslateY(-10000);
+		
 		setColorProperties();
-        
-        Window.getGame().addHitBox(this);
 	}
 	
 	public HitBox(GameObject object, HitBoxType type, double width, double height, 
@@ -37,10 +42,10 @@ public class HitBox {
 	}
 	
 	private void setColorProperties() {
-	    this.hitBoxRect.setFill(Color.TRANSPARENT);
+	    this.hitBoxRect.setFill(Color.GREEN);
 	    // Show hit boxes if in debug mode
-	    int strokeWidth = Window.DEBUG ? 2 : 0;
-	    this.hitBoxRect.setStrokeWidth(strokeWidth);
+	    double opacity = Window.DEBUG ? 0.3 : 0;
+	    this.hitBoxRect.setOpacity(opacity);
 	}
 
 	public void tick() {
@@ -70,6 +75,7 @@ public class HitBox {
 		this.xVelocity = velocity;
 	}
 
+	// HitBox will not follow the player
 	public void setIndependent(boolean independent) {
 		this.independent = independent;
 	}
@@ -103,7 +109,7 @@ public class HitBox {
 	    return this.type;
 	}
 	
-	public void markForDeletion() {
+	private void markForDeletion() {
 		Window.getGame().getHandler().removeHitBox(this);
 		this.getObject().getHitBoxes().remove(this);
 		Window.getGameScene().getNodes().remove(this.getRect());

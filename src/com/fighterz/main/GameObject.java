@@ -1,5 +1,6 @@
 package com.fighterz.main;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import javafx.scene.image.Image;
@@ -15,7 +16,9 @@ public abstract class GameObject {
 
 	public abstract List<HitBox> getHitBoxes();
 	
-	public abstract void onCollide(GameObject gameObject);
+	protected abstract void onCollide(GameObject gameObject);
+	
+    protected LinkedList<HitBox> hitBoxes;
 	
 	public void setSprite(Image image) {
 	    this.sprite.setImage(image);
@@ -26,6 +29,11 @@ public abstract class GameObject {
 
     public SimpleImage getSprite() {
         return this.sprite;
+    }
+    
+    public void addHitBox(HitBox hitBox) {
+        this.getHitBoxes().add(hitBox);
+        Window.getGame().addHitBox(hitBox);
     }
 	
     public void setX(double x) {

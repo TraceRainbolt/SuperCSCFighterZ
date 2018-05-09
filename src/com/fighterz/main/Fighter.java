@@ -9,7 +9,6 @@ public class Fighter extends GameObject {
     
     private static final int SPEED = (int) (10 * Window.getHRatio());
     
-    protected LinkedList<HitBox> hitBoxes;
     protected String side;
     
     protected double originalX;

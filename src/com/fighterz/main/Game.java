@@ -137,8 +137,5 @@ public class Game {
     
     public Handler getHandler() {
     	return handler;
-    }
-
-
-    
+    }  
 }

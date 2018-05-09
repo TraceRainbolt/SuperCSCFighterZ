@@ -52,7 +52,7 @@ public class Handler {
         for (HitBox otherHitBox : hitBoxes) {
             if (otherHitBox.getObject() != hitBox.getObject()) {
                 Color hitBoxColor = otherHitBox.getType() == HitBoxType.HURT ? Color.GREEN : Color.BLUE;
-                otherHitBox.getRect().setStroke(hitBoxColor);
+                otherHitBox.getRect().setFill(hitBoxColor);
                 if (hitBox.getRect().getBoundsInParent().intersects(otherHitBox.getRect().getBoundsInParent())) {
                     collisionDetected = true;
                     hits.add(otherHitBox);
@@ -74,9 +74,9 @@ public class Handler {
                 hitBox.getObject().onCollide(hit.getObject());
                 damaged.add(hit.hashCode());
             }
-            hit.getRect().setStroke(Color.RED);
+            hit.getRect().setFill(Color.RED);
         }
-        hitBox.getRect().setStroke(Color.RED);
+        hitBox.getRect().setFill(Color.RED);
     }
     
     public void removeHitBox(HitBox hitBox) {
