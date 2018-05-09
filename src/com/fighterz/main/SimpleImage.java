@@ -35,6 +35,7 @@ public class SimpleImage extends ImageView {
         this.width = (int) image.getWidth();
     }
 
+    // This constructor is mostly used for animations so that we can hot swap animations
     public SimpleImage(Image image, boolean fitScreen) {
 		super(image);
         this.height = (int) image.getHeight();

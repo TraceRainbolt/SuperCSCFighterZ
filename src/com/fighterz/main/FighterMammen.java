@@ -31,6 +31,7 @@ public class FighterMammen extends Fighter {
         		Window.getGame().setMammenMovementLock(true);
         		originalX = this.getX();
         		
+        		// Gotta do the jumpTo here as well
         		currentAnimation.jumpTo(Duration.millis(2000));
         		currentAnimation.pause();
 

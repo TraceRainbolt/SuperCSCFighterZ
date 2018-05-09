@@ -27,6 +27,8 @@ public class FighterFalessi extends Fighter {
         		Window.getGame().setFalessiMovementLock(true);
         		originalX = this.getX();
         		
+        		// If we don't do the jumpTo then the animation will flash to the wrong frames
+        		// I don't really know why this fixes it but it does
         		currentAnimation.jumpTo(Duration.millis(2000));
         		currentAnimation.pause();
 

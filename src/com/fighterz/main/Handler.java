@@ -64,6 +64,10 @@ public class Handler {
         }
     }
     
+    // Basically we only want to count a hit if we have a HIT box contact a HURT box
+    // e. g. we don't want two players (hurt box) touching each other to hurt them both
+    // the damaged hash set is so that once a hitbox does damage it stops, so that 
+    // we don't do damage every frame (which would instantly kill them)
     private void handleCollision(List<HitBox> hits, HitBox hitBox) {
         for(HitBox hit : hits) {
             if(hit.getType() == HitBoxType.HIT && hitBox.getType() == HitBoxType.HURT && !damaged.contains(hit.hashCode())) {

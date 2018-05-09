@@ -64,6 +64,7 @@ public class FightingStage extends StackPane implements GameScene {
         fullHealthBarRight.setTranslateY(-480 * Window.getHRatio());
         fullHealthBarRight.setTranslateX(600 *  Window.getHRatio());
         
+        // This is so we get the slant on the health bar
         rightHealth = new Polygon();
         rightHealth.getPoints().addAll(new Double[] {
         	0.0, 0.0,

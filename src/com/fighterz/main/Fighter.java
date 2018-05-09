@@ -8,8 +8,6 @@ import javafx.animation.Animation;
 public class Fighter extends GameObject {
     
     private static final int SPEED = (int) (10 * Window.getHRatio());
-
-    private String professor;
     
     protected LinkedList<HitBox> hitBoxes;
     protected String side;
@@ -17,7 +15,6 @@ public class Fighter extends GameObject {
     protected double originalX;
     
     protected Animation currentAnimation;
-    
     
     public Fighter(String side) {
     	this.side = side;
