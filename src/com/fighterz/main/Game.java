@@ -67,6 +67,9 @@ public class Game {
         } else if (pressedKeys.contains(KeyCode.J) && !pressedKeys.contains(KeyCode.L)) {
             fighterFalessi.moveLeft();
         }
+        if(pressedKeys.contains(KeyCode.SPACE)) {
+            fighterFalessi.jump();
+        }
         if (pressedKeys.contains(KeyCode.O) && !falessiAbilityLock) {
         	fighterFalessi.setAnimation(AnimationState.POWER_BALL);
         }

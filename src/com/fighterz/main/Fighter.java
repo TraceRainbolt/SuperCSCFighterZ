@@ -4,6 +4,10 @@ import java.util.LinkedList;
 import java.util.List;
 
 import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
+import javafx.util.Duration;
 
 public class Fighter extends GameObject {
     
@@ -37,6 +41,18 @@ public class Fighter extends GameObject {
     
     public void moveLeft() {
         this.setX(this.getX() - SPEED);
+    }
+    
+    public void jump() {
+        Timeline timeline = new Timeline();
+        timeline.getKeyFrames().addAll(
+                new KeyFrame(Duration.ZERO, new KeyValue(this.getSprite().translateYProperty(), 0 * Window.getHRatio())),
+                new KeyFrame(new Duration(125), new KeyValue(this.getSprite().translateYProperty(), -190 * Window.getHRatio())),
+                new KeyFrame(new Duration(200), new KeyValue(this.getSprite().translateYProperty(), -250 * Window.getHRatio())),
+                new KeyFrame(new Duration(275), new KeyValue(this.getSprite().translateYProperty(), -190 * Window.getHRatio())),
+                new KeyFrame(new Duration(400), new KeyValue(this.getSprite().translateYProperty(), 0 * Window.getHRatio())));
+        timeline.setCycleCount(1);
+        timeline.play();
     }
     
     public List<HitBox> getHitBoxes() {
