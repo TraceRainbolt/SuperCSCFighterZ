@@ -12,15 +12,18 @@ public class Game {
     
     private HashSet<KeyCode> pressedKeys;
     
-    private Fighter fighterFalessi;
-    private Fighter fighterMammen;
+    private FighterFalessi fighterFalessi;
+    private FighterMammen fighterMammen;
     
     private FightingStage fightingStage;
     
     private Scene scene;
     private Stage pStage;
     
-    private boolean lock = false;
+    private boolean falessiMovementLock = false;
+    private boolean mammenMovementLock = false;
+    private boolean falessiAbilityLock = false;
+    private boolean mammenAbilityLock = false;
     
     public Game() {
     	this.handler = new Handler();
@@ -31,7 +34,7 @@ public class Game {
     private void initUI() {
         CharacterSelectScreen charSelectScreen = new CharacterSelectScreen();
         OptionsMenu optionsMenu = new OptionsMenu();
-        this.fightingStage = new FightingStage(Professor.FALESSI, Professor.MAMMEN);
+        this.fightingStage = new FightingStage();
         MainMenu mainMenu = new MainMenu(charSelectScreen, fightingStage, optionsMenu);
     	
         this.scene = new Scene(mainMenu);
@@ -45,13 +48,52 @@ public class Game {
     
     public void update() {
     	handler.tick();
-    	if(!lock)
-    		resolveKeyPresses();
+    	resolveKeyPresses();
     }
     
-    public void setLock(boolean value) {
-    	lock = value;
+    
+    private void resolveKeyPresses() {
+        if(fighterFalessi != null) {
+        	if(!falessiMovementLock)
+        		handleFighterFalessi();
+        	if(!mammenMovementLock)
+                handleFighterMammen();
+        }
     }
+    
+    private void handleFighterFalessi() {
+        if (pressedKeys.contains(KeyCode.D) && !pressedKeys.contains(KeyCode.A)) {
+            fighterFalessi.moveRight();
+        } else if (pressedKeys.contains(KeyCode.A) && !pressedKeys.contains(KeyCode.D)) {
+            fighterFalessi.moveLeft();
+        }
+        if (pressedKeys.contains(KeyCode.E) && !falessiAbilityLock) {
+        	fighterFalessi.setAnimation(AnimationState.POWER_BALL);
+        }
+    }
+    
+    private void handleFighterMammen() {
+        if (pressedKeys.contains(KeyCode.L) && !pressedKeys.contains(KeyCode.LEFT)) {
+            fighterMammen.moveRight();
+        } else if (pressedKeys.contains(KeyCode.J) && !pressedKeys.contains(KeyCode.RIGHT)) {
+            fighterMammen.moveLeft();
+        } 
+        if (pressedKeys.contains(KeyCode.O) && !mammenAbilityLock) {
+        	fighterMammen.setAnimation(AnimationState.POINTER_VISION);
+        }
+    }
+    
+    public void setFalessiMovementLock(boolean value) {
+    	falessiMovementLock = value;
+    }
+    
+    public void setMammenMovementLock(boolean value) {
+    	mammenMovementLock = value;
+    }
+    
+	public void setMammenAbilityLock(boolean value) {
+		mammenAbilityLock = value;
+	}
     
     public void addObjects(GameObject ... objects) {
     	for(GameObject object : objects) {
@@ -79,39 +121,12 @@ public class Game {
     	return fightingStage;
     }
     
-    private void resolveKeyPresses() {
-        if(fighterFalessi != null) {
-            handleFighterFalessi();
-            handleFighterMammen();
-        }
-    }
-    
-    private void handleFighterFalessi() {
-        if (pressedKeys.contains(KeyCode.D) && !pressedKeys.contains(KeyCode.A)) {
-            fighterFalessi.moveRight();
-        } else if (pressedKeys.contains(KeyCode.A) && !pressedKeys.contains(KeyCode.D)) {
-            fighterFalessi.moveLeft();
-        } else if (pressedKeys.contains(KeyCode.E) && !lock) {
-        	fighterFalessi.setAnimation(AnimationState.POWER_BALL);
-        }
-    }
-    
-    private void handleFighterMammen() {
-        if (pressedKeys.contains(KeyCode.RIGHT) && !pressedKeys.contains(KeyCode.LEFT)) {
-            fighterMammen.moveRight();
-        } else if (pressedKeys.contains(KeyCode.LEFT) && !pressedKeys.contains(KeyCode.RIGHT)) {
-            fighterMammen.moveLeft();
-        } else {
-            // Some more shit goes here
-        }
-    }
-    
     public void addFighter(Fighter fighter) {
     	handler.addObject(fighter);
-        if(fighter.getProfessor() == Professor.FALESSI)
-            fighterFalessi = fighter;
+        if(fighter instanceof FighterFalessi)
+            fighterFalessi = (FighterFalessi) fighter;
         else
-            fighterMammen = fighter;
+            fighterMammen = (FighterMammen) fighter;
     }
 
 
@@ -123,5 +138,7 @@ public class Game {
     public Handler getHandler() {
     	return handler;
     }
+
+
     
 }

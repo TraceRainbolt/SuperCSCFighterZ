@@ -13,7 +13,7 @@ public class FightingStage extends StackPane implements GameScene {
 	private SimpleImage fullHealthBarRight;
 	private SimpleImage fullHealthBarLeft;
     
-    public FightingStage(Professor falessi, Professor mammen) {
+    public FightingStage() {
         // Empty constructor
 	}
 
@@ -21,8 +21,8 @@ public class FightingStage extends StackPane implements GameScene {
         BackButton backBtn = new BackButton();
         SimpleImage background = new SimpleImage("StageBasketball.jpg", true);
 
-        Fighter falessi = new Fighter(Professor.FALESSI, "right");
-        Fighter mammen = new Fighter(Professor.MAMMEN, "left");
+        Fighter falessi = new FighterFalessi("right");
+        Fighter mammen = new FighterMammen("left");
         
         falessi.setX(550 * Window.getHRatio());
         mammen.setX(-550 * Window.getHRatio());

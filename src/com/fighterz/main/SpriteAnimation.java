@@ -28,12 +28,13 @@ public class SpriteAnimation extends Transition {
         imageView.setViewport(new Rectangle2D(0, 0, width, height));
         setCycleDuration(duration);
         setInterpolator(Interpolator.LINEAR);
-        
-        if(width > 540) {
-        	offset = (width - 540) / 2 + 90;
-        	imageView.setTranslateX(imageView.getTranslateX() - offset);
-        }
     }
+    
+    public SpriteAnimation(ImageView imageView, Duration duration, int count, int offset) {
+    	this(imageView, duration, count);
+    	imageView.setTranslateX(imageView.getTranslateX() - offset);
+    }
+    
 
     protected void interpolate(double k) {
         final int index = Math.min((int) Math.floor(k * count), count - 1);

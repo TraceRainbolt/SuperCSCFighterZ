@@ -1,5 +1,6 @@
 package com.fighterz.main;
 
+import java.util.HashSet;
 import java.util.LinkedList;
 
 import javafx.scene.paint.Color;
@@ -8,6 +9,7 @@ public class Handler {
     LinkedList<GameObject> objects = new LinkedList<>();
     LinkedList<GameScene> scenes = new LinkedList<>();
     LinkedList<HitBox> hitBoxes = new LinkedList<>();
+    HashSet<Integer> damaged = new HashSet<>();
 
     public void tick() {
         for (int i = 0; i < objects.size(); i++) {
@@ -44,7 +46,8 @@ public class Handler {
 
     public void checkBounds(HitBox hitBox) {
         boolean collisionDetected = false;
-        LinkedList<HitBox> hits = new LinkedList<HitBox>();
+        LinkedList<HitBox> hits = new LinkedList<>();
+        
         for (HitBox otherHitBox : hitBoxes) {
             if (otherHitBox.getObject() != hitBox.getObject()) {
                 Color hitBoxColor = otherHitBox.getType() == HitBoxType.HURT ? Color.GREEN : Color.BLUE;
@@ -57,8 +60,9 @@ public class Handler {
         }
         if (collisionDetected) {
             for(HitBox hit : hits) {
-                if(hit.getType() == HitBoxType.HIT && hitBox.getType() == HitBoxType.HURT) {
+                if(hit.getType() == HitBoxType.HIT && hitBox.getType() == HitBoxType.HURT && !damaged.contains(hit.hashCode())) {
                     hitBox.getObject().onCollide(hit.getObject());
+                    damaged.add(hit.hashCode());
                 }
                 hit.getRect().setStroke(Color.RED);
             }
