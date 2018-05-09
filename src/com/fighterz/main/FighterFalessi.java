@@ -46,6 +46,7 @@ public class FighterFalessi extends Fighter {
     private void setPowerBall() {
 		HitBox hitBox = createPowerBallHitbox();
         this.addHitBox(hitBox);
+        this.getSprite().toFront();
     	this.setSprite(powerBallImage);
     	this.getSprite().setX(this.getSprite().getX() + 100);
     	currentAnimation = new SpriteAnimation(this.getSprite(), Duration.millis(1000), 29, (int) (375 * Window.getHRatio()));

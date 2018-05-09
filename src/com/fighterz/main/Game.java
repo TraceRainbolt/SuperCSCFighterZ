@@ -62,23 +62,23 @@ public class Game {
     }
     
     private void handleFighterFalessi() {
-        if (pressedKeys.contains(KeyCode.D) && !pressedKeys.contains(KeyCode.A)) {
+        if (pressedKeys.contains(KeyCode.L) && !pressedKeys.contains(KeyCode.J)) {
             fighterFalessi.moveRight();
-        } else if (pressedKeys.contains(KeyCode.A) && !pressedKeys.contains(KeyCode.D)) {
+        } else if (pressedKeys.contains(KeyCode.J) && !pressedKeys.contains(KeyCode.L)) {
             fighterFalessi.moveLeft();
         }
-        if (pressedKeys.contains(KeyCode.E) && !falessiAbilityLock) {
+        if (pressedKeys.contains(KeyCode.O) && !falessiAbilityLock) {
         	fighterFalessi.setAnimation(AnimationState.POWER_BALL);
         }
     }
     
     private void handleFighterMammen() {
-        if (pressedKeys.contains(KeyCode.L) && !pressedKeys.contains(KeyCode.LEFT)) {
+        if (pressedKeys.contains(KeyCode.D) && !pressedKeys.contains(KeyCode.A)) {
             fighterMammen.moveRight();
-        } else if (pressedKeys.contains(KeyCode.J) && !pressedKeys.contains(KeyCode.RIGHT)) {
+        } else if (pressedKeys.contains(KeyCode.A) && !pressedKeys.contains(KeyCode.D)) {
             fighterMammen.moveLeft();
         } 
-        if (pressedKeys.contains(KeyCode.O) && !mammenAbilityLock) {
+        if (pressedKeys.contains(KeyCode.E) && !mammenAbilityLock) {
         	fighterMammen.setAnimation(AnimationState.POINTER_VISION);
         }
     }

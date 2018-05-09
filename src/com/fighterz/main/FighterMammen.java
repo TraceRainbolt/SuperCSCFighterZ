@@ -59,6 +59,7 @@ public class FighterMammen extends Fighter {
     private void setPointerVision() {
 		HitBox hitBox = createPointerVisionHitbox();
 		this.addHitBox(hitBox);
+		this.getSprite().toFront();
     	this.setSprite(pointerVision);
     	this.getSprite().setX(this.getSprite().getX() + 100);
     	currentAnimation = new SpriteAnimation(this.getSprite(), Duration.millis(1000), 25, (int) (-375 * Window.getHRatio()));
