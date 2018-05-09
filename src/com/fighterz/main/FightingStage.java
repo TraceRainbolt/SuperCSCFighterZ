@@ -1,9 +1,14 @@
 package com.fighterz.main;
 
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Polygon;
+import javafx.util.Duration;
 
 public class FightingStage extends StackPane implements GameScene {
 	
@@ -45,13 +50,27 @@ public class FightingStage extends StackPane implements GameScene {
     
     private void subtractRightHealth(double amount) {
     	double percent = amount / 100 * fullHealthBarRight.getWidth();
-    	rightHealth.setTranslateX(rightHealth.getTranslateX() + percent);
+    	
+        Timeline timeline = new Timeline();
+        timeline.getKeyFrames().addAll(
+                new KeyFrame(Duration.ZERO, new KeyValue(rightHealth.translateXProperty(), rightHealth.getTranslateX())),
+                new KeyFrame(new Duration(400), new KeyValue(rightHealth.translateXProperty(), rightHealth.getTranslateX() + percent)));
+        timeline.setCycleCount(1);
+        timeline.play();
+        
     	fullHealthBarRight.setClip(rightHealth);
     }
     
     private void subtractLeftHealth(double amount) {
     	double percent = amount / 100 * fullHealthBarLeft.getWidth();
-    	leftHealth.setTranslateX(leftHealth.getTranslateX() + percent);
+    	
+        Timeline timeline = new Timeline();
+        timeline.getKeyFrames().addAll(
+                new KeyFrame(Duration.ZERO, new KeyValue(leftHealth.translateXProperty(), leftHealth.getTranslateX())),
+                new KeyFrame(new Duration(400), new KeyValue(leftHealth.translateXProperty(), leftHealth.getTranslateX() + percent)));
+        timeline.setCycleCount(1);
+        timeline.play();
+        
     	fullHealthBarLeft.setClip(leftHealth);
     }
     
