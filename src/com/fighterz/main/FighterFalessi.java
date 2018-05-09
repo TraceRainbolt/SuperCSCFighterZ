@@ -13,7 +13,7 @@ public class FighterFalessi extends Fighter {
     	super(side);
         this.setAnimation(AnimationState.IDLE);
         
-    	HitBox hurtBox = new HitBox(this, HitBoxType.HURT, 250, 830);
+    	HitBox hurtBox = new HitBox(this, HitBoxType.HURT, 220, 750);
     	hitBoxes.add(hurtBox);
     }
     
@@ -46,7 +46,7 @@ public class FighterFalessi extends Fighter {
 		this.hitBoxes.add(hitBox);
     	this.setSprite(powerBallImage);
     	this.getSprite().setX(this.getSprite().getX() + 100);
-    	currentAnimation = new SpriteAnimation(this.getSprite(), Duration.millis(1000), 29, 375);
+    	currentAnimation = new SpriteAnimation(this.getSprite(), Duration.millis(1000), 29, (int) (375 * Window.getHRatio()));
     	currentAnimation.setCycleCount(1);
     	currentAnimation.play();
     	currentAnimation.setOnFinished(e -> setIdle());
@@ -57,8 +57,8 @@ public class FighterFalessi extends Fighter {
     	HitBox hitBox = new HitBox(this, HitBoxType.HIT, 100, 100, 100, -150);
 		hitBox.setIndependent(true);
 		hitBox.setDelay(2);
-		hitBox.setXVelocity(-7);
-		hitBox.setMaxDuration(4.1);
+		hitBox.setXVelocity(-7 * Window.getHRatio());
+		hitBox.setMaxDuration(4.2);
 		return hitBox;
     }
     

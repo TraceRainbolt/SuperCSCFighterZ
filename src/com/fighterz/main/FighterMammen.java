@@ -62,7 +62,7 @@ public class FighterMammen extends Fighter {
 		this.hitBoxes.add(hitBox);
     	this.setSprite(pointerVision);
     	this.getSprite().setX(this.getSprite().getX() + 100);
-    	currentAnimation = new SpriteAnimation(this.getSprite(), Duration.millis(1000), 25, -375);
+    	currentAnimation = new SpriteAnimation(this.getSprite(), Duration.millis(1000), 25, (int) (-375 * Window.getHRatio()));
     	currentAnimation.setCycleCount(1);
     	currentAnimation.play();
     	currentAnimation.setOnFinished(e -> setIdle());

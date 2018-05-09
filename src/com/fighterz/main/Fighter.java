@@ -3,11 +3,6 @@ package com.fighterz.main;
 import java.util.LinkedList;
 
 import javafx.animation.Animation;
-import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
-import javafx.animation.Timeline;
-import javafx.scene.image.Image;
-import javafx.util.Duration;
 
 public class Fighter extends GameObject {
     
@@ -22,7 +17,7 @@ public class Fighter extends GameObject {
     
     protected Animation currentAnimation;
     
-
+    
     public Fighter(String side) {
     	this.side = side;
     	

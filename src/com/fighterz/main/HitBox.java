@@ -1,8 +1,5 @@
 package com.fighterz.main;
 
-import java.util.concurrent.ScheduledThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
-
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
@@ -14,7 +11,7 @@ public class HitBox {
 	private HitBoxType type;
 	private double offsetX = 0;
 	private double offsetY = 0;
-	private int xVelocity = 0;
+	private double xVelocity = 0;
 	private boolean independent = false;
 	
 	private boolean lock = false;
@@ -69,7 +66,7 @@ public class HitBox {
 		return object;
 	}
 	
-	public void setXVelocity(int velocity) {
+	public void setXVelocity(double velocity) {
 		this.xVelocity = velocity;
 	}
 
