@@ -14,16 +14,12 @@ public class SpriteAnimation extends Transition {
     private final int height;
 
     private int lastIndex;
-    
-    private int offset;
 
     public SpriteAnimation(ImageView imageView, Duration duration, int count) {
         this.imageView = imageView;
         this.count = count;
         this.width = (int) (imageView.getImage().getWidth() / count);
         this.height = (int) (imageView.getImage().getHeight());
-        
-        this.offset = 0;
 
         imageView.setViewport(new Rectangle2D(0, 0, width, height));
         setCycleDuration(duration);

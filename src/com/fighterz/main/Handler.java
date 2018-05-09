@@ -2,6 +2,7 @@ package com.fighterz.main;
 
 import java.util.HashSet;
 import java.util.LinkedList;
+import java.util.List;
 
 import javafx.scene.paint.Color;
 
@@ -32,7 +33,7 @@ public class Handler {
         this.hitBoxes.add(hitBox);
     }
 
-    // TODO make this not O(n^2), probably can get O(nlogn)
+    // nvm its fine
     public void checkHitBoxes() {
         for (GameObject object : objects) {
             if(object.getHitBoxes() != null) {
@@ -59,15 +60,19 @@ public class Handler {
             }
         }
         if (collisionDetected) {
-            for(HitBox hit : hits) {
-                if(hit.getType() == HitBoxType.HIT && hitBox.getType() == HitBoxType.HURT && !damaged.contains(hit.hashCode())) {
-                    hitBox.getObject().onCollide(hit.getObject());
-                    damaged.add(hit.hashCode());
-                }
-                hit.getRect().setStroke(Color.RED);
-            }
-            hitBox.getRect().setStroke(Color.RED);
+            handleCollision(hits, hitBox);
         }
+    }
+    
+    private void handleCollision(List<HitBox> hits, HitBox hitBox) {
+        for(HitBox hit : hits) {
+            if(hit.getType() == HitBoxType.HIT && hitBox.getType() == HitBoxType.HURT && !damaged.contains(hit.hashCode())) {
+                hitBox.getObject().onCollide(hit.getObject());
+                damaged.add(hit.hashCode());
+            }
+            hit.getRect().setStroke(Color.RED);
+        }
+        hitBox.getRect().setStroke(Color.RED);
     }
     
     public void removeHitBox(HitBox hitBox) {

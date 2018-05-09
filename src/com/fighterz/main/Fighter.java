@@ -1,6 +1,7 @@
 package com.fighterz.main;
 
 import java.util.LinkedList;
+import java.util.List;
 
 import javafx.animation.Animation;
 
@@ -22,12 +23,7 @@ public class Fighter extends GameObject {
     	this.side = side;
     	
         Window.getGame().addFighter(this);
-        hitBoxes = new LinkedList<HitBox>();
-        
-        if(this.professor == "MAMMEN") {
-        	HitBox hurtBox = new HitBox(this, HitBoxType.HURT, 292, 510, 0, -65);
-        	hitBoxes.add(hurtBox);
-        }
+        hitBoxes = new LinkedList<>();
     }
     
     public void tick() {
@@ -47,7 +43,7 @@ public class Fighter extends GameObject {
         this.setX(this.getX() - SPEED);
     }
     
-    public LinkedList<HitBox> getHitBoxes() {
+    public List<HitBox> getHitBoxes() {
         return this.hitBoxes;
     }
 }

@@ -1,7 +1,5 @@
 package com.fighterz.main;
 
-import java.util.LinkedList;
-
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
