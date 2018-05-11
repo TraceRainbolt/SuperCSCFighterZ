@@ -36,8 +36,8 @@ public class Handler {
     // nvm its fine
     public void checkHitBoxes() {
         for (GameObject object : objects) {
-            if(object.getHitBoxes() != null) {
-                for(HitBox hitBox : object.getHitBoxes()) {
+            if (object.getHitBoxes() != null) {
+                for (HitBox hitBox : object.getHitBoxes()) {
                     hitBox.tick();
                     checkBounds(hitBox);
                 }
@@ -48,7 +48,7 @@ public class Handler {
     public void checkBounds(HitBox hitBox) {
         boolean collisionDetected = false;
         LinkedList<HitBox> hits = new LinkedList<>();
-        
+
         for (HitBox otherHitBox : hitBoxes) {
             if (otherHitBox.getObject() != hitBox.getObject()) {
                 Color hitBoxColor = otherHitBox.getType() == HitBoxType.HURT ? Color.GREEN : Color.BLUE;
@@ -63,24 +63,26 @@ public class Handler {
             handleCollision(hits, hitBox);
         }
     }
-    
+
     // Basically we only want to count a hit if we have a HIT box contact a HURT box
-    // e. g. we don't want two players (hurt box) touching each other to hurt them both
-    // the damaged hash set is so that once a hitbox does damage it stops, so that 
+    // e. g. we don't want two players (hurt box) touching each other to hurt them
+    // both
+    // the damaged hash set is so that once a hitbox does damage it stops, so that
     // we don't do damage every frame (which would instantly kill them)
     private void handleCollision(List<HitBox> hits, HitBox hitBox) {
-        for(HitBox hit : hits) {
-            if(hit.getType() == HitBoxType.HIT && hitBox.getType() == HitBoxType.HURT && !damaged.contains(hit.hashCode())) {
-                hitBox.getObject().onCollide(hit.getObject());
+        for (HitBox hit : hits) {
+            if (hit.getType() == HitBoxType.HIT && hitBox.getType() == HitBoxType.HURT
+                    && !damaged.contains(hit.hashCode())) {
+                hit.getObject().onCollide(hitBox);
                 damaged.add(hit.hashCode());
             }
             hit.getRect().setFill(Color.RED);
         }
         hitBox.getRect().setFill(Color.RED);
     }
-    
+
     public void removeHitBox(HitBox hitBox) {
-    	this.hitBoxes.remove(hitBox);
+        this.hitBoxes.remove(hitBox);
     }
 
     public void switchScene(GameScene scene) {

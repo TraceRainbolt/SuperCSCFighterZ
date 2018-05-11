@@ -19,11 +19,11 @@ public class OptionsMenu extends StackPane implements GameScene {
     public OptionsMenu() {
         // Empty constructor
     }
-    
+
     public ObservableList<Node> getNodes() {
-    	return this.getChildren();
+        return this.getChildren();
     }
-    
+
     @Override
     public void render() {
         SimpleImage imgView = new SimpleImage("OptionsMenu.png", true);
@@ -113,7 +113,7 @@ public class OptionsMenu extends StackPane implements GameScene {
             this.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent e) {
-                	Window.setWindowSize(that.heightVal);
+                    Window.setWindowSize(that.heightVal);
                     that.getChildren().clear();
                     render();
                 }

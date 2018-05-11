@@ -25,12 +25,11 @@ public class SpriteAnimation extends Transition {
         setCycleDuration(duration);
         setInterpolator(Interpolator.LINEAR);
     }
-    
+
     public SpriteAnimation(ImageView imageView, Duration duration, int count, int offset) {
-    	this(imageView, duration, count);
-    	imageView.setTranslateX(imageView.getTranslateX() - offset);
+        this(imageView, duration, count);
+        imageView.setTranslateX(imageView.getTranslateX() - offset);
     }
-    
 
     protected void interpolate(double k) {
         final int index = Math.min((int) Math.floor(k * count), count - 1);

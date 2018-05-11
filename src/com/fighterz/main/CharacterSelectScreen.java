@@ -10,20 +10,20 @@ public class CharacterSelectScreen extends StackPane implements GameScene {
     public CharacterSelectScreen() {
         // Empty constructor
     }
-    
+
     public ObservableList<Node> getNodes() {
-    	return this.getChildren();
+        return this.getChildren();
     }
-    
-	@Override
-	public void render() {
+
+    @Override
+    public void render() {
         Image background = new Image("CharacterSelect.png");
         ImageView imgView = new ImageView(background);
         imgView.setFitHeight(Window.getHeight());
         imgView.setFitWidth(Window.getWidth());
 
         BackButton backBtn = new BackButton();
-        
+
         this.getChildren().addAll(imgView, backBtn);
     }
 

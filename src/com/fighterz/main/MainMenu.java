@@ -18,24 +18,24 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.util.Duration;
 
-public class MainMenu extends StackPane  implements GameScene {
-	
-	private CharacterSelectScreen charSelectScreen;
-	private FightingStage fightingStage;
-	private OptionsMenu optionsMenu;
-	
+public class MainMenu extends StackPane implements GameScene {
+
+    private CharacterSelectScreen charSelectScreen;
+    private FightingStage fightingStage;
+    private OptionsMenu optionsMenu;
+
     public MainMenu(CharacterSelectScreen charSelectScreen, FightingStage fightingStage, OptionsMenu optionsMenu) {
-    	this.charSelectScreen = charSelectScreen;
-    	this.fightingStage = fightingStage;
-    	this.optionsMenu = optionsMenu;
+        this.charSelectScreen = charSelectScreen;
+        this.fightingStage = fightingStage;
+        this.optionsMenu = optionsMenu;
     }
-    
+
     public ObservableList<Node> getNodes() {
-    	return this.getChildren();
+        return this.getChildren();
     }
-    
-	@Override
-	public void render() {
+
+    @Override
+    public void render() {
         SimpleImage background = new SimpleImage("MainMenuBG.png", true);
         background.setHeight(Window.getHeight());
         background.setWidth(Window.getWidth());
@@ -49,13 +49,14 @@ public class MainMenu extends StackPane  implements GameScene {
 
         int maxX = (int) (Window.getHRatio() * 420);
         play.setTranslateX(-maxX);
-        leaderboards.setTranslateX((float) -maxX / 2 + Window.getHRatio() * 90); // Leaderboard btn is offset b/c it's so long
+        leaderboards.setTranslateX((float) -maxX / 2 + Window.getHRatio() * 90); // Leaderboard btn is offset b/c it's
+                                                                                 // so long
         options.setTranslateX(maxX / 2);
         exit.setTranslateX(maxX);
 
         this.getChildren().addAll(background, logoView, play, leaderboards, options, exit);
-	}
-   
+    }
+
     protected static ImageView setupLogo() {
         SimpleImage logo = new SimpleImage("MainMenuLogo.png");
         logo.setFitHeight(Window.getHeight());
@@ -69,7 +70,7 @@ public class MainMenu extends StackPane  implements GameScene {
         timeline.play();
         return logo;
     }
-    
+
     public static void addGlowEffect(Node button) {
         button.addEventHandler(MouseEvent.MOUSE_ENTERED, new EventHandler<MouseEvent>() {
             @Override
@@ -97,7 +98,7 @@ public class MainMenu extends StackPane  implements GameScene {
             this.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent e) {
-                	Window.switchScene(newScene); 
+                    Window.switchScene(newScene);
                 }
             });
         }
@@ -142,7 +143,7 @@ public class MainMenu extends StackPane  implements GameScene {
                     that.setEffect(null);
                 }
             });
- 
+
             addGlowEffect(this);
         }
     }

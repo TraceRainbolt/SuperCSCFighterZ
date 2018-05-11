@@ -4,6 +4,7 @@ import javafx.collections.ObservableList;
 import javafx.scene.Node;
 
 public interface GameScene {
-	public void render();
-	public ObservableList<Node> getNodes();
+    public void render();
+
+    public ObservableList<Node> getNodes();
 }

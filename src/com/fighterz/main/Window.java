@@ -8,27 +8,27 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 public class Window extends Application {
-    
+
     // Currently just shows hitBox boundaries
     public static final boolean DEBUG = false;
-    
+
     // 16 : 9 Ratio based off height
     private static final int INIT_HEIGHT = 720;
     private static final int INIT_WIDTH = INIT_HEIGHT * 16 / 9;
-    
+
     // Framerate information
     private static final int FRAMES_PER_SECOND = 60;
     private static final int MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
 
     private static Game game;
-    
+
     private static int width;
     private static int height;
     private static double hRatio;
-    
+
     private static GameScene currentScene;
     private static GameScene previousScene;
-    
+
     public static void main(String[] args) {
         width = INIT_WIDTH;
         height = INIT_HEIGHT;
@@ -46,38 +46,37 @@ public class Window extends Application {
         stage.setHeight(INIT_HEIGHT);
         stage.setScene(game.getScene());
         stage.show();
-        
-        KeyFrame frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY),
-                e -> game.update());
+
+        KeyFrame frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e -> game.update());
         Timeline animation = new Timeline();
         animation.setCycleCount(Timeline.INDEFINITE);
         animation.getKeyFrames().add(frame);
         animation.play();
     }
-    
+
     public static Game getGame() {
-    	return game;
+        return game;
     }
-    
+
     public static void initCurrentScene(GameScene scene) {
-    	currentScene = scene;
+        currentScene = scene;
     }
-    
+
     public static void switchScene(GameScene scene) {
-    	previousScene = currentScene;
-    	currentScene = scene;
-    	getGame().getHandler().switchScene(scene);
-    	getGame().getStage().getScene().setRoot((Parent) scene);
+        previousScene = currentScene;
+        currentScene = scene;
+        getGame().getHandler().switchScene(scene);
+        getGame().getStage().getScene().setRoot((Parent) scene);
     }
-    
+
     public static GameScene getPreviousScene() {
-    	return previousScene;
+        return previousScene;
     }
-    
+
     public static GameScene getGameScene() {
-    	return currentScene;
+        return currentScene;
     }
-    
+
     public static int getWidth() {
         return width;
     }
@@ -89,11 +88,11 @@ public class Window extends Application {
     public static double getHRatio() {
         return hRatio;
     }
-    
+
     public static void setWindowSize(int newHeight) {
-    	height = newHeight;
-    	width = newHeight * 16 / 9;
-    	hRatio = newHeight / 1080.0;
+        height = newHeight;
+        width = newHeight * 16 / 9;
+        hRatio = newHeight / 1080.0;
 
         getGame().getStage().setHeight(height);
         getGame().getStage().setWidth(width);
