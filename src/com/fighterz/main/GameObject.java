@@ -20,6 +20,8 @@ public abstract class GameObject {
 
     protected LinkedList<HitBox> hitBoxes;
 
+    public abstract int getFlipped();
+    
     public void setSprite(Image image) {
         this.sprite.setImage(image);
         this.sprite.setWidth((int) (image.getWidth() * Window.getHRatio()));
@@ -53,5 +55,4 @@ public abstract class GameObject {
     public double getY() {
         return this.y;
     }
-
 }

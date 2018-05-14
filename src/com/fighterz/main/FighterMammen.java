@@ -64,15 +64,17 @@ public class FighterMammen extends Fighter {
         this.getSprite().toFront();
         this.setSprite(pointerVision);
         this.getSprite().setX(this.getSprite().getX() + 100);
+        
         currentAnimation = new SpriteAnimation(this.getSprite(), Duration.millis(1000), 25,
-                (int) (-375 * Window.getHRatio()));
+                (int) (375 * Window.getHRatio() * this.getFlipped()));
+        
         currentAnimation.setCycleCount(1);
         currentAnimation.play();
         currentAnimation.setOnFinished(e -> setIdle());
     }
 
     private HitBox createPointerVisionHitbox() {
-        HitBox hitBox = new HitBox(this, HitBoxType.HIT, 700, 140, 500, -110);
+        HitBox hitBox = new HitBox(this, HitBoxType.HIT, 700, 140, -500, -110);
         hitBox.setDelay(0.2);
         hitBox.setMaxDuration(8.5);
         return hitBox;

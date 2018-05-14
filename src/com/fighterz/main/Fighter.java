@@ -18,6 +18,8 @@ public class Fighter extends GameObject {
     protected double originalX;
 
     protected Animation currentAnimation;
+    
+    private boolean flipped = false;
 
     public Fighter(String side) {
         this.side = side;
@@ -27,13 +29,31 @@ public class Fighter extends GameObject {
     }
 
     public void tick() {
-        // tick tock
+        Fighter mammen = Window.getGame().getFightingStage().getFighterMammen();
+        Fighter falessi = Window.getGame().getFightingStage().getFighterFalessi();
+        
+        if(falessi.getX() < mammen.getX()) {
+            falessi.setFlip(true);
+            mammen.setFlip(false);
+        } else {
+            falessi.setFlip(false);
+            mammen.setFlip(true);
+        }
     }
 
     @Override
     public void onCollide(HitBox hitBox) {
         // Damage the side that isn't us
         Window.getGame().getFightingStage().subtractHealth(hitBox.getDamage(), side == "left" ? "right" : "left");
+    }
+    
+    public void setFlip(boolean flip) {
+        this.getSprite().setScaleX(flip ? -1 : 1);
+        this.flipped = flip;
+    }
+    
+    public int getFlipped() {
+        return this.flipped ? -1 : 1;
     }
 
     public void moveRight() {
@@ -46,17 +66,12 @@ public class Fighter extends GameObject {
 
     public void jump() {
         Timeline timeline = new Timeline();
-        timeline.getKeyFrames()
-                .addAll(new KeyFrame(Duration.ZERO,
-                        new KeyValue(this.getSprite().translateYProperty(), 0 * Window.getHRatio())),
-                        new KeyFrame(new Duration(125),
-                                new KeyValue(this.getSprite().translateYProperty(), -190 * Window.getHRatio())),
-                        new KeyFrame(new Duration(200),
-                                new KeyValue(this.getSprite().translateYProperty(), -250 * Window.getHRatio())),
-                        new KeyFrame(new Duration(275),
-                                new KeyValue(this.getSprite().translateYProperty(), -190 * Window.getHRatio())),
-                        new KeyFrame(new Duration(400),
-                                new KeyValue(this.getSprite().translateYProperty(), 0 * Window.getHRatio())));
+        timeline.getKeyFrames().addAll(new KeyFrame(Duration.ZERO,
+            new KeyValue(this.getSprite().translateYProperty(), 0 * Window.getHRatio())),
+            new KeyFrame(new Duration(125), new KeyValue(this.getSprite().translateYProperty(), -190 * Window.getHRatio())),
+            new KeyFrame(new Duration(200), new KeyValue(this.getSprite().translateYProperty(), -250 * Window.getHRatio())),
+            new KeyFrame(new Duration(275), new KeyValue(this.getSprite().translateYProperty(), -190 * Window.getHRatio())),
+            new KeyFrame(new Duration(400), new KeyValue(this.getSprite().translateYProperty(), 0 * Window.getHRatio())));
         timeline.setCycleCount(1);
         timeline.play();
     }

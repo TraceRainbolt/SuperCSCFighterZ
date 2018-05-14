@@ -16,6 +16,9 @@ public class FightingStage extends StackPane implements GameScene {
 
     private SimpleImage fullHealthBarRight;
     private SimpleImage fullHealthBarLeft;
+    
+    private Fighter falessi;
+    private Fighter mammen;
 
     public FightingStage() {
         // Empty constructor
@@ -25,12 +28,12 @@ public class FightingStage extends StackPane implements GameScene {
         BackButton backBtn = new BackButton();
         SimpleImage background = new SimpleImage("StageBasketball.jpg", true);
 
-        Fighter falessi = new FighterFalessi("right");
-        Fighter mammen = new FighterMammen("left");
+        this.falessi = new FighterFalessi("right");
+        this.mammen = new FighterMammen("left");
 
         falessi.setX(550 * Window.getHRatio());
         mammen.setX(-550 * Window.getHRatio());
-        mammen.getSprite().setScaleX(-1);
+        mammen.setFlip(true);
 
         this.getNodes().add(background);
 
@@ -38,6 +41,14 @@ public class FightingStage extends StackPane implements GameScene {
 
         Window.getGame().addObjects(mammen, falessi);
         this.getNodes().add(backBtn);
+    }
+    
+    public Fighter getFighterFalessi() {
+        return falessi;
+    }
+    
+    public Fighter getFighterMammen() {
+        return mammen;
     }
 
     public void subtractHealth(double amount, String side) {

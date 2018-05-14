@@ -17,6 +17,7 @@ public class FighterFalessi extends Fighter {
         hurtBox.setDamage(10);
         this.addHitBox(hurtBox);
     }
+    
 
     public void setAnimation(AnimationState state) {
         setupSprite(state);
@@ -51,7 +52,7 @@ public class FighterFalessi extends Fighter {
         this.setSprite(powerBallImage);
         this.getSprite().setX(this.getSprite().getX() + 100);
         currentAnimation = new SpriteAnimation(this.getSprite(), Duration.millis(1000), 29,
-                (int) (375 * Window.getHRatio()));
+                (int) (375 * Window.getHRatio() * this.getFlipped()));
         currentAnimation.setCycleCount(1);
         currentAnimation.play();
         currentAnimation.setOnFinished(e -> setIdle());

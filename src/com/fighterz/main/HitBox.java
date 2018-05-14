@@ -25,8 +25,7 @@ public class HitBox {
         this.hitBoxRect = new Rectangle(0, 0, width * Window.getHRatio(), height * Window.getHRatio());
         this.type = type;
 
-        // Super jank but it works. Basically the rectangle is always instantiated at 0,
-        // 0
+        // Super jank but it works. Basically the rectangle is always instantiated at 0, 0
         // This means that it will briefly contact any hitboxes at 0, 0, which is bad.
         // So we translate it down before hitBox detection is activated.
         // In the tick method we are brought to our correct location.
@@ -100,15 +99,15 @@ public class HitBox {
 
     private void updateHitboxLocation() {
         if (!this.independent) {
-            this.hitBoxRect.setTranslateX(this.object.getX() + offsetX);
+            this.hitBoxRect.setTranslateX(this.object.getX() + offsetX * this.object.getFlipped());
             this.hitBoxRect.setTranslateY(this.object.getY() + offsetY);
         } else {
             if (!lock) {
-                this.hitBoxRect.setTranslateX(this.object.getX() + offsetX);
+                this.hitBoxRect.setTranslateX(this.object.getX() + offsetX * this.object.getFlipped());
                 this.hitBoxRect.setTranslateY(this.object.getY() + offsetY);
                 lock = true;
             } else {
-                this.hitBoxRect.setTranslateX(this.hitBoxRect.getTranslateX() + xVelocity);
+                this.hitBoxRect.setTranslateX(this.hitBoxRect.getTranslateX() + xVelocity * this.object.getFlipped());
             }
         }
     }
