@@ -88,9 +88,17 @@ public class Game {
     public void setFalessiMovementLock(boolean value) {
         falessiMovementLock = value;
     }
+    
+    public boolean getFalessiMovementLock() {
+        return falessiMovementLock;
+    }
 
     public void setMammenMovementLock(boolean value) {
         mammenMovementLock = value;
+    }
+    
+    public boolean getMammenMovementLock() {
+        return mammenMovementLock;
     }
 
     public void setMammenAbilityLock(boolean value) {

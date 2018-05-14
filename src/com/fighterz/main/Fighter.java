@@ -32,10 +32,14 @@ public class Fighter extends GameObject {
         Fighter mammen = Window.getGame().getFightingStage().getFighterMammen();
         Fighter falessi = Window.getGame().getFightingStage().getFighterFalessi();
         
-        if(falessi.getX() < mammen.getX()) {
+        boolean mammenLock = Window.getGame().getMammenMovementLock();
+        boolean falessiLock = Window.getGame().getFalessiMovementLock();
+        boolean locked = mammenLock || falessiLock;
+        
+        if(falessi.getX() < mammen.getX() && !locked) {
             falessi.setFlip(true);
             mammen.setFlip(false);
-        } else {
+        } else if(!falessiLock && !locked) {
             falessi.setFlip(false);
             mammen.setFlip(true);
         }
