@@ -20,13 +20,19 @@ public class BackButton extends ImageView {
         this.addEventHandler(MouseEvent.MOUSE_PRESSED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent e) {
-                that.setTranslateY(that.getTranslateY() + 2);
+            	// Scale button down when pressed
+            	that.setScaleX(0.95);
+            	that.setScaleY(0.95);
             }
         });
 
         this.addEventHandler(MouseEvent.MOUSE_RELEASED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent e) {
+            	// Scale button back up after mouse is released
+            	that.setScaleX(1);
+            	that.setScaleY(1);
+            	
                 Window.switchScene(Window.getPreviousScene());
             }
         });
