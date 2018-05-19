@@ -88,5 +88,11 @@ public class FighterMammen extends Fighter {
         currentAnimation.play();
         Window.getGame().setMammenMovementLock(false);
     }
+    
+    @Override
+    public void onCollide(HitBox hitBox) {
+        super.onCollide(hitBox);
+        System.out.println("Mammen Energy = " + energy);
+    }
 
 }

@@ -76,5 +76,11 @@ public class FighterFalessi extends Fighter {
         currentAnimation.play();
         Window.getGame().setFalessiMovementLock(false);
     }
+    
+    @Override
+    public void onCollide(HitBox hitBox) {
+        super.onCollide(hitBox);
+        System.out.println("Falessi Energy = " + energy);
+    }
 
 }

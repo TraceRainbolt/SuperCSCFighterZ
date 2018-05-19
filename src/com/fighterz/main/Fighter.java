@@ -20,12 +20,15 @@ public class Fighter extends GameObject {
     protected Animation currentAnimation;
     
     private boolean flipped = false;
+    
+    protected int energy;
 
     public Fighter(String side) {
         this.side = side;
 
         Window.getGame().addFighter(this);
         hitBoxes = new LinkedList<>();
+        energy = 0;
     }
 
     public void tick() {
@@ -49,6 +52,7 @@ public class Fighter extends GameObject {
     public void onCollide(HitBox hitBox) {
         // Damage the side that isn't us
         Window.getGame().getFightingStage().subtractHealth(hitBox.getDamage(), side == "left" ? "right" : "left");
+        energy += 10;
     }
     
     public void setFlip(boolean flip) {
