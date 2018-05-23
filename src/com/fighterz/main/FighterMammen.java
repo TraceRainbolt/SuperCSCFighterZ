@@ -17,7 +17,6 @@ public class FighterMammen extends Fighter {
         this.setAnimation(AnimationState.IDLE);
 
         HitBox hurtBox = new HitBox(this, HitBoxType.HURT, 292, 510, 0, -85);
-        hurtBox.setDamage(20);
         this.addHitBox(hurtBox);
     }
 
@@ -75,6 +74,7 @@ public class FighterMammen extends Fighter {
 
     private HitBox createPointerVisionHitbox() {
         HitBox hitBox = new HitBox(this, HitBoxType.HIT, 700, 140, -500, -110);
+        hitBox.setDamage(20);
         hitBox.setDelay(0.2);
         hitBox.setMaxDuration(8.5);
         return hitBox;

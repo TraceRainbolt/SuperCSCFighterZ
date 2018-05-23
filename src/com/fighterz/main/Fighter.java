@@ -51,7 +51,7 @@ public class Fighter extends GameObject {
     @Override
     public void onCollide(HitBox hitBox) {
         // Damage the side that isn't us
-        Window.getGame().getFightingStage().subtractHealth(hitBox.getDamage(), side == "left" ? "right" : "left");
+        Window.getGame().getFightingStage().subtractHealth(hitBox.getDamage(), side);
         energy += 10;
     }
     

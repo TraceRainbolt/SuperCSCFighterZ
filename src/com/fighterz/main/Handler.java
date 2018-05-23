@@ -71,9 +71,8 @@ public class Handler {
     // we don't do damage every frame (which would instantly kill them)
     private void handleCollision(List<HitBox> hits, HitBox hitBox) {
         for (HitBox hit : hits) {
-            if (hit.getType() == HitBoxType.HIT && hitBox.getType() == HitBoxType.HURT
-                    && !damaged.contains(hit.hashCode())) {
-                hit.getObject().onCollide(hitBox);
+            if (hit.getType() == HitBoxType.HIT && hitBox.getType() == HitBoxType.HURT && !damaged.contains(hit.hashCode())) {
+            	hitBox.getObject().onCollide(hit);
                 damaged.add(hit.hashCode());
             }
             hit.getRect().setFill(Color.RED);
