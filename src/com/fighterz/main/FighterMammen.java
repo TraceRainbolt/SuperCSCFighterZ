@@ -46,13 +46,12 @@ public class FighterMammen extends Fighter {
         }
 
         Timeline timeline = new Timeline();
-        timeline.getKeyFrames()
-                .addAll(new KeyFrame(Duration.ZERO,
-                        new KeyValue(this.getSprite().translateYProperty(), -88 * Window.getHRatio())),
-                        new KeyFrame(new Duration(600),
-                                new KeyValue(this.getSprite().translateYProperty(), -100 * Window.getHRatio())),
-                        new KeyFrame(new Duration(1200),
-                                new KeyValue(this.getSprite().translateYProperty(), -88 * Window.getHRatio())));
+        timeline.getKeyFrames().addAll(
+        	new KeyFrame(Duration.ZERO,
+            new KeyValue(this.getSprite().translateYProperty(), -88 * Window.getHRatio())),
+            new KeyFrame(new Duration(600), new KeyValue(this.getSprite().translateYProperty(), -100 * Window.getHRatio())),
+            new KeyFrame(new Duration(1200), new KeyValue(this.getSprite().translateYProperty(), -88 * Window.getHRatio()))
+        );
         timeline.setCycleCount(Animation.INDEFINITE);
         timeline.play();
     }

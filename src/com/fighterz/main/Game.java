@@ -15,6 +15,7 @@ public class Game {
     private FighterFalessi fighterFalessi;
     private FighterMammen fighterMammen;
 
+    private CharacterSelectScreen charSelectScreen;
     private FightingStage fightingStage;
 
     private Scene scene;
@@ -32,9 +33,10 @@ public class Game {
     }
 
     private void initUI() {
-        CharacterSelectScreen charSelectScreen = new CharacterSelectScreen();
-        OptionsMenu optionsMenu = new OptionsMenu();
         this.fightingStage = new FightingStage();
+        this.charSelectScreen = new CharacterSelectScreen();
+        
+        OptionsMenu optionsMenu = new OptionsMenu();
         MainMenu mainMenu = new MainMenu(charSelectScreen, fightingStage, optionsMenu);
 
         this.scene = new Scene(mainMenu);
@@ -58,6 +60,8 @@ public class Game {
             if (!mammenMovementLock)
                 handleFighterMammen();
         }
+        if(Window.getGameScene() instanceof CharacterSelectScreen)
+        	charSelectScreen.handleKeys(pressedKeys);
     }
 
     private void handleFighterFalessi() {

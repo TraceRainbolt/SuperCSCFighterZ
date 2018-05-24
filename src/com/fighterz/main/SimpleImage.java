@@ -1,7 +1,11 @@
 package com.fighterz.main;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.util.Duration;
 
 // Class removes a lot of boilerplate for adding images
 public class SimpleImage extends ImageView {
@@ -60,4 +64,16 @@ public class SimpleImage extends ImageView {
         this.setFitWidth(width);
         this.width = width;
     }
+    
+	public void moveTo(double x, double y) {
+        Timeline timeline = new Timeline();
+        timeline.getKeyFrames().addAll(
+        	new KeyFrame(Duration.ZERO, new KeyValue(this.translateYProperty(), this.getTranslateY())),
+        	new KeyFrame(Duration.ZERO, new KeyValue(this.translateXProperty(), this.getTranslateX())),
+            new KeyFrame(new Duration(20), new KeyValue(this.translateYProperty(), y * Window.getHRatio())),
+            new KeyFrame(new Duration(20), new KeyValue(this.translateXProperty(), x * Window.getHRatio()))
+        );
+        timeline.setCycleCount(1);
+        timeline.play();
+	}
 }
