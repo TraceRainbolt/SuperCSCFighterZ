@@ -17,8 +17,8 @@ public class FightingStage extends StackPane implements GameScene {
     private SimpleImage fullHealthBarRight;
     private SimpleImage fullHealthBarLeft;
     
-    private Fighter falessi;
-    private Fighter mammen;
+    private Fighter fighterRight;
+    private Fighter fighterLeft;
 
     public FightingStage() {
         // Empty constructor
@@ -28,27 +28,28 @@ public class FightingStage extends StackPane implements GameScene {
         BackButton backBtn = new BackButton();
         SimpleImage background = new SimpleImage("StageBasketball.jpg", true);
 
-        this.falessi = new FighterFalessi("right");
-        this.mammen = new FighterMammen("left");
-
-        falessi.setX(550 * Window.getHRatio());
-        mammen.setX(-550 * Window.getHRatio());
-        mammen.setFlip(true);
-
         this.getNodes().add(background);
 
         setupHealthBars();
-
-        Window.getGame().addObjects(mammen, falessi);
         this.getNodes().add(backBtn);
     }
     
-    public Fighter getFighterFalessi() {
-        return falessi;
+    public void setFighterRight(Fighter fighter) {
+        fighter.setX(400 * Window.getHRatio());
+        this.fighterRight = fighter;
     }
     
-    public Fighter getFighterMammen() {
-        return mammen;
+    public void setFighterLeft(Fighter fighter) {
+        fighter.setX(-400 * Window.getHRatio());
+        this.fighterLeft = fighter;
+    } 
+    
+    public Fighter getFighterRight() {
+        return fighterRight;
+    }
+    
+    public Fighter getFighterLeft() {
+        return fighterLeft;
     }
 
     public void subtractHealth(double amount, String side) {
@@ -62,11 +63,10 @@ public class FightingStage extends StackPane implements GameScene {
         double percent = amount / 100 * fullHealthBarRight.getWidth();
 
         Timeline timeline = new Timeline();
-        timeline.getKeyFrames()
-                .addAll(new KeyFrame(Duration.ZERO,
-                        new KeyValue(rightHealth.translateXProperty(), rightHealth.getTranslateX())),
-                        new KeyFrame(new Duration(400),
-                                new KeyValue(rightHealth.translateXProperty(), rightHealth.getTranslateX() + percent)));
+        timeline.getKeyFrames().addAll(new KeyFrame(Duration.ZERO,
+            new KeyValue(rightHealth.translateXProperty(), rightHealth.getTranslateX())),
+            new KeyFrame(new Duration(400),
+            new KeyValue(rightHealth.translateXProperty(), rightHealth.getTranslateX() + percent)));
         timeline.setCycleCount(1);
         timeline.play();
 

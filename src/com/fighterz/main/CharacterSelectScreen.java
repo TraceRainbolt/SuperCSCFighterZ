@@ -50,7 +50,7 @@ public class CharacterSelectScreen extends StackPane implements GameScene {
         SimpleImage blackBarLeft = new SimpleImage("CharacterSelectBlackBar.png", false);
         SimpleImage blackBarRight = new SimpleImage("CharacterSelectBlackBar.png", false);
         blackBarRight.setScaleX(-1);
-        blackBarRight.setTranslateX(-28);
+        blackBarRight.setTranslateX(-42 * Window.getHRatio());
         
         redSelect = new SimpleImage("CharacterSelectMarkerRed.png", false);
         blueSelect = new SimpleImage("CharacterSelectMarkerBlue.png", false);
@@ -60,16 +60,20 @@ public class CharacterSelectScreen extends StackPane implements GameScene {
         falessiCharRed = new SimpleImage("CharacterSelectFalessi.png", false);
         mammenCharRed = new SimpleImage("CharacterSelectMammen.png", false);
         mammenCharRed.setScaleX(-1);
+        mammenCharRed.setTranslateX(-40 * Window.getHRatio());
         
         falessiCharBlue = new SimpleImage("CharacterSelectFalessi.png", false);
         mammenCharBlue = new SimpleImage("CharacterSelectMammen.png", false);
         falessiCharBlue.setScaleX(-1);
+        falessiCharBlue.setTranslateX(-40 * Window.getHRatio());
         
         falessiIcon = new SimpleImage("CharacterSelectFalessiIcon.png", false);
         mammenIcon = new SimpleImage("CharacterSelectMammenIcon.png", false);
 
         BackButton backBtn = new BackButton();
-        this.getChildren().addAll(falessiCharRed, mammenCharRed, falessiCharBlue, mammenCharBlue, background, blackBarLeft, blackBarRight, 
+        
+        this.getChildren().addAll(falessiCharRed, mammenCharRed, falessiCharBlue, 
+                mammenCharBlue, background, blackBarLeft, blackBarRight, 
         		blueSelect, redSelect, falessiIcon, mammenIcon, backBtn);
     }
 
@@ -107,9 +111,33 @@ public class CharacterSelectScreen extends StackPane implements GameScene {
 			switched = true;
 		}
 		
+		if(pressedKeys.contains(KeyCode.W)) {
+		    redSelected = null;
+		    mammenCharRed.toBack();
+		    falessiCharRed.toBack();
+		    redSelect.moveTo(-50 * Window.getHRatio(), 0);
+		}
+		
+		if(pressedKeys.contains(KeyCode.I)) {
+            blueSelected = null;
+            mammenCharBlue.toBack();
+            falessiCharBlue.toBack();
+            blueSelect.moveTo(12 * Window.getHRatio(), 0);
+        }
+		
 		if(pressedKeys.contains(KeyCode.ENTER)) {
 			if(redSelected != null && blueSelected != null) {
 				Window.switchScene(Window.getGame().getFightingStage());
+				if(redSelected == falessiCharRed) {
+				    Window.getGame().addFighter(new FighterFalessi("left"));
+				} else {
+				    Window.getGame().addFighter(new FighterMammen("left"));
+				}
+                if(blueSelected == falessiCharBlue) {
+                    Window.getGame().addFighter(new FighterFalessi("right"));
+                } else {
+                    Window.getGame().addFighter(new FighterMammen("right"));
+                }
 			}
 		}
 		

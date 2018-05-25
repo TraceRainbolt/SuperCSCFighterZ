@@ -12,8 +12,8 @@ public class Game {
 
     private HashSet<KeyCode> pressedKeys;
 
-    private FighterFalessi fighterFalessi;
-    private FighterMammen fighterMammen;
+    private Fighter fighterRight;
+    private Fighter fighterLeft;
 
     private CharacterSelectScreen charSelectScreen;
     private FightingStage fightingStage;
@@ -21,10 +21,8 @@ public class Game {
     private Scene scene;
     private Stage pStage;
 
-    private boolean falessiMovementLock = false;
-    private boolean mammenMovementLock = false;
-    private boolean falessiAbilityLock = false;
-    private boolean mammenAbilityLock = false;
+    private boolean movementLockRight = false;
+    private boolean movementLockLeft = false;
 
     public Game() {
         this.handler = new Handler();
@@ -54,61 +52,52 @@ public class Game {
     }
 
     private void resolveKeyPresses() {
-        if (fighterFalessi != null) {
-            if (!falessiMovementLock)
-                handleFighterFalessi();
-            if (!mammenMovementLock)
-                handleFighterMammen();
+        if (fighterRight != null) {
+            handleFighterRight();
+        }
+        if(fighterLeft != null) {
+            handleFighterLeft();
         }
         if(Window.getGameScene() instanceof CharacterSelectScreen)
         	charSelectScreen.handleKeys(pressedKeys);
     }
 
-    private void handleFighterFalessi() {
+    private void handleFighterRight() {
         if (pressedKeys.contains(KeyCode.L) && !pressedKeys.contains(KeyCode.J)) {
-            fighterFalessi.moveRight();
+            fighterRight.moveRight();
         } else if (pressedKeys.contains(KeyCode.J) && !pressedKeys.contains(KeyCode.L)) {
-            fighterFalessi.moveLeft();
+            fighterRight.moveLeft();
         }
-        if (pressedKeys.contains(KeyCode.SPACE)) {
-            fighterFalessi.jump();
-        }
-        if (pressedKeys.contains(KeyCode.O) && !falessiAbilityLock) {
-            fighterFalessi.setAnimation(AnimationState.POWER_BALL);
+        if (pressedKeys.contains(KeyCode.O) && !movementLockRight) {
+            fighterRight.setAnimation(AnimationState.POWER_MOVE);
         } else if(pressedKeys.contains(KeyCode.I) && pressedKeys.contains(KeyCode.L)) {
-        	fighterFalessi.teleportBehindYou();
+            fighterRight.teleportBehindYou();
         }
     }
 
-    private void handleFighterMammen() {
+    private void handleFighterLeft() {
         if (pressedKeys.contains(KeyCode.D) && !pressedKeys.contains(KeyCode.A)) {
-            fighterMammen.moveRight();
+            fighterLeft.moveRight();
         } else if (pressedKeys.contains(KeyCode.A) && !pressedKeys.contains(KeyCode.D)) {
-            fighterMammen.moveLeft();
+            fighterLeft.moveLeft();
         }
-        if (pressedKeys.contains(KeyCode.E) && !mammenAbilityLock) {
-            fighterMammen.setAnimation(AnimationState.POINTER_VISION);
+        if (pressedKeys.contains(KeyCode.E) && !movementLockLeft) {
+            fighterLeft.setAnimation(AnimationState.POWER_MOVE);
         } 
     }
 
-    public void setFalessiMovementLock(boolean value) {
-        falessiMovementLock = value;
+    public void setMovementLock(boolean value, String side) {
+        if(side == "right") {
+            movementLockRight = value;
+        } else if (side == "left") {
+            movementLockLeft = value;
+        }
     }
     
-    public boolean getFalessiMovementLock() {
-        return falessiMovementLock;
-    }
-
-    public void setMammenMovementLock(boolean value) {
-        mammenMovementLock = value;
-    }
-    
-    public boolean getMammenMovementLock() {
-        return mammenMovementLock;
-    }
-
-    public void setMammenAbilityLock(boolean value) {
-        mammenAbilityLock = value;
+    public boolean getMovementLock(String side) {
+        if(side == "right")
+            return movementLockRight;
+        return movementLockLeft;
     }
 
     public void addObjects(GameObject... objects) {
@@ -138,11 +127,14 @@ public class Game {
     }
 
     public void addFighter(Fighter fighter) {
-        handler.addObject(fighter);
-        if (fighter instanceof FighterFalessi)
-            fighterFalessi = (FighterFalessi) fighter;
-        else
-            fighterMammen = (FighterMammen) fighter;
+        addObjects(fighter);
+        if(fighter.getSide() == "right") {
+            fighterRight = fighter;
+            fightingStage.setFighterRight(fighter);
+        } else if(fighter.getSide() == "left") {
+            fighterLeft = fighter;
+            fightingStage.setFighterLeft(fighter);
+        }
     }
 
     public Stage getStage() {

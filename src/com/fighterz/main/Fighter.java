@@ -9,7 +9,7 @@ import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.util.Duration;
 
-public class Fighter extends GameObject {
+public abstract class Fighter extends GameObject {
 
     private static final int SPEED = (int) (10 * Window.getHRatio());
 
@@ -22,29 +22,33 @@ public class Fighter extends GameObject {
     private boolean flipped = false;
     
     protected int energy;
+    
+    public abstract void teleportBehindYou();
+
+    public abstract void setAnimation(AnimationState state);
 
     public Fighter(String side) {
         this.side = side;
 
-        Window.getGame().addFighter(this);
         hitBoxes = new LinkedList<>();
         energy = 0;
     }
 
     public void tick() {
-        Fighter mammen = Window.getGame().getFightingStage().getFighterMammen();
-        Fighter falessi = Window.getGame().getFightingStage().getFighterFalessi();
+        Fighter fighterRight = Window.getGame().getFightingStage().getFighterRight();
+        Fighter fighterLeft = Window.getGame().getFightingStage().getFighterLeft();
         
-        boolean mammenLock = Window.getGame().getMammenMovementLock();
-        boolean falessiLock = Window.getGame().getFalessiMovementLock();
-        boolean locked = mammenLock || falessiLock;
+        boolean rightLock = Window.getGame().getMovementLock("right");
+        boolean leftLock = Window.getGame().getMovementLock("left");
         
-        if(falessi.getX() < mammen.getX() && !locked) {
-            falessi.setFlip(true);
-            mammen.setFlip(false);
-        } else if(!falessiLock && !locked) {
-            falessi.setFlip(false);
-            mammen.setFlip(true);
+        boolean locked = rightLock || leftLock;
+        
+        if(fighterRight.getX() < fighterLeft.getX() && !locked) {
+            fighterRight.setFlip(true);
+            fighterLeft.setFlip(false);
+        } else if(!rightLock && !locked) {
+            fighterRight.setFlip(false);
+            fighterLeft.setFlip(true);
         }
     }
 
@@ -53,6 +57,10 @@ public class Fighter extends GameObject {
         // Damage the side that isn't us
         Window.getGame().getFightingStage().subtractHealth(hitBox.getDamage(), side);
         energy += 10;
+    }
+    
+    public String getSide() {
+        return this.side;
     }
     
     public void setFlip(boolean flip) {
@@ -87,4 +95,5 @@ public class Fighter extends GameObject {
     public List<HitBox> getHitBoxes() {
         return this.hitBoxes;
     }
+
 }

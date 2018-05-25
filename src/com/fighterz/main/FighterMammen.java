@@ -26,9 +26,9 @@ public class FighterMammen extends Fighter {
 
     private void setupSprite(AnimationState state) {
 
-        if (state == AnimationState.POINTER_VISION) {
+        if (state == AnimationState.POWER_MOVE) {
             if (currentAnimation != null) {
-                Window.getGame().setMammenMovementLock(true);
+                Window.getGame().setMovementLock(true, side);
                 originalX = this.getX();
 
                 // Gotta do the jumpTo here as well
@@ -85,13 +85,19 @@ public class FighterMammen extends Fighter {
         currentAnimation = new SpriteAnimation(this.getSprite(), Duration.millis(1000), 27);
         currentAnimation.setCycleCount(Animation.INDEFINITE);
         currentAnimation.play();
-        Window.getGame().setMammenMovementLock(false);
+        Window.getGame().setMovementLock(false, side);
     }
     
     @Override
     public void onCollide(HitBox hitBox) {
         super.onCollide(hitBox);
         System.out.println("Mammen Energy = " + energy);
+    }
+
+    @Override
+    public void teleportBehindYou() {
+        // TODO Auto-generated method stub
+        
     }
 
 }

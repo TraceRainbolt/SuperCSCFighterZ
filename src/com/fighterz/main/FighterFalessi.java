@@ -29,9 +29,9 @@ public class FighterFalessi extends Fighter {
     }
 
     private void setupSprite(AnimationState state) {
-        if (state == AnimationState.POWER_BALL) {
+        if (state == AnimationState.POWER_MOVE) {
             if (currentAnimation != null) {
-                Window.getGame().setFalessiMovementLock(true);
+                Window.getGame().setMovementLock(true, side);
                 originalX = this.getX();
 
                 // If we don't do the jumpTo then the animation will flash to the wrong frames
@@ -51,7 +51,7 @@ public class FighterFalessi extends Fighter {
     }
 
     public void teleportBehindYou() {
-        Window.getGame().setFalessiMovementLock(true);
+        Window.getGame().setMovementLock(true, side);
         FadeTransition fade = new FadeTransition(Duration.millis(300), this.getSprite());
         fade.setFromValue(1.0);
         fade.setToValue(0.0);
@@ -61,15 +61,16 @@ public class FighterFalessi extends Fighter {
 
     }
     
+    // TODO get other fighter instead of left
     private void nothingPersonnelKid() {
-        this.setX(Window.getGame().getFightingStage().getFighterMammen().getX() - 300 * this.getFlipped());
+        this.setX(Window.getGame().getFightingStage().getFighterLeft().getX() - 300 * this.getFlipped() * Window.getHRatio());
         this.setFlip(this.getFlipped() == 1 ? true : false);
         FadeTransition fade = new FadeTransition(Duration.millis(300), this.getSprite());
         fade.setFromValue(0.0);
         fade.setToValue(1.0);
         fade.setCycleCount(1);
         fade.play();
-        fade.setOnFinished(e -> Window.getGame().setFalessiMovementLock(false));
+        fade.setOnFinished(e -> Window.getGame().setMovementLock(false, side));
     }
 
     private void setPowerBall() {
@@ -103,7 +104,7 @@ public class FighterFalessi extends Fighter {
         currentAnimation = new SpriteAnimation(this.getSprite(), Duration.millis(1000), 29);
         currentAnimation.setCycleCount(Animation.INDEFINITE);
         currentAnimation.play();
-        Window.getGame().setFalessiMovementLock(false);
+        Window.getGame().setMovementLock(false, side);
     }
     
     @Override
