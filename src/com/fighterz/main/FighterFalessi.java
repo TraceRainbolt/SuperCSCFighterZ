@@ -1,6 +1,12 @@
 package com.fighterz.main;
 
 import javafx.animation.Animation;
+import javafx.animation.FadeTransition;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
+import javafx.scene.effect.Blend;
+import javafx.scene.effect.BlendMode;
 import javafx.scene.image.Image;
 import javafx.util.Duration;
 
@@ -42,6 +48,28 @@ public class FighterFalessi extends Fighter {
             currentAnimation.setCycleCount(Animation.INDEFINITE);
             currentAnimation.play();
         }
+    }
+
+    public void teleportBehindYou() {
+        Window.getGame().setFalessiMovementLock(true);
+        FadeTransition fade = new FadeTransition(Duration.millis(300), this.getSprite());
+        fade.setFromValue(1.0);
+        fade.setToValue(0.0);
+        fade.setCycleCount(1);
+        fade.play();
+        fade.setOnFinished(e -> nothingPersonnelKid());
+
+    }
+    
+    private void nothingPersonnelKid() {
+        this.setX(Window.getGame().getFightingStage().getFighterMammen().getX() - 300 * this.getFlipped());
+        this.setFlip(this.getFlipped() == 1 ? true : false);
+        FadeTransition fade = new FadeTransition(Duration.millis(300), this.getSprite());
+        fade.setFromValue(0.0);
+        fade.setToValue(1.0);
+        fade.setCycleCount(1);
+        fade.play();
+        fade.setOnFinished(e -> Window.getGame().setFalessiMovementLock(false));
     }
 
     private void setPowerBall() {

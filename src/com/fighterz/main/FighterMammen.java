@@ -51,7 +51,7 @@ public class FighterMammen extends Fighter {
             new KeyValue(this.getSprite().translateYProperty(), -88 * Window.getHRatio())),
             new KeyFrame(new Duration(600), new KeyValue(this.getSprite().translateYProperty(), -100 * Window.getHRatio())),
             new KeyFrame(new Duration(1200), new KeyValue(this.getSprite().translateYProperty(), -88 * Window.getHRatio()))
-        );
+            );
         timeline.setCycleCount(Animation.INDEFINITE);
         timeline.play();
     }

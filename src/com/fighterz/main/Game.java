@@ -75,6 +75,8 @@ public class Game {
         }
         if (pressedKeys.contains(KeyCode.O) && !falessiAbilityLock) {
             fighterFalessi.setAnimation(AnimationState.POWER_BALL);
+        } else if(pressedKeys.contains(KeyCode.I) && pressedKeys.contains(KeyCode.L)) {
+        	fighterFalessi.teleportBehindYou();
         }
     }
 
@@ -86,7 +88,7 @@ public class Game {
         }
         if (pressedKeys.contains(KeyCode.E) && !mammenAbilityLock) {
             fighterMammen.setAnimation(AnimationState.POINTER_VISION);
-        }
+        } 
     }
 
     public void setFalessiMovementLock(boolean value) {
