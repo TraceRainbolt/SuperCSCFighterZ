@@ -19,8 +19,11 @@ public class CharacterSelectScreen extends StackPane implements GameScene {
 	private SimpleImage redSelect;
 	private SimpleImage blueSelect;
 	
-	private SimpleImage falessiChar;
-	private SimpleImage mammenChar;
+	private SimpleImage falessiCharRed;
+	private SimpleImage mammenCharRed;
+	
+	private SimpleImage falessiCharBlue;
+	private SimpleImage mammenCharBlue;
 	
 	private SimpleImage falessiIcon;
 	private SimpleImage mammenIcon;
@@ -54,14 +57,19 @@ public class CharacterSelectScreen extends StackPane implements GameScene {
         redSelect.setTranslateX(-50 * Window.getHRatio());
         blueSelect.setTranslateX(12 * Window.getHRatio());
     
-        falessiChar = new SimpleImage("CharacterSelectFalessi.png", false);
-        mammenChar = new SimpleImage("CharacterSelectMammen.png", false);
+        falessiCharRed = new SimpleImage("CharacterSelectFalessi.png", false);
+        mammenCharRed = new SimpleImage("CharacterSelectMammen.png", false);
+        mammenCharRed.setScaleX(-1);
+        
+        falessiCharBlue = new SimpleImage("CharacterSelectFalessi.png", false);
+        mammenCharBlue = new SimpleImage("CharacterSelectMammen.png", false);
+        falessiCharBlue.setScaleX(-1);
         
         falessiIcon = new SimpleImage("CharacterSelectFalessiIcon.png", false);
         mammenIcon = new SimpleImage("CharacterSelectMammenIcon.png", false);
 
         BackButton backBtn = new BackButton();
-        this.getChildren().addAll(falessiChar, mammenChar, background, blackBarLeft, blackBarRight, 
+        this.getChildren().addAll(falessiCharRed, mammenCharRed, falessiCharBlue, mammenCharBlue, background, blackBarLeft, blackBarRight, 
         		blueSelect, redSelect, falessiIcon, mammenIcon, backBtn);
     }
 
@@ -70,7 +78,7 @@ public class CharacterSelectScreen extends StackPane implements GameScene {
 		
 		if(pressedKeys.contains(KeyCode.A)) {
 			redSelect.moveTo(-290, 290);
-			redSelected = falessiChar;
+			redSelected = falessiCharRed;
 			blueSelect.toFront();
 			redSelect.toFront();
 			switched = true;
@@ -79,7 +87,7 @@ public class CharacterSelectScreen extends StackPane implements GameScene {
 		if(pressedKeys.contains(KeyCode.D)) {
 			redSelect.moveTo(290, 290);
 			redSelect.toFront();
-			redSelected = mammenChar;
+			redSelected = mammenCharRed;
 			switched = true;
 		}
 		
@@ -88,34 +96,48 @@ public class CharacterSelectScreen extends StackPane implements GameScene {
 			falessiIcon.toFront();
 			redSelect.toFront();
 			blueSelect.toFront();
-			blueSelected = falessiChar;
+			blueSelected = falessiCharBlue;
 			switched = true;
 		}
 		
 		if(pressedKeys.contains(KeyCode.L)) {
 			blueSelect.moveTo(250, 290);
 			blueSelect.toFront();
-			blueSelected = mammenChar;
+			blueSelected = mammenCharBlue;
 			switched = true;
 		}
 		
+		if(pressedKeys.contains(KeyCode.ENTER)) {
+			if(redSelected != null && blueSelected != null) {
+				Window.switchScene(Window.getGame().getFightingStage());
+			}
+		}
+		
 		if(switched) {
-			if(redSelected != null) {
-				redSelected.toFront();
+			if(redSelected == falessiCharRed) {
+				falessiCharRed.toFront();
+				mammenCharRed.toBack();
 			}
-			if(blueSelected != null) {
-				blueSelected.toFront();
+			
+			if(blueSelected == falessiCharBlue) {
+				falessiCharBlue.toFront();
+				mammenCharBlue.toBack();
 			}
+			
+			if(redSelected == mammenCharRed) {
+				mammenCharRed.toFront();
+				falessiCharRed.toBack();
+			}
+			
+			if(blueSelected == mammenCharBlue) {
+				mammenCharBlue.toFront();
+				falessiCharBlue.toBack();
+			}
+			
 			falessiIcon.toFront();
+			mammenIcon.toFront();
 			redSelect.toFront();
 			blueSelect.toFront();
-			
-			if(redSelected != falessiChar && blueSelected != falessiChar) {
-				falessiChar.toBack();
-			}
-			if(redSelected != mammenChar && blueSelected != mammenChar) {
-				mammenChar.toBack();
-			}
 		}
 	}
 }
