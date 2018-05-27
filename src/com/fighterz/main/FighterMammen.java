@@ -1,5 +1,7 @@
 package com.fighterz.main;
 
+import com.fighterz.main.FighterSounds.NoSuchFighterException;
+
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -18,6 +20,13 @@ public class FighterMammen extends Fighter {
 
         HitBox hurtBox = new HitBox(this, HitBoxType.HURT, 292, 510, 0, -85);
         this.addHitBox(hurtBox);
+        
+        try {
+			fighterSounds = new FighterSounds("Mammen");
+		} catch (NoSuchFighterException e) {
+			e.printStackTrace();
+			System.exit(1);
+		}
     }
 
     public void setAnimation(AnimationState state) {
@@ -69,6 +78,9 @@ public class FighterMammen extends Fighter {
         currentAnimation.setCycleCount(1);
         currentAnimation.play();
         currentAnimation.setOnFinished(e -> setIdle());
+        
+        // Play melee attack sound
+     	fighterSounds.playMeleSound();
     }
 
     private HitBox createPointerVisionHitbox() {
@@ -92,6 +104,9 @@ public class FighterMammen extends Fighter {
     public void onCollide(HitBox hitBox) {
         super.onCollide(hitBox);
         System.out.println("Mammen Energy = " + energy);
+        
+        // Play takes damage sound
+ 		fighterSounds.playTakeDamageSound();
     }
 
     @Override

@@ -28,6 +28,8 @@ public class MainMenu extends StackPane implements GameScene {
         this.charSelectScreen = charSelectScreen;
         this.fightingStage = fightingStage;
         this.optionsMenu = optionsMenu;
+        
+        AudioManager.getInstance().music.playMenuMusic();
     }
 
     public ObservableList<Node> getNodes() {
@@ -96,10 +98,12 @@ public class MainMenu extends StackPane implements GameScene {
             this.setupHandlers();
 
             this.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent e) {
-                    Window.switchScene(newScene);
-                }
+				@Override
+				public void handle(MouseEvent e) {
+					Window.switchScene(newScene);
+
+					AudioManager.getInstance().menuSounds.playButtonClickedSound();
+				}
             });
         }
 
@@ -134,6 +138,8 @@ public class MainMenu extends StackPane implements GameScene {
                 @Override
                 public void handle(MouseEvent e) {
                     that.setEffect(new Glow(0.8));
+                    
+                    AudioManager.getInstance().menuSounds.playButtonMousedOverSound();
                 }
             });
 

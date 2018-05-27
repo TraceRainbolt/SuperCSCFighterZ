@@ -11,6 +11,8 @@ import javafx.util.Duration;
 
 public abstract class Fighter extends GameObject {
 
+	FighterSounds fighterSounds;
+	
     private static final int SPEED = (int) (10 * Window.getHRatio());
 
     protected String side;

@@ -8,7 +8,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 public class Window extends Application {
-
+	
     // Currently just shows hitBox boundaries
     public static final boolean DEBUG = false;
 
@@ -66,6 +66,13 @@ public class Window extends Application {
     public static void switchScene(GameScene scene) {
         previousScene = currentScene;
         currentScene = scene;
+        
+        if (currentScene instanceof FightingStage) {
+        	AudioManager.getInstance().music.playFightMusic();
+        } else {
+        	AudioManager.getInstance().music.playMenuMusic();
+        }
+        
         getGame().getHandler().switchScene(scene);
         getGame().getStage().getScene().setRoot((Parent) scene);
     }

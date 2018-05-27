@@ -1,5 +1,7 @@
 package com.fighterz.main;
 
+import com.fighterz.main.FighterSounds.NoSuchFighterException;
+
 import javafx.animation.Animation;
 import javafx.animation.FadeTransition;
 import javafx.animation.KeyFrame;
@@ -21,6 +23,13 @@ public class FighterFalessi extends Fighter {
 
         HitBox hurtBox = new HitBox(this, HitBoxType.HURT, 240, 750, 20, 0);
         this.addHitBox(hurtBox);
+        
+        try {
+			fighterSounds = new FighterSounds("Falessi");
+		} catch (NoSuchFighterException e) {
+			e.printStackTrace();
+			System.exit(1);
+		}
     }
     
 
@@ -85,6 +94,9 @@ public class FighterFalessi extends Fighter {
         currentAnimation.setCycleCount(1);
         currentAnimation.play();
         currentAnimation.setOnFinished(e -> setIdle());
+        
+        // Play ranged attack sound
+        fighterSounds.playRangedSound();
     }
 
     // Sets all the params for the power ball hit box. Trial and error was used.
@@ -111,6 +123,9 @@ public class FighterFalessi extends Fighter {
     public void onCollide(HitBox hitBox) {
         super.onCollide(hitBox);
         System.out.println("Falessi Energy = " + energy);
+        
+        // Play takes damage sound
+        fighterSounds.playTakeDamageSound();
     }
 
 }

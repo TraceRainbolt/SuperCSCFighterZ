@@ -34,6 +34,16 @@ public class BackButton extends ImageView {
             	that.setScaleY(1);
             	
                 Window.switchScene(Window.getPreviousScene());
+                
+                AudioManager.getInstance().menuSounds.playButtonClickedSound();
+            }
+        });
+        
+        // On mouse over, play button moused over sound
+        this.addEventHandler(MouseEvent.MOUSE_ENTERED, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent e) {
+                AudioManager.getInstance().menuSounds.playButtonMousedOverSound();
             }
         });
 
