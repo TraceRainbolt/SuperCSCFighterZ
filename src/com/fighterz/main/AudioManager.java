@@ -25,7 +25,8 @@ public class AudioManager {
 	}
 
 	public class Music {
-		private MediaPlayer menuSong, fightSong;
+		private MediaPlayer menuSong;
+		private MediaPlayer fightSong;
 
 		private Music() {
 			Media menuSongMedia = new Media(
@@ -67,7 +68,8 @@ public class AudioManager {
 	}
 
 	public class MenuSounds {
-		private MediaPlayer buttonMousedOverSound, buttonClickedSound;
+		private MediaPlayer buttonMousedOverSound;
+		private MediaPlayer buttonClickedSound;
 
 		private MenuSounds() {
 			Media buttonMousedOverMedia = new Media(AudioManager.class.getClassLoader()

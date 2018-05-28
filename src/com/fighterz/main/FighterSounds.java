@@ -9,10 +9,12 @@ import java.util.Random;
 
 public class FighterSounds {
 
+	private static final String FALESSI_STR = "Falessi";
+	private static final String MAMMEN_STR = "Mammen";
 	// Lines for individual characters. Initialized as static so they are only
 	// loaded once.
-	static final private Lines falessiLines = new Lines("Falessi");
-	static final private Lines mammenLines = new Lines("Mammen");
+	private static final Lines falessiLines = new Lines(FALESSI_STR);
+	private static final Lines mammenLines = new Lines(MAMMEN_STR);
 	// Holds all lines for this fighter
 	private Lines lines;
 	// Ensures only one sound can play at a time
@@ -23,11 +25,11 @@ public class FighterSounds {
 	private IdleSoundManager idleSoundManager = new IdleSoundManager();
 	private static boolean idleSoundIsPlaying = false;
 
-	// Pass in either "Falessi" or "Mammen"
+	// Pass in either FALESSI_STR or MAMMEN_STR
 	public FighterSounds(String fighterName) throws NoSuchFighterException {
-		if (fighterName.toLowerCase().equals("Falessi".toLowerCase())) {
+		if (fighterName.equalsIgnoreCase(FALESSI_STR)) {
 			lines = falessiLines;
-		} else if (fighterName.toLowerCase().equals("Mammen".toLowerCase())) {
+		} else if (fighterName.equalsIgnoreCase(MAMMEN_STR)) {
 			lines = mammenLines;
 		} else {
 			throw new NoSuchFighterException("Unable to create fighter with name \"" + fighterName + "\"");
@@ -44,18 +46,6 @@ public class FighterSounds {
 		}
 	}
 
-	private static void addLinesFromFolderToArrayList(String folder, ArrayList<MediaPlayer> arr) {
-		try {
-			File[] files = new File(FighterSounds.class.getClassLoader().getResource(folder).toURI()).listFiles();
-			for (File f : files) {
-				arr.add(new MediaPlayer(new Media(f.toURI().toString())));
-			}
-		} catch (URISyntaxException e) {
-			e.printStackTrace();
-			System.exit(1);
-		}
-	}
-
 	// MARK: Methods to play sounds
 	public void playBeginGameSound() {
 		playExclusiveRandomSoundFromArrayList(lines.beginGame);
@@ -67,8 +57,10 @@ public class FighterSounds {
 
 	public void playTakeDamageSound() {
 		MediaPlayer takeDamageSound = getRandomSoundFromArrayList(lines.hit);
-		takeDamageSound.stop();
-		takeDamageSound.play();
+		if (takeDamageSound != null) {
+			takeDamageSound.stop();
+			takeDamageSound.play();
+		}
 		playExclusiveRandomSoundFromArrayList(lines.takeDamage);
 	}
 
@@ -97,14 +89,16 @@ public class FighterSounds {
 		}
 		// Get and play new random sound
 		playingSound = getRandomSoundFromArrayList(arr);
-		playingSound.play();
+		if (playingSound != null) {
+			playingSound.play();
+		}
 	}
 
 	private MediaPlayer getRandomSoundFromArrayList(ArrayList<MediaPlayer> arr) {
 		int index;
 
 		// If there's nothing in the given ArrayList, do nothing
-		if (arr.size() == 0) {
+		if (arr.isEmpty()) {
 			return null;
 		}
 
@@ -114,7 +108,14 @@ public class FighterSounds {
 	}
 
 	private static class Lines {
-		private ArrayList<MediaPlayer> beginGame, idle, takeDamage, mele, ranged, jump, victory, hit;
+		private ArrayList<MediaPlayer> beginGame;
+		private ArrayList<MediaPlayer> idle;
+		private ArrayList<MediaPlayer> takeDamage;
+		private ArrayList<MediaPlayer> mele;
+		private ArrayList<MediaPlayer> ranged;
+		private ArrayList<MediaPlayer> jump;
+		private ArrayList<MediaPlayer> victory;
+		private ArrayList<MediaPlayer> hit;
 
 		// Almost a factory, but you don't need a factory this way
 		public Lines(String fighterName) {
@@ -128,7 +129,7 @@ public class FighterSounds {
 			hit = new ArrayList<>();
 
 			addLinesFromFolderToArrayList("Audio/Fighter Sounds/Hit", hit);
-			if (fighterName.toLowerCase().equals("Falessi".toLowerCase())) {
+			if (fighterName.equalsIgnoreCase(FALESSI_STR)) {
 				// Initialize Falessi's lines
 				addLinesFromFolderToArrayList("Audio/Fighter Sounds/Falessi/Begin Game", beginGame);
 				addLinesFromFolderToArrayList("Audio/Fighter Sounds/Falessi/Idle", idle);
@@ -137,7 +138,7 @@ public class FighterSounds {
 				addLinesFromFolderToArrayList("Audio/Fighter Sounds/Falessi/Ranged", ranged);
 				addLinesFromFolderToArrayList("Audio/Fighter Sounds/Falessi/Take Damage", takeDamage);
 				addLinesFromFolderToArrayList("Audio/Fighter Sounds/Falessi/Victory", victory);
-			} else if (fighterName.toLowerCase().equals("Mammen".toLowerCase())) {
+			} else if (fighterName.equalsIgnoreCase(MAMMEN_STR)) {
 				// Initialize Mammen's lines
 				addLinesFromFolderToArrayList("Audio/Fighter Sounds/Mammen/Begin Game", beginGame);
 				addLinesFromFolderToArrayList("Audio/Fighter Sounds/Mammen/Idle", idle);
@@ -152,17 +153,33 @@ public class FighterSounds {
 				System.exit(1);
 			}
 		}
+		
+		private static void addLinesFromFolderToArrayList(String folder, ArrayList<MediaPlayer> arr) {
+			try {
+				File[] files = new File(FighterSounds.class.getClassLoader().getResource(folder).toURI()).listFiles();
+				for (File f : files) {
+					arr.add(new MediaPlayer(new Media(f.toURI().toString())));
+				}
+			} catch (URISyntaxException e) {
+				e.printStackTrace();
+				System.exit(1);
+			}
+		}
 	}
 
 	// Waits random amounts of time, then plays an idle sound if nothing else is
 	// playing
 	private class IdleSoundManager extends Thread {
+		@Override
 		public void run() {
 			while (true) {
+				// Wait for random amount of time
 				try {
 					Thread.sleep((long) random.nextInt(9000) + 5000);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
+					// No longer smelly
+					Thread.currentThread().interrupt();
 				}
 				// Play idle sound if nothing else is playing
 				if (!idleSoundIsPlaying) {
@@ -172,7 +189,7 @@ public class FighterSounds {
 							|| playingSound.getCurrentTime().toMillis() == 0.0) {
 						playIdleSound();
 					} else {
-						// Sound shouldn't play because another idle sound is playing
+						// Sound shouldn't play idle sound because another idle sound is playing
 					}
 				}
 			}
