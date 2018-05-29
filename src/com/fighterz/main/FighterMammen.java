@@ -85,7 +85,14 @@ public class FighterMammen extends Fighter {
 
     private HitBox createPointerVisionHitbox() {
         HitBox hitBox = new HitBox(this, HitBoxType.HIT, 700, 140, -500, -110);
-        hitBox.setDamage(10);
+        if(this.poweredUp == true) {
+        	hitBox.setDamage(30);
+        	this.poweredUp = false;
+        	this.energy -= 100;
+        }
+        else {
+        	hitBox.setDamage(10);
+        }
         hitBox.setDelay(0.2);
         hitBox.setMaxDuration(8.5);
         return hitBox;

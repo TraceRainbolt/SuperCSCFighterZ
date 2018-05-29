@@ -73,6 +73,9 @@ public class Game {
         } else if(pressedKeys.contains(KeyCode.I) && pressedKeys.contains(KeyCode.L)) {
             fighterRight.teleportBehindYou();
         }
+        if (pressedKeys.contains(KeyCode.H) && !movementLockRight) {
+        	fighterRight.setPoweredUp();
+        }
     }
 
     private void handleFighterLeft() {
