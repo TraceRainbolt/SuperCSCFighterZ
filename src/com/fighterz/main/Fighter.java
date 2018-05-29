@@ -25,6 +25,8 @@ public abstract class Fighter extends GameObject {
     
     protected int energy;
     
+    protected boolean poweredUp;
+    
     public abstract void teleportBehindYou();
 
     public abstract void setAnimation(AnimationState state);
@@ -96,6 +98,15 @@ public abstract class Fighter extends GameObject {
 
     public List<HitBox> getHitBoxes() {
         return this.hitBoxes;
+    }
+    
+    public void setPoweredUp() {
+    	if(energy >= 100) {
+    		poweredUp = true;
+    	}
+    	else {
+    		System.out.println("Not enough energy!");
+    	}
     }
 
 }

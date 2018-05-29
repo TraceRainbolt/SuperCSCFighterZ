@@ -84,6 +84,9 @@ public class Game {
         if (pressedKeys.contains(KeyCode.E) && !movementLockLeft) {
             fighterLeft.setAnimation(AnimationState.POWER_MOVE);
         } 
+        if (pressedKeys.contains(KeyCode.F) && !movementLockLeft) {
+        	fighterLeft.setPoweredUp();
+        }
     }
 
     public void setMovementLock(boolean value, String side) {
