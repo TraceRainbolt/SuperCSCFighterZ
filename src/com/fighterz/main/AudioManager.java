@@ -3,8 +3,11 @@ package com.fighterz.main;
 import javafx.scene.media.*;
 
 public class AudioManager {
-
 	
+	// Required to get rid of code smell
+	private AudioManager() {
+	    throw new IllegalStateException("Utility class");
+	}
 	
 	public static class Music {
 		private static final MediaPlayer menuSong = new MediaPlayer(
@@ -12,19 +15,14 @@ public class AudioManager {
 		private static final MediaPlayer fightSong = new MediaPlayer(
 				new Media(AudioManager.class.getClassLoader().getResource("Audio/Music/Fight Theme.m4a").toString()));
 
+		// Required to get rid of code smell
+		private Music() {
+			throw new IllegalStateException("Static Class");
+		}
+		
 		private static void initMusic() {
-			// Media menuSongMedia = new Media(
-			// AudioManager.class.getClassLoader().getResource("Audio/Music/Main
-			// Theme.m4a").toString());
-			// menuSong = new MediaPlayer(menuSongMedia);
-
 			// Loop forever
 			menuSong.setCycleCount(MediaPlayer.INDEFINITE);
-
-			// Media fightSongMedia = new Media(
-			// AudioManager.class.getClassLoader().getResource("Audio/Music/Fight
-			// Theme.m4a").toString());
-			// fightSong = new MediaPlayer(fightSongMedia);
 			fightSong.setCycleCount(MediaPlayer.INDEFINITE);
 		}
 
@@ -66,14 +64,10 @@ public class AudioManager {
 		private static final MediaPlayer buttonClickedSound = new MediaPlayer(new Media(
 					AudioManager.class.getClassLoader().getResource("Audio/Menu Sounds/Button Clicked.wav").toString()));
 
-//		private MenuSounds() {
-//			Media buttonMousedOverMedia = new Media(AudioManager.class.getClassLoader()
-//					.getResource("Audio/Menu Sounds/Button Moused Over.wav").toString());
-//			buttonMousedOverSound = new MediaPlayer(buttonMousedOverMedia);
-//			Media buttonClickedMedia = new Media(
-//					AudioManager.class.getClassLoader().getResource("Audio/Menu Sounds/Button Clicked.wav").toString());
-//			buttonClickedSound = new MediaPlayer(buttonClickedMedia);
-//		}
+		// Required to get rid of code smell
+		private MenuSounds() {
+			throw new IllegalStateException("Static Class");
+		}
 
 		public static void playButtonMousedOverSound() {
 			buttonMousedOverSound.stop();
