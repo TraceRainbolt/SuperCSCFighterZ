@@ -19,28 +19,18 @@ public class AudioManager {
 		private Music() {
 			throw new IllegalStateException("Static Class");
 		}
-		
-		private static void initMusic() {
-			// Loop forever
-			menuSong.setCycleCount(MediaPlayer.INDEFINITE);
-			fightSong.setCycleCount(MediaPlayer.INDEFINITE);
-		}
 
 		// Play menu music and stop fighting music
 		public static void playMenuMusic() {
-			if (menuSong == null) {
-				initMusic();
-			}
 			fightSong.stop();
+			menuSong.setCycleCount(MediaPlayer.INDEFINITE);
 			menuSong.play();
 		}
 
 		// Play fighting music and stop menu music
 		public static void playFightMusic() {
-			if (menuSong == null) {
-				initMusic();
-			}
 			menuSong.stop();
+			fightSong.setCycleCount(MediaPlayer.INDEFINITE);
 			fightSong.play();
 		}
 
