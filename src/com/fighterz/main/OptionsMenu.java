@@ -101,7 +101,7 @@ public class OptionsMenu extends StackPane implements GameScene {
                     // So that the highlight doesn't appear on top of us
                     that.toFront();
                     
-                    AudioManager.getInstance().menuSounds.playButtonMousedOverSound();
+                    AudioManager.MenuSounds.playButtonMousedOverSound();
                 }
             });
 
@@ -119,7 +119,7 @@ public class OptionsMenu extends StackPane implements GameScene {
                     that.getChildren().clear();
                     render();
                     
-                    AudioManager.getInstance().menuSounds.playButtonClickedSound();
+                    AudioManager.MenuSounds.playButtonClickedSound();
                 }
             });
         }

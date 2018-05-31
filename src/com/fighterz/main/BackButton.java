@@ -35,7 +35,7 @@ public class BackButton extends ImageView {
             	
                 Window.switchScene(Window.getPreviousScene());
                 
-                AudioManager.getInstance().menuSounds.playButtonClickedSound();
+                AudioManager.MenuSounds.playButtonClickedSound();
             }
         });
         
@@ -43,7 +43,7 @@ public class BackButton extends ImageView {
         this.addEventHandler(MouseEvent.MOUSE_ENTERED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent e) {
-                AudioManager.getInstance().menuSounds.playButtonMousedOverSound();
+                AudioManager.MenuSounds.playButtonMousedOverSound();
             }
         });
 

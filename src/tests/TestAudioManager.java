@@ -1,7 +1,5 @@
 package tests;
 
-import static org.junit.Assert.*;
-
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -37,48 +35,35 @@ public class TestAudioManager {
 		Thread.sleep(500);
 	}
 
-	// Constructor test
-	@Test
-	public void testConstructor() {
-		AudioManager audioManager = AudioManager.getInstance();
-		assertNotEquals(null, audioManager);
-	}
-
 	// MenuSounds Tests
 	@Test
 	public void testButtonMousedOverSound() {
-		AudioManager audioManager = AudioManager.getInstance();
-		audioManager.menuSounds.playButtonMousedOverSound();
+		AudioManager.MenuSounds.playButtonMousedOverSound();
 	}
 
 	@Test
 	public void testButtonClickedSound() {
-		AudioManager audioManager = AudioManager.getInstance();
-		audioManager.menuSounds.playButtonClickedSound();
+		AudioManager.MenuSounds.playButtonClickedSound();
 	}
 
 	// Music Tests
 	@Test
 	public void testSetMusicVolume() {
-		AudioManager audioManager = AudioManager.getInstance();
-		audioManager.music.setMusicVolume(0.5);
+		AudioManager.Music.setMusicVolume(0.5);
 	}
 
 	@Test
 	public void testPlayFightMusic() {
-		AudioManager audioManager = AudioManager.getInstance();
-		audioManager.music.playFightMusic();
+		AudioManager.Music.playFightMusic();
 	}
 
 	@Test
 	public void testPlayMenuMusic() {
-		AudioManager audioManager = AudioManager.getInstance();
-		audioManager.music.playMenuMusic();
+		AudioManager.Music.playMenuMusic();
 	}
 
 	@Test
 	public void testStopAllMusic() {
-		AudioManager audioManager = AudioManager.getInstance();
-		audioManager.music.stopAllMusic();
+		AudioManager.Music.stopAllMusic();
 	}
 }

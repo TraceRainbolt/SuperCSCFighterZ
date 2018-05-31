@@ -1,5 +1,7 @@
 package com.fighterz.main;
 
+import java.util.logging.Logger;
+
 import com.fighterz.main.FighterSounds.NoSuchFighterException;
 
 import javafx.animation.Animation;
@@ -10,6 +12,7 @@ import javafx.scene.image.Image;
 import javafx.util.Duration;
 
 public class FighterMammen extends Fighter {
+	private static final Logger logger = Logger.getLogger(FighterMammen.class.getName());
 
     private final Image idleImage = new Image("SpriteMammenIdle.png", false);
     private final Image pointerVision = new Image("SpriteMammenPointerVision.png", false);
@@ -24,7 +27,7 @@ public class FighterMammen extends Fighter {
         try {
 			fighterSounds = new FighterSounds("Mammen");
 		} catch (NoSuchFighterException e) {
-			e.printStackTrace();
+			logger.severe("Unable to create FighterSounds for Mammen");
 			System.exit(1);
 		}
     }

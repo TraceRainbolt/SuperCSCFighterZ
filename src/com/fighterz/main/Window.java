@@ -68,9 +68,9 @@ public class Window extends Application {
         currentScene = scene;
         
         if (currentScene instanceof FightingStage) {
-        	AudioManager.getInstance().music.playFightMusic();
+        	AudioManager.Music.playFightMusic();
         } else {
-        	AudioManager.getInstance().music.playMenuMusic();
+        	AudioManager.Music.playMenuMusic();
         }
         
         getGame().getHandler().switchScene(scene);

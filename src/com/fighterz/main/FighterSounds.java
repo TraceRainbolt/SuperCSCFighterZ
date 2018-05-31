@@ -6,8 +6,10 @@ import java.io.File;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.logging.Logger;
 
 public class FighterSounds {
+	private static final Logger logger = Logger.getLogger(FighterSounds.class.getName());
 
 	private static final String FALESSI_STR = "Falessi";
 	private static final String MAMMEN_STR = "Mammen";
@@ -161,7 +163,7 @@ public class FighterSounds {
 					arr.add(new MediaPlayer(new Media(f.toURI().toString())));
 				}
 			} catch (URISyntaxException e) {
-				e.printStackTrace();
+				logger.severe("Can't add lines from folder to array list -- " + e.getMessage());
 				System.exit(1);
 			}
 		}
@@ -177,7 +179,7 @@ public class FighterSounds {
 				try {
 					Thread.sleep((long) random.nextInt(9000) + 5000);
 				} catch (InterruptedException e) {
-					e.printStackTrace();
+					logger.warning("IdleSoundManager's thread was interrupted: " + e.getMessage());
 					// No longer smelly
 					Thread.currentThread().interrupt();
 				}
