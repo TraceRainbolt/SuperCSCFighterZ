@@ -12,7 +12,7 @@
 	  </dependency> 
   </dependencies>
   <build>
-    <sourceDirectory>src</sourceDirectory>
+    <sourceDirectory>src/com/fighterz/main</sourceDirectory>
     <resources>
       <resource>
         <directory>Resources</directory>

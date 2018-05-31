@@ -25,7 +25,11 @@ public class TestAudioManager {
 	public static void initJFX() throws InterruptedException {
 		Thread t = new Thread("JavaFX Init Thread") {
 			public void run() {
-				Application.launch(AsNonApp.class, new String[0]);
+				try {
+					Application.launch(AsNonApp.class, new String[0]);
+				} catch (Exception e) {
+					// Don't launch another application if one is already running
+				}
 			}
 		};
 		t.setDaemon(true);
