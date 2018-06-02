@@ -4,6 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import javafx.animation.Animation;
+import javafx.animation.FadeTransition;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -26,8 +27,6 @@ public abstract class Fighter extends GameObject {
     protected int energy;
     
     protected boolean poweredUp;
-    
-    public abstract void teleportBehindYou();
 
     public abstract void setAnimation(AnimationState state);
 
@@ -94,6 +93,31 @@ public abstract class Fighter extends GameObject {
             new KeyFrame(new Duration(400), new KeyValue(this.getSprite().translateYProperty(), 0 * Window.getHRatio())));
         timeline.setCycleCount(1);
         timeline.play();
+    }
+    
+
+    public void teleportBehindYou() {
+        Window.getGame().setMovementLock(true, side);
+        FadeTransition fade = new FadeTransition(Duration.millis(300), this.getSprite());
+        fade.setFromValue(1.0);
+        fade.setToValue(0.0);
+        fade.setCycleCount(1);
+        fade.play();
+        fade.setOnFinished(e -> nothingPersonnelKid());
+    }
+    
+    // TODO get other fighter instead of left
+    private void nothingPersonnelKid() {
+    	Fighter otherFighter = this.side == "left" ? Window.getGame().getFightingStage().getFighterRight() : Window.getGame().getFightingStage().getFighterLeft();
+    	double x = otherFighter.getX();
+        this.setX(x - 230 * this.getFlipped() * Window.getHRatio());
+        this.setFlip(this.getFlipped() == 1 ? true : false);
+        FadeTransition fade = new FadeTransition(Duration.millis(300), this.getSprite());
+        fade.setFromValue(0.0);
+        fade.setToValue(1.0);
+        fade.setCycleCount(1);
+        fade.play();
+        fade.setOnFinished(e -> Window.getGame().setMovementLock(false, side));
     }
 
     public List<HitBox> getHitBoxes() {

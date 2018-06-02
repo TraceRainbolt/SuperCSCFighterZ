@@ -5,20 +5,14 @@ import java.util.logging.Logger;
 import com.fighterz.main.FighterSounds.NoSuchFighterException;
 
 import javafx.animation.Animation;
-import javafx.animation.FadeTransition;
-import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
-import javafx.animation.Timeline;
-import javafx.scene.effect.Blend;
-import javafx.scene.effect.BlendMode;
 import javafx.scene.image.Image;
 import javafx.util.Duration;
 
 public class FighterFalessi extends Fighter {
 	private static final Logger logger = Logger.getLogger(Fighter.class.getName());
 
-    private final Image powerBallImage = new Image("SpriteFalessiPowerBall.png", false);
-    private final Image idleImage = new Image("SpriteFalessiIdle.png", false);
+    private static final Image powerBallImage = new Image("SpriteFalessiPowerBall.png", false);
+    private static final Image idleImage = new Image("SpriteFalessiIdle.png", false);
 
     public FighterFalessi(String side) {
         super(side);
@@ -62,29 +56,6 @@ public class FighterFalessi extends Fighter {
         }
     }
 
-    public void teleportBehindYou() {
-        Window.getGame().setMovementLock(true, side);
-        FadeTransition fade = new FadeTransition(Duration.millis(300), this.getSprite());
-        fade.setFromValue(1.0);
-        fade.setToValue(0.0);
-        fade.setCycleCount(1);
-        fade.play();
-        fade.setOnFinished(e -> nothingPersonnelKid());
-
-    }
-    
-    // TODO get other fighter instead of left
-    private void nothingPersonnelKid() {
-        this.setX(Window.getGame().getFightingStage().getFighterLeft().getX() - 300 * this.getFlipped() * Window.getHRatio());
-        this.setFlip(this.getFlipped() == 1 ? true : false);
-        FadeTransition fade = new FadeTransition(Duration.millis(300), this.getSprite());
-        fade.setFromValue(0.0);
-        fade.setToValue(1.0);
-        fade.setCycleCount(1);
-        fade.play();
-        fade.setOnFinished(e -> Window.getGame().setMovementLock(false, side));
-    }
-
     private void setPowerBall() {
         HitBox hitBox = createPowerBallHitbox();
         this.addHitBox(hitBox);
@@ -92,7 +63,7 @@ public class FighterFalessi extends Fighter {
         this.setSprite(powerBallImage);
         this.getSprite().setX(this.getSprite().getX() + 100);
         currentAnimation = new SpriteAnimation(this.getSprite(), Duration.millis(1000), 29,
-                (int) (375 * Window.getHRatio() * this.getFlipped()));
+                (int) (375 * this.sizeRatio * this.getFlipped()));
         
         currentAnimation.setCycleCount(1);
         currentAnimation.play();
@@ -114,9 +85,9 @@ public class FighterFalessi extends Fighter {
         	hitBox.setDamage(10);
         }
         hitBox.setIndependent(true);
-        hitBox.setDelay(2);
-        hitBox.setXVelocity(-7 * Window.getHRatio());
-        hitBox.setMaxDuration(4.2);
+        hitBox.setDelay(0.7);
+        hitBox.setXVelocity(-30 * this.sizeRatio);
+        hitBox.setMaxDuration(1.23);
         return hitBox;
     }
 

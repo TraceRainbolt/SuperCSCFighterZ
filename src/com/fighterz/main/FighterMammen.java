@@ -14,8 +14,8 @@ import javafx.util.Duration;
 public class FighterMammen extends Fighter {
 	private static final Logger logger = Logger.getLogger(FighterMammen.class.getName());
 
-    private final Image idleImage = new Image("SpriteMammenIdle.png", false);
-    private final Image pointerVision = new Image("SpriteMammenPointerVision.png", false);
+    private static final Image idleImage = new Image("SpriteMammenIdle.png", false);
+    private static final Image pointerVision = new Image("SpriteMammenPointerVision.png", false);
 
     public FighterMammen(String side) {
         super(side);
@@ -76,7 +76,7 @@ public class FighterMammen extends Fighter {
         this.getSprite().setX(this.getSprite().getX() + 100);
         
         currentAnimation = new SpriteAnimation(this.getSprite(), Duration.millis(1000), 25,
-                (int) (375 * Window.getHRatio() * this.getFlipped()));
+                (int) (375 * this.sizeRatio * this.getFlipped()));
         
         currentAnimation.setCycleCount(1);
         currentAnimation.play();
@@ -97,7 +97,7 @@ public class FighterMammen extends Fighter {
         	hitBox.setDamage(10);
         }
         hitBox.setDelay(0.2);
-        hitBox.setMaxDuration(8.5);
+        hitBox.setMaxDuration(2.0);
         return hitBox;
     }
 
@@ -117,12 +117,6 @@ public class FighterMammen extends Fighter {
         
         // Play takes damage sound
  		fighterSounds.playTakeDamageSound();
-    }
-
-    @Override
-    public void teleportBehindYou() {
-        // TODO Auto-generated method stub
-        
     }
 
 }

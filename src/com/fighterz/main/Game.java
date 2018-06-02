@@ -17,6 +17,7 @@ public class Game {
 
     private CharacterSelectScreen charSelectScreen;
     private FightingStage fightingStage;
+    private MainMenu mainMenu;
 
     private Scene scene;
     private Stage pStage;
@@ -35,7 +36,7 @@ public class Game {
         this.charSelectScreen = new CharacterSelectScreen();
         
         OptionsMenu optionsMenu = new OptionsMenu();
-        MainMenu mainMenu = new MainMenu(charSelectScreen, fightingStage, optionsMenu);
+        this.mainMenu = new MainMenu(charSelectScreen, fightingStage, optionsMenu);
 
         this.scene = new Scene(mainMenu);
         Window.initCurrentScene(mainMenu);
@@ -52,10 +53,10 @@ public class Game {
     }
 
     private void resolveKeyPresses() {
-        if (fighterRight != null) {
+        if (fighterRight != null && !movementLockRight) {
             handleFighterRight();
         }
-        if(fighterLeft != null) {
+        if(fighterLeft != null && !movementLockLeft) {
             handleFighterLeft();
         }
         if(Window.getGameScene() instanceof CharacterSelectScreen)
@@ -68,7 +69,7 @@ public class Game {
         } else if (pressedKeys.contains(KeyCode.J) && !pressedKeys.contains(KeyCode.L)) {
             fighterRight.moveLeft();
         }
-        if (pressedKeys.contains(KeyCode.O) && !movementLockRight) {
+        if (pressedKeys.contains(KeyCode.O)) {
             fighterRight.setAnimation(AnimationState.POWER_MOVE);
         } else if(pressedKeys.contains(KeyCode.I) && pressedKeys.contains(KeyCode.L)) {
             fighterRight.teleportBehindYou();
@@ -84,9 +85,11 @@ public class Game {
         } else if (pressedKeys.contains(KeyCode.A) && !pressedKeys.contains(KeyCode.D)) {
             fighterLeft.moveLeft();
         }
-        if (pressedKeys.contains(KeyCode.E) && !movementLockLeft) {
+        if (pressedKeys.contains(KeyCode.E)) {
             fighterLeft.setAnimation(AnimationState.POWER_MOVE);
-        } 
+        } else if(pressedKeys.contains(KeyCode.D) && pressedKeys.contains(KeyCode.W)) {
+        	fighterLeft.teleportBehindYou();
+        }
         if (pressedKeys.contains(KeyCode.F) && !movementLockLeft) {
         	fighterLeft.setPoweredUp();
         }
@@ -119,6 +122,11 @@ public class Game {
             handler.addHitBox(hitBox);
         }
     }
+    
+    public void nullFighters() {
+    	fighterRight = null;
+    	fighterLeft = null;
+    }
 
     public void setStage(Stage stage) {
         pStage = stage;
@@ -150,4 +158,12 @@ public class Game {
     public Handler getHandler() {
         return handler;
     }
+
+	public GameScene getMainMenu() {
+		return mainMenu;
+	}
+
+	public GameScene getCharSelect() {
+		return charSelectScreen;
+	}
 }

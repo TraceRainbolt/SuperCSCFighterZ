@@ -25,7 +25,7 @@ public class FightingStage extends StackPane implements GameScene {
     }
 
     public void render() {
-        BackButton backBtn = new BackButton();
+        BackButton backBtn = new BackButton(Window.getGame().getCharSelect());
         SimpleImage background = new SimpleImage("StageBasketball.jpg", true);
 
         this.getNodes().add(background);
@@ -42,7 +42,12 @@ public class FightingStage extends StackPane implements GameScene {
     public void setFighterLeft(Fighter fighter) {
         fighter.setX(-400 * Window.getHRatio());
         this.fighterLeft = fighter;
-    } 
+    }
+    
+    public void nullFighters() {
+    	fighterRight = null;
+    	fighterLeft = null;
+    }
     
     public Fighter getFighterRight() {
         return fighterRight;

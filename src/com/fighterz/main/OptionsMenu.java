@@ -48,7 +48,7 @@ public class OptionsMenu extends StackPane implements GameScene {
         SimpleImage pointer = new SimpleImage("OptionPointer.png", false);
         SimpleImage container = new SimpleImage("OptionsContainer.png", true);
         SimpleImage heading = new SimpleImage("OptionsHeading.png", true);
-        BackButton backBtn = new BackButton();
+        BackButton backBtn = new BackButton(Window.getGame().getMainMenu());
 
         this.getChildren().addAll(imgView, backBtn, logoView, container, heading, minRes, medRes, maxRes, pointer);
 

@@ -2,17 +2,10 @@ package com.fighterz.main;
 
 import java.util.HashSet;
 
-import javafx.animation.Animation;
-import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
-import javafx.animation.Timeline;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.StackPane;
-import javafx.util.Duration;
 
 public class CharacterSelectScreen extends StackPane implements GameScene {
 	
@@ -45,6 +38,7 @@ public class CharacterSelectScreen extends StackPane implements GameScene {
     }
     
     private void setupCharSelect() {
+    	
         SimpleImage background = new SimpleImage("CharacterSelectBG.png", true);
         
         SimpleImage blackBarLeft = new SimpleImage("CharacterSelectBlackBar.png", false);
@@ -70,7 +64,7 @@ public class CharacterSelectScreen extends StackPane implements GameScene {
         falessiIcon = new SimpleImage("CharacterSelectFalessiIcon.png", false);
         mammenIcon = new SimpleImage("CharacterSelectMammenIcon.png", false);
 
-        BackButton backBtn = new BackButton();
+        BackButton backBtn = new BackButton(Window.getGame().getMainMenu());
         
         this.getChildren().addAll(falessiCharRed, mammenCharRed, falessiCharBlue, 
                 mammenCharBlue, background, blackBarLeft, blackBarRight, 

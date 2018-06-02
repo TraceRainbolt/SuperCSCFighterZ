@@ -9,6 +9,7 @@ import javafx.event.EventHandler;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.effect.Glow;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -56,7 +57,26 @@ public class MainMenu extends StackPane implements GameScene {
         options.setTranslateX(maxX / 2);
         exit.setTranslateX(maxX);
 
-        this.getChildren().addAll(background, logoView, play, leaderboards, options, exit);
+        this.getChildren().addAll(background, logoView);
+        setupYellowBar();
+        this.getChildren().addAll(play, leaderboards, options, exit);
+    }
+    
+    private void setupYellowBar() {
+    	SimpleImage yellowBar = new SimpleImage("MainMenuYellowBar.png", false);
+        SimpleImage menuMask = new SimpleImage("MainMenuMask.png", false);
+    	
+        Timeline timeline = new Timeline();
+        timeline.getKeyFrames().addAll(
+    		new KeyFrame(Duration.ZERO, new KeyValue(yellowBar.translateYProperty(), -2 * Window.getHRatio())),
+            new KeyFrame(new Duration(1600), new KeyValue(yellowBar.translateYProperty(), -80 * Window.getHRatio()))
+        );
+        timeline.setCycleCount(Animation.INDEFINITE);
+        timeline.play();
+        
+        yellowBar.setOpacity(0.7);
+     
+        this.getChildren().addAll(yellowBar, menuMask);
     }
 
     protected static ImageView setupLogo() {
@@ -90,6 +110,8 @@ public class MainMenu extends StackPane implements GameScene {
     }
 
     private class MainMenuButton extends Label {
+    	
+    	private DropShadow dropShadow;
 
         public MainMenuButton(String label, GameScene newScene) {
             super(label);
@@ -126,6 +148,14 @@ public class MainMenu extends StackPane implements GameScene {
             this.setFont(Font.font("Myriad Pro", FontWeight.NORMAL, Window.getHRatio() * 54));
             this.setTextFill(Color.WHITE);
             this.setCursor(Cursor.HAND);
+            
+            this.dropShadow = dropShadow = new DropShadow();
+            dropShadow.setRadius(1.6);
+            dropShadow.setOffsetX(2.0);
+            dropShadow.setOffsetY(2.0);
+            dropShadow.setColor(Color.BLACK);
+            
+            this.setEffect(dropShadow);
 
             // Relative height to window size, 1/4 of the way up from the bottom
             this.setTranslateY(Window.getHeight() / 2 - Window.getHeight() / 4);
@@ -137,7 +167,7 @@ public class MainMenu extends StackPane implements GameScene {
             this.addEventHandler(MouseEvent.MOUSE_ENTERED, new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent e) {
-                    that.setEffect(new Glow(0.8));
+                    that.dropShadow.setInput(new Glow(0.8));
                     
                     AudioManager.MenuSounds.playButtonMousedOverSound();
                 }
@@ -146,11 +176,10 @@ public class MainMenu extends StackPane implements GameScene {
             this.addEventHandler(MouseEvent.MOUSE_EXITED, new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent e) {
-                    that.setEffect(null);
+                	that.dropShadow.setInput(null);
+                    that.setEffect(that.dropShadow);
                 }
             });
-
-            addGlowEffect(this);
         }
     }
 }

@@ -6,15 +6,17 @@ import java.util.List;
 import javafx.scene.image.Image;
 
 public abstract class GameObject {
+	
+    public abstract void tick();
+
+    public abstract List<HitBox> getHitBoxes();
 
     private SimpleImage sprite = new SimpleImage("spriteFalessiIdle.png");
 
     private double x;
     private double y;
-
-    public abstract void tick();
-
-    public abstract List<HitBox> getHitBoxes();
+    
+    protected double sizeRatio = Window.getHRatio() * 0.8;
 
     protected abstract void onCollide(HitBox hitBox);
 
@@ -24,8 +26,8 @@ public abstract class GameObject {
     
     public void setSprite(Image image) {
         this.sprite.setImage(image);
-        this.sprite.setWidth((int) (image.getWidth() * Window.getHRatio()));
-        this.sprite.setHeight((int) (image.getHeight() * Window.getHRatio()));
+        this.sprite.setWidth((int) (image.getWidth() * sizeRatio));
+        this.sprite.setHeight((int) (image.getHeight() * sizeRatio));
         this.sprite.setPreserveRatio(true);
     }
 

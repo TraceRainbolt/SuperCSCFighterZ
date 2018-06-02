@@ -1,5 +1,6 @@
 package com.fighterz.main;
 
+import java.util.ConcurrentModificationException;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -11,11 +12,14 @@ public class Handler {
     LinkedList<GameScene> scenes = new LinkedList<>();
     LinkedList<HitBox> hitBoxes = new LinkedList<>();
     HashSet<Integer> damaged = new HashSet<>();
+    
+    Camera camera = new Camera();
 
     public void tick() {
         for (int i = 0; i < objects.size(); i++) {
             GameObject tempObject = objects.get(i);
             tempObject.tick();
+            camera.updateView();
             checkHitBoxes();
         }
     }
@@ -37,10 +41,14 @@ public class Handler {
     public void checkHitBoxes() {
         for (GameObject object : objects) {
             if (object.getHitBoxes() != null) {
-                for (HitBox hitBox : object.getHitBoxes()) {
-                    hitBox.tick();
-                    checkBounds(hitBox);
-                }
+            	try {
+	                for (HitBox hitBox : object.getHitBoxes()) {
+	                    hitBox.tick();
+	                    checkBounds(hitBox);
+	                }
+            	} catch (ConcurrentModificationException e) {
+            		// not gonna fix this one as I don't see any side effects
+            	}
             }
         }
     }

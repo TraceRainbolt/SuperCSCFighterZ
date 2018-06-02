@@ -8,8 +8,14 @@ import javafx.scene.input.MouseEvent;
 
 public class BackButton extends ImageView {
 
-    public BackButton() {
+    public BackButton(GameScene prevScene) {
         super(new Image("BackIcon.png"));
+        
+        FightingStage stage = Window.getGame().getFightingStage();
+        if(stage != null) {
+        	stage.nullFighters();
+        	Window.getGame().nullFighters();
+        }
 
         this.setCursor(Cursor.HAND);
         double side = Window.getHRatio() * new Image("BackIcon.png").getHeight();
@@ -33,7 +39,7 @@ public class BackButton extends ImageView {
             	that.setScaleX(1);
             	that.setScaleY(1);
             	
-                Window.switchScene(Window.getPreviousScene());
+                Window.switchScene(prevScene);
                 
                 AudioManager.MenuSounds.playButtonClickedSound();
             }
