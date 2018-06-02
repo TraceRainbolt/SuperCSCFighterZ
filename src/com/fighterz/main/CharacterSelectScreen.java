@@ -3,6 +3,9 @@ package com.fighterz.main;
 import java.util.HashSet;
 
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
+import javafx.concurrent.WorkerStateEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.StackPane;
@@ -121,17 +124,34 @@ public class CharacterSelectScreen extends StackPane implements GameScene {
 		
 		if(pressedKeys.contains(KeyCode.ENTER)) {
 			if(redSelected != null && blueSelected != null) {
-				Window.switchScene(Window.getGame().getFightingStage());
-				if(redSelected == falessiCharRed) {
-				    Window.getGame().addFighter(new FighterFalessi("left"));
-				} else {
-				    Window.getGame().addFighter(new FighterMammen("left"));
-				}
-                if(blueSelected == falessiCharBlue) {
-                    Window.getGame().addFighter(new FighterFalessi("right"));
-                } else {
-                    Window.getGame().addFighter(new FighterMammen("right"));
-                }
+		        Task<Void> sleeper = new Task<Void>() {
+		            @Override
+		            protected Void call() throws Exception {
+		                try {
+							Window.switchScene(new LoadingScreen());
+		                    Thread.sleep(300);
+		                } catch (InterruptedException e) {
+		                }
+		                return null;
+		            }
+		        };
+		        sleeper.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+		            @Override
+		            public void handle(WorkerStateEvent event) {
+						Window.switchScene(Window.getGame().getFightingStage());
+						if(redSelected == falessiCharRed) {
+						    Window.getGame().addFighter(new FighterFalessi("left"));
+						} else {
+						    Window.getGame().addFighter(new FighterMammen("left"));
+						}
+		                if(blueSelected == falessiCharBlue) {
+		                    Window.getGame().addFighter(new FighterFalessi("right"));
+		                } else {
+		                    Window.getGame().addFighter(new FighterMammen("right"));
+		                }
+		            }
+		        });
+		        new Thread(sleeper).start();
 			}
 		}
 		
