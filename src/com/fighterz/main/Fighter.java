@@ -27,6 +27,8 @@ public abstract class Fighter extends GameObject {
     protected int energy;
     
     protected boolean poweredUp;
+    
+    protected double health;
 
     public abstract void setAnimation(AnimationState state);
 
@@ -35,6 +37,7 @@ public abstract class Fighter extends GameObject {
 
         hitBoxes = new LinkedList<>();
         energy = 0;
+        health = 100;
     }
 
     public void tick() {
@@ -132,6 +135,10 @@ public abstract class Fighter extends GameObject {
     	else {
     		System.out.println("Not enough energy!");
     	}
+    }
+    
+    public void subtractHealth(double amount) {
+    	health -= amount;
     }
 
 }

@@ -108,5 +108,13 @@ public class FighterFalessi extends Fighter {
         // Play takes damage sound
         fighterSounds.playTakeDamageSound();
     }
+    
+    @Override
+    public void subtractHealth(double amount) {
+    	super.subtractHealth(amount);
+    	if(this.health <= 0) {
+    		System.out.println("Falessi is dead!");
+    	}
+    }
 
 }

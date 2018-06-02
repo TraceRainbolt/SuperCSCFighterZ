@@ -76,6 +76,7 @@ public class FightingStage extends StackPane implements GameScene {
         timeline.play();
 
         fullHealthBarRight.setClip(rightHealth);
+        fighterRight.subtractHealth(amount);
     }
 
     private void subtractLeftHealth(double amount) {
@@ -90,6 +91,7 @@ public class FightingStage extends StackPane implements GameScene {
         timeline.play();
 
         fullHealthBarLeft.setClip(leftHealth);
+        fighterLeft.subtractHealth(amount);
     }
 
     public void setupHealthBars() {

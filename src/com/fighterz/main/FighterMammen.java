@@ -118,5 +118,14 @@ public class FighterMammen extends Fighter {
         // Play takes damage sound
  		fighterSounds.playTakeDamageSound();
     }
+    
+    @Override
+    public void subtractHealth(double amount) {
+    	super.subtractHealth(amount);
+    	if(this.health <= 0) {
+    		System.out.println("Mammen is dead!");
+    	}
+    	
+    }
 
 }
