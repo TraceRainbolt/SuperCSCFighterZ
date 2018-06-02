@@ -85,13 +85,8 @@ public class FighterSounds {
 	}
 	
 	public void playTeleportSound() {
-//		MediaPlayer teleportSound = getRandomSoundFromArrayList(lines.teleport);
 		System.out.println("playing teleport sound");
 		MediaPlayer teleportSound = lines.teleport.get(0);
-//		if (teleportSound != null) {
-//			teleportSound.stop();
-//			teleportSound.play();
-//		}
 		teleportSound.seek(Duration.ZERO);
 		teleportSound.play();
 	}
