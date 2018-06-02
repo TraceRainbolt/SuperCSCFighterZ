@@ -77,6 +77,9 @@ public class Game {
         if (pressedKeys.contains(KeyCode.H) && !movementLockRight) {
         	fighterRight.setPoweredUp();
         }
+        if(pressedKeys.contains(KeyCode.N) && !movementLockRight) {
+        	fighterRight.setBlockOn();
+        }
     }
 
     private void handleFighterLeft() {
@@ -92,6 +95,9 @@ public class Game {
         }
         if (pressedKeys.contains(KeyCode.F) && !movementLockLeft) {
         	fighterLeft.setPoweredUp();
+        }
+        if(pressedKeys.contains(KeyCode.C) && !movementLockLeft) {
+        	fighterLeft.setBlockOn();
         }
     }
 

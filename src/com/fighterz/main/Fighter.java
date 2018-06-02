@@ -28,6 +28,8 @@ public abstract class Fighter extends GameObject {
     
     protected boolean poweredUp;
     
+    protected boolean isBlocking;
+    
     protected double health;
 
     public abstract void setAnimation(AnimationState state);
@@ -139,6 +141,10 @@ public abstract class Fighter extends GameObject {
     
     public void subtractHealth(double amount) {
     	health -= amount;
+    }
+    
+    public void setBlockOn() {
+    	isBlocking = true;
     }
 
 }
