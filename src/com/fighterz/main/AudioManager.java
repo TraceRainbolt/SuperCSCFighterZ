@@ -1,6 +1,7 @@
 package com.fighterz.main;
 
 import javafx.scene.media.*;
+import javafx.util.Duration;
 
 public class AudioManager {
 	
@@ -24,6 +25,7 @@ public class AudioManager {
 		public static void playMenuMusic() {
 			fightSong.stop();
 			menuSong.setCycleCount(MediaPlayer.INDEFINITE);
+			menuSong.seek(Duration.ZERO);
 			menuSong.play();
 		}
 
@@ -31,6 +33,7 @@ public class AudioManager {
 		public static void playFightMusic() {
 			menuSong.stop();
 			fightSong.setCycleCount(MediaPlayer.INDEFINITE);
+			fightSong.seek(Duration.ZERO);
 			fightSong.play();
 		}
 
@@ -61,11 +64,13 @@ public class AudioManager {
 
 		public static void playButtonMousedOverSound() {
 			buttonMousedOverSound.stop();
+			buttonMousedOverSound.seek(Duration.ZERO);
 			buttonMousedOverSound.play();
 		}
 
 		public static void playButtonClickedSound() {
 			buttonClickedSound.stop();
+			buttonMousedOverSound.seek(Duration.ZERO);
 			buttonClickedSound.play();
 		}
 	}

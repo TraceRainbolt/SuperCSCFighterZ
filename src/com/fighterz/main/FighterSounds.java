@@ -1,6 +1,7 @@
 package com.fighterz.main;
 
 import javafx.scene.media.*;
+import javafx.util.Duration;
 
 import java.io.File;
 import java.net.URISyntaxException;
@@ -61,6 +62,7 @@ public class FighterSounds {
 		MediaPlayer takeDamageSound = getRandomSoundFromArrayList(lines.hit);
 		if (takeDamageSound != null) {
 			takeDamageSound.stop();
+			takeDamageSound.seek(Duration.ZERO);
 			takeDamageSound.play();
 		}
 		playExclusiveRandomSoundFromArrayList(lines.takeDamage);
@@ -81,6 +83,18 @@ public class FighterSounds {
 	public void playVictorySound() {
 		playExclusiveRandomSoundFromArrayList(lines.victory);
 	}
+	
+	public void playTeleportSound() {
+//		MediaPlayer teleportSound = getRandomSoundFromArrayList(lines.teleport);
+		System.out.println("playing teleport sound");
+		MediaPlayer teleportSound = lines.teleport.get(0);
+//		if (teleportSound != null) {
+//			teleportSound.stop();
+//			teleportSound.play();
+//		}
+		teleportSound.seek(Duration.ZERO);
+		teleportSound.play();
+	}
 
 	// Unexpected Behavior: Occasionally doesn't play sounds when called even if
 	// index is generated
@@ -92,6 +106,7 @@ public class FighterSounds {
 		// Get and play new random sound
 		playingSound = getRandomSoundFromArrayList(arr);
 		if (playingSound != null) {
+			playingSound.seek(Duration.ZERO);
 			playingSound.play();
 		}
 	}
@@ -118,6 +133,7 @@ public class FighterSounds {
 		private ArrayList<MediaPlayer> jump;
 		private ArrayList<MediaPlayer> victory;
 		private ArrayList<MediaPlayer> hit;
+		private ArrayList<MediaPlayer> teleport;
 
 		// Almost a factory, but you don't need a factory this way
 		public Lines(String fighterName) {
@@ -129,8 +145,10 @@ public class FighterSounds {
 			jump = new ArrayList<>();
 			victory = new ArrayList<>();
 			hit = new ArrayList<>();
+			teleport = new ArrayList<>();
 
-			addLinesFromFolderToArrayList("Audio/Fighter Sounds/Hit", hit);
+			addLinesFromFolderToArrayList("Audio/Fighter Sounds/All/Teleport", teleport);
+			addLinesFromFolderToArrayList("Audio/Fighter Sounds/All/Hit", hit);
 			if (fighterName.equalsIgnoreCase(FALESSI_STR)) {
 				// Initialize Falessi's lines
 				addLinesFromFolderToArrayList("Audio/Fighter Sounds/Falessi/Begin Game", beginGame);

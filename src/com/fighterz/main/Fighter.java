@@ -102,6 +102,7 @@ public abstract class Fighter extends GameObject {
         fade.setFromValue(1.0);
         fade.setToValue(0.0);
         fade.setCycleCount(1);
+        fighterSounds.playTeleportSound();
         fade.play();
         fade.setOnFinished(e -> nothingPersonnelKid());
     }
