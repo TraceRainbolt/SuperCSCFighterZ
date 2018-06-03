@@ -24,17 +24,21 @@ public class AudioManager {
 		// Play menu music and stop fighting music
 		public static void playMenuMusic() {
 			fightSong.stop();
-			menuSong.setCycleCount(MediaPlayer.INDEFINITE);
-			menuSong.seek(Duration.ZERO);
-			menuSong.play();
+			if (!menuSongIsPlaying()) {
+				menuSong.setCycleCount(MediaPlayer.INDEFINITE);
+				menuSong.seek(Duration.ZERO);
+				menuSong.play();
+			}
 		}
 
 		// Play fighting music and stop menu music
 		public static void playFightMusic() {
 			menuSong.stop();
-			fightSong.setCycleCount(MediaPlayer.INDEFINITE);
-			fightSong.seek(Duration.ZERO);
-			fightSong.play();
+			if (fightSong.getStatus() != MediaPlayer.Status.PLAYING) {
+				fightSong.setCycleCount(MediaPlayer.INDEFINITE);
+				fightSong.seek(Duration.ZERO);
+				fightSong.play();
+			}
 		}
 
 		// Stop all music (I don't know why you'd need this, but it seems useful
@@ -45,9 +49,17 @@ public class AudioManager {
 		}
 
 		// TODO: Use in options menu to change music volume
-		public static void setMusicVolume(double volume) {
+		public static void setVolume(double volume) {
 			menuSong.setVolume(volume);
 			fightSong.setVolume(volume);
+		}
+		
+		public static double getVolume() {
+			return menuSong.getVolume();
+		}
+		
+		public static boolean menuSongIsPlaying() {
+			return menuSong.getStatus() == MediaPlayer.Status.PLAYING;
 		}
 	}
 

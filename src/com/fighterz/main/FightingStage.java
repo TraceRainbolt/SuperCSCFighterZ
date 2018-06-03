@@ -4,7 +4,9 @@ import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.scene.Node;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Polygon;
 import javafx.util.Duration;
@@ -26,6 +28,14 @@ public class FightingStage extends StackPane implements GameScene {
 
     public void render() {
         BackButton backBtn = new BackButton(Window.getGame().getCharSelect());
+        // Kill the threads handling idle chatter from fighters
+        backBtn.addEventHandler(MouseEvent.MOUSE_PRESSED, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent e) {
+                fighterRight.fighterSounds.kill();
+                fighterLeft.fighterSounds.kill();
+            }
+        });
         SimpleImage background = new SimpleImage("StageBasketball.jpg", true);
 
         this.getNodes().add(background);

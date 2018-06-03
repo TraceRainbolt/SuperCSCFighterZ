@@ -9,15 +9,14 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.logging.Logger;
 
+import org.junit.validator.PublicClassValidator;
+
 public class FighterSounds {
 	private static final Logger logger = Logger.getLogger(FighterSounds.class.getName());
 
 	private static final String FALESSI_STR = "Falessi";
 	private static final String MAMMEN_STR = "Mammen";
-	// Lines for individual characters. Initialized as static so they are only
-	// loaded once.
-	private static final Lines falessiLines = new Lines(FALESSI_STR);
-	private static final Lines mammenLines = new Lines(MAMMEN_STR);
+
 	// Holds all lines for this fighter
 	private Lines lines;
 	// Ensures only one sound can play at a time
@@ -31,9 +30,9 @@ public class FighterSounds {
 	// Pass in either FALESSI_STR or MAMMEN_STR
 	public FighterSounds(String fighterName) throws NoSuchFighterException {
 		if (fighterName.equalsIgnoreCase(FALESSI_STR)) {
-			lines = falessiLines;
+			lines = new Lines(FALESSI_STR);
 		} else if (fighterName.equalsIgnoreCase(MAMMEN_STR)) {
-			lines = mammenLines;
+			lines = new Lines(MAMMEN_STR);
 		} else {
 			throw new NoSuchFighterException("Unable to create fighter with name \"" + fighterName + "\"");
 		}
@@ -61,7 +60,7 @@ public class FighterSounds {
 	public void playTakeDamageSound() {
 		MediaPlayer takeDamageSound = getRandomSoundFromArrayList(lines.hit);
 		if (takeDamageSound != null) {
-			takeDamageSound.stop();
+//			takeDamageSound.stop();
 			takeDamageSound.seek(Duration.ZERO);
 			takeDamageSound.play();
 		}
@@ -89,6 +88,12 @@ public class FighterSounds {
 		MediaPlayer teleportSound = lines.teleport.get(0);
 		teleportSound.seek(Duration.ZERO);
 		teleportSound.play();
+	}
+	
+	// Call to stop from playing idle sounds and properly shut down thread
+	public void kill() {
+		logger.warning("Killing idle sound manager thread");
+		idleSoundManager.kill();
 	}
 
 	// Unexpected Behavior: Occasionally doesn't play sounds when called even if
@@ -185,6 +190,10 @@ public class FighterSounds {
 	// Waits random amounts of time, then plays an idle sound if nothing else is
 	// playing
 	private class IdleSoundManager extends Thread {
+		public void kill() {
+			stop();
+		}
+		
 		@Override
 		public void run() {
 			while (true) {
@@ -194,7 +203,7 @@ public class FighterSounds {
 				} catch (InterruptedException e) {
 					logger.warning("IdleSoundManager's thread was interrupted: " + e.getMessage());
 					// No longer smelly
-					Thread.currentThread().interrupt();
+					interrupt();
 				}
 				// Play idle sound if nothing else is playing
 				if (!idleSoundIsPlaying) {

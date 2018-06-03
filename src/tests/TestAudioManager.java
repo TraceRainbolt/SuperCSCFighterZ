@@ -49,7 +49,7 @@ public class TestAudioManager {
 	// Music Tests
 	@Test
 	public void testSetMusicVolume() {
-		AudioManager.Music.setMusicVolume(0.5);
+		AudioManager.Music.setVolume(0.5);
 	}
 
 	@Test
