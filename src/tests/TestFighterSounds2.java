@@ -36,37 +36,28 @@ public class TestFighterSounds2 {
 		Thread.sleep(500);
 	}
 
-	// Test constructors
+	// Edward Kesicki Tests
 	@Test
-	public void testConstructFalessi() {
-		FighterSounds falessiSounds;
+	public void testConstructDummyFighter() {
+		FighterSounds dummyFighterSounds;
 		try {
-			falessiSounds = new FighterSounds("Falessi");
-			assertNotEquals(null, falessiSounds);
+			dummyFighterSounds = new FighterSounds("Dummy Fighter");
+			assertEquals(null, dummyFighterSounds);
 		} catch (NoSuchFighterException e) {
 			fail("Constructor failed");
 		}
 	}
 
 	@Test
-	public void testConstructMammen() {
+	public void testKillSound() {
 		FighterSounds mammenSounds;
 		try {
 			mammenSounds = new FighterSounds("Mammen");
-			assertNotEquals(null, mammenSounds);
 		} catch (NoSuchFighterException e) {
 			fail("Constructor failed");
 		}
 	}
 
-	@Test
-	public void testConstructNonExistentFighter() {
-		try {
-			new FighterSounds("Ben");
-			fail("Constructor should have failed");
-		} catch (NoSuchFighterException e) {
-			assertEquals("Unable to create fighter with name \"Ben\"", e.getMessage());
-		}
-	}
+
 	
 }
