@@ -1,3 +1,5 @@
+// Written by Benjamin Troller
+
 package tests;
 
 import static org.junit.Assert.*;
