@@ -36,7 +36,6 @@ public class OptionsMenu extends StackPane implements GameScene {
     public void render() {
     	
     	grid = new GridPane();
-//    	GridPane grid = new GridPane();
 		grid.setAlignment(Pos.TOP_LEFT);
 		grid.setHgap(10);
 		grid.setVgap(10);
@@ -52,17 +51,6 @@ public class OptionsMenu extends StackPane implements GameScene {
         Slider musicVolume = new Slider(0.0, 1.0, AudioManager.Music.getVolume());
         musicVolume.setStyle("-fx-control-inner-background: orange; -fx-highlight-fill: red;");
 
-        // Starting point for resolution choices
-        // Magic numbers for x values simply left align the res label
-//
-//        medRes.setTranslateX(-259 * Window.getHRatio());
-//        medRes.setTranslateY((MIN_BTN_Y + 100) * Window.getHRatio());
-//
-//        maxRes.setTranslateX(-241 * Window.getHRatio());
-//        maxRes.setTranslateY((MIN_BTN_Y + 200) * Window.getHRatio());
-        
-//        musicVolume.setTranslateX(-270 * Window.getHRatio());
-//        musicVolume.setTranslateY((MIN_BTN_Y + 300) * Window.getHRatio());
         musicVolume.valueProperty().addListener(new ChangeListener<Number>() {
 			@Override
 			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
@@ -95,24 +83,12 @@ public class OptionsMenu extends StackPane implements GameScene {
         	grid.add(pointer, 1, 1);
         }
         
-//        grid.getChildren().addAll(minRes, medRes, maxRes, musicVolume);
         this.getChildren().addAll(imgView, backBtn, logoView, container, heading);
         this.getChildren().remove(grid);
         this.getChildren().add(grid);
         grid.toFront();
         
         backBtn.toFront();
-
-//        pointer.setTranslateX(-335 * Window.getHRatio());
-//
-//        // Always initialize pointer pointing to correct resolution
-//        if (Window.getHeight() == 1080) {
-//            pointer.setTranslateY((MIN_BTN_Y + 90) * Window.getHRatio());
-//        } else if (Window.getHeight() == 720) {
-//            pointer.setTranslateY((MIN_BTN_Y + 110) * Window.getHRatio());
-//        } else {
-//            pointer.setTranslateY(MIN_BTN_Y * Window.getHRatio());
-//        }
 
         minRes.setupHandlers(this, pointer);
         medRes.setupHandlers(this, pointer);
@@ -150,28 +126,10 @@ public class OptionsMenu extends StackPane implements GameScene {
 
         public void setupHandlers(StackPane optionsMenu, SimpleImage pointer) {
             OptionsButton that = this;
-                        
-//            SimpleImage highlight = new SimpleImage("OptionHighlighter.png");
-//            highlight.addEventHandler(MouseEvent.MOUSE_EXITED, new EventHandler<MouseEvent>() {
-//                @Override
-//                public void handle(MouseEvent e) {
-//                    optionsMenu.getChildren().remove(highlight);
-//                }
-//            });
-//            
-//            highlight.setOpacity(0.3);
-//            highlight.setFitHeight(highlight.boundsInLocalProperty().getValue().getHeight() * Window.getHRatio());
-//            highlight.setFitWidth(highlight.boundsInLocalProperty().getValue().getWidth() * Window.getHRatio());
 
             this.addEventHandler(MouseEvent.MOUSE_ENTERED, new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent e) {
-//                	optionsMenu.getChildren().remove(highlight);
-//                    optionsMenu.getChildren().add(highlight);
-////                    highlight.setTranslateX(that.getTranslateX());
-//                    highlight.setTranslateX(that.getParent().getLayoutX());
-////                    highlight.setTranslateY(that.getTranslateY());
-//                    highlight.setTranslateY(that.getLayoutY() - (490 * Window.getHRatio()));
                 	grid.getChildren().remove(pointer);
                 	grid.add(pointer, 1, GridPane.getRowIndex(that));
 
@@ -179,13 +137,6 @@ public class OptionsMenu extends StackPane implements GameScene {
                     that.toFront();
                     
                     AudioManager.MenuSounds.playButtonMousedOverSound();
-                }
-            });
-
-            this.addEventHandler(MouseEvent.MOUSE_EXITED, new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent e) {
-//                    optionsMenu.getChildren().remove(highlight);
                 }
             });
 
