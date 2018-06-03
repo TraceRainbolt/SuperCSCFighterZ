@@ -48,7 +48,6 @@ public class AudioManager {
 			fightSong.stop();
 		}
 
-		// TODO: Use in options menu to change music volume
 		public static void setVolume(double volume) {
 			menuSong.setVolume(volume);
 			fightSong.setVolume(volume);

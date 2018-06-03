@@ -1,7 +1,5 @@
 package com.fighterz.main;
 
-import org.w3c.dom.css.ElementCSSInlineStyle;
-
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;

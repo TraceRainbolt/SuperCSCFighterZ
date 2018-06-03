@@ -58,7 +58,6 @@ public class FighterSounds {
 	public void playTakeDamageSound() {
 		MediaPlayer takeDamageSound = getRandomSoundFromArrayList(lines.hit);
 		if (takeDamageSound != null) {
-//			takeDamageSound.stop();
 			takeDamageSound.seek(Duration.ZERO);
 			takeDamageSound.play();
 		}
@@ -82,7 +81,6 @@ public class FighterSounds {
 	}
 	
 	public void playTeleportSound() {
-		System.out.println("playing teleport sound");
 		MediaPlayer teleportSound = lines.teleport.get(0);
 		teleportSound.seek(Duration.ZERO);
 		teleportSound.play();
@@ -92,6 +90,8 @@ public class FighterSounds {
 	public void kill() {
 		logger.warning("Killing idle sound manager thread");
 		idleSoundManager.kill();
+		// Ensure no sounds continue to play
+		playingSound.stop();
 	}
 
 	// Unexpected Behavior: Occasionally doesn't play sounds when called even if
@@ -188,13 +188,15 @@ public class FighterSounds {
 	// Waits random amounts of time, then plays an idle sound if nothing else is
 	// playing
 	private class IdleSoundManager extends Thread {
+		private boolean shouldRun = true;
+		
 		public void kill() {
-			stop();
+			shouldRun = false;
 		}
 		
 		@Override
 		public void run() {
-			while (true) {
+			while (shouldRun) {
 				// Wait for random amount of time
 				try {
 					Thread.sleep((long) random.nextInt(9000) + 5000);
@@ -204,7 +206,7 @@ public class FighterSounds {
 					interrupt();
 				}
 				// Play idle sound if nothing else is playing
-				if (!idleSoundIsPlaying) {
+				if (!idleSoundIsPlaying && shouldRun) {
 					if (playingSound == null) {
 						playIdleSound();
 					} else if (playingSound.getCurrentTime().equals(playingSound.getStopTime())
