@@ -35,6 +35,7 @@ public class FighterSounds {
 			throw new NoSuchFighterException("Unable to create fighter with name \"" + fighterName + "\"");
 		}
 		idleSoundManager.start();
+		playBeginGameSound();
 	}
 
 	public class NoSuchFighterException extends Exception {
