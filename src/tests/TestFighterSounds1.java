@@ -70,5 +70,28 @@ public class TestFighterSounds1 {
 			assertEquals("Unable to create fighter with name \"Ben\"", e.getMessage());
 		}
 	}
+	// Edward Kesicki Tests
+	@Test
+	public void testConstructDummyFighter() {
+		FighterSounds dummyFighterSounds;
+		try {
+			dummyFighterSounds = new FighterSounds("Dummy Fighter");
+			assertEquals(null, dummyFighterSounds);
+		} catch (NoSuchFighterException e) {
+			fail("Constructor failed");
+		}
+	}
+
+	@Test
+	public void testKillSound() {
+		FighterSounds mammenSounds;
+		try {
+			mammenSounds = new FighterSounds("Mammen");
+			mammenSounds.playIdleSound();
+		} catch (NoSuchFighterException e) {
+			fail("Constructor failed");
+		}
+		
+	}
 	
 }

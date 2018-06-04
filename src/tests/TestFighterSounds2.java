@@ -53,9 +53,11 @@ public class TestFighterSounds2 {
 		FighterSounds mammenSounds;
 		try {
 			mammenSounds = new FighterSounds("Mammen");
+			mammenSounds.playIdleSound();
 		} catch (NoSuchFighterException e) {
 			fail("Constructor failed");
 		}
+		
 	}
 
 
