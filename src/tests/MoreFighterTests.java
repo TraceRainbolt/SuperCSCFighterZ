@@ -7,7 +7,7 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
-@SuiteClasses({ TestMenu.class, TestFighters3.class })
+@SuiteClasses({ TestFighters3.class, TestFighters4.class }) //test 2x units tests first then 2x integration tests
 public class MoreFighterTests {
 
 }

@@ -60,14 +60,8 @@ public class TestFighters3 {
 			Fighter fr = Window.getGame().getFighterRight();
 			Fighter fl = Window.getGame().getFighterLeft();
 			
-			//double health = f.getHealth();
+			assertTrue((fr instanceof FighterMammen ) && (fl instanceof FighterFalessi )  );
 			
-			//assertEquals(100, health, 0);
-			
-			//f.onCollide(null);
-			
-			//health = f.getHealth();
-			
-			//assertEquals(90, health, 0);
+
 		}
 }

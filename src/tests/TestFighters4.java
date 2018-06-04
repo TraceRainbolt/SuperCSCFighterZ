@@ -9,13 +9,14 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.fighterz.main.Fighter;
+import com.fighterz.main.FighterFalessi;
 import com.fighterz.main.FighterMammen;
 import com.fighterz.main.Window;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
 
-public class TestMenu {
+public class TestFighters4 {
 	
 	
 	// Used to allow JavaFX to run
@@ -25,7 +26,8 @@ public class TestMenu {
 			}
 		}
 
-		@BeforeClass
+		
+		@BeforeClass //make it so there are no graphic errors
 		public static void initJFX() throws InterruptedException {
 			Thread t = new Thread("JavaFX Init Thread") {
 				public void run() {
@@ -42,8 +44,8 @@ public class TestMenu {
 		}
 		
 		
-		@Test
-		public void testFighterHealth() throws InterruptedException {
+		@Test //make sure characters spawn the right ways
+		public void testFighterBlockOn() throws InterruptedException {
 			try {
 				Window.main(null);
 			}
@@ -52,18 +54,13 @@ public class TestMenu {
 			}
 			
 			
-			Window.getGame().addFighter(new FighterMammen("right"));
+			Window.getGame().addFighter(new FighterFalessi("left"));
 			
-			Fighter f = Window.getGame().getFighterRight();
+			Fighter fl = Window.getGame().getFighterLeft();
+			fl.setBlockOn();
 			
-			double health = f.getHealth();
+			assertTrue(fl.getBlock() == true);
 			
-			assertEquals(100, health, 0);
-			
-			f.onCollide(null);
-			
-			health = f.getHealth();
-			
-			assertEquals(90, health, 0);
+
 		}
 }

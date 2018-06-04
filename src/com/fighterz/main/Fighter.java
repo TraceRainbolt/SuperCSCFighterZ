@@ -153,6 +153,10 @@ public abstract class Fighter extends GameObject {
     	isBlocking = true;
     }
     
+    public boolean getBlock() {
+    	return isBlocking;
+    }
+    
     public int getEnergy() {
     	return energy;
     }
