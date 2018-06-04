@@ -56,15 +56,13 @@ public class TestFighters {
 		
 		Fighter f = Window.getGame().getFighterRight();
 		
-		int energy = f.getEnergy();
-		
-		assertEquals(0, energy);
+		int startEnergy = f.getEnergy();
 		
 		f.onCollide(null);
 		
-		energy = f.getEnergy();
+		int endEnergy = f.getEnergy();
 		
-		assertEquals(10, energy);
+		assertTrue(startEnergy == 0 && endEnergy == 10);
 		
 		
 	}

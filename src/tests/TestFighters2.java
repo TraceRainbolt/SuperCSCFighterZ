@@ -56,14 +56,16 @@ public class TestFighters2 {
 			
 			Fighter f = Window.getGame().getFighterRight();
 			
-			double health = f.getHealth();
+			double startHealth = f.getHealth();
 			
-			assertEquals(100, health, 0);
+			//assertEquals(100, health, 0);
 			
 			f.onCollide(null);
 			
-			health = f.getHealth();
+			double endHealth = f.getHealth();
 			
-			assertEquals(90, health, 0);
+			//assertEquals(90, health, 0);
+			
+			assertTrue(startHealth == 100.0 && endHealth == 90.0);
 		}
 }
