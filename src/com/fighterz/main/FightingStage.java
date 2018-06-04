@@ -68,6 +68,7 @@ public class FightingStage extends StackPane implements GameScene {
     }
 
     public void subtractHealth(double amount, String side) {
+    	//the characters blocking status is checked here
         if (side.equalsIgnoreCase("right") && fighterRight.isBlocking == false)
             subtractRightHealth(amount);
         if (side.equalsIgnoreCase("left") && fighterLeft.isBlocking == false)

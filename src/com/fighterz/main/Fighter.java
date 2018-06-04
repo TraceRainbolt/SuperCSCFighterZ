@@ -28,7 +28,7 @@ public abstract class Fighter extends GameObject {
     
     protected boolean poweredUp;
     
-    protected boolean isBlocking;
+    protected boolean isBlocking; //this value is checked in FightingStage.subtractHealth();
     
     protected double health;
 
@@ -63,6 +63,7 @@ public abstract class Fighter extends GameObject {
     @Override
     public void onCollide(HitBox hitBox) {
         // Damage the side that isn't us
+    	//this if makes unit testing for these values possible without needed to create hitboxes
     	if(hitBox != null) {
     		Window.getGame().getFightingStage().subtractHealth(hitBox.getDamage(), side);
     	}
