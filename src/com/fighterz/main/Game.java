@@ -64,38 +64,43 @@ public class Game {
     }
 
     private void handleFighterRight() {
-        if (pressedKeys.contains(KeyCode.L) && !pressedKeys.contains(KeyCode.J)) {
-            fighterRight.moveRight();
-        } else if (pressedKeys.contains(KeyCode.J) && !pressedKeys.contains(KeyCode.L)) {
-            fighterRight.moveLeft();
-        }
-        if (pressedKeys.contains(KeyCode.O)) {
-            fighterRight.setAnimation(AnimationState.POWER_MOVE);
-        } else if(pressedKeys.contains(KeyCode.I) && pressedKeys.contains(KeyCode.L)) {
-            fighterRight.teleportBehindYou();
-        }
-        if (pressedKeys.contains(KeyCode.H) && !movementLockRight) {
-        	fighterRight.setPoweredUp();
-        }
+    	if(fighterRight.getBlock() == false) {
+    		if (pressedKeys.contains(KeyCode.L) && !pressedKeys.contains(KeyCode.J)) {
+            	fighterRight.moveRight();
+        	} else if (pressedKeys.contains(KeyCode.J) && !pressedKeys.contains(KeyCode.L)) {
+            	fighterRight.moveLeft();
+        	}
+        	if (pressedKeys.contains(KeyCode.O)) {
+            	fighterRight.setAnimation(AnimationState.POWER_MOVE);
+        	} else if(pressedKeys.contains(KeyCode.I) && pressedKeys.contains(KeyCode.L)) {
+            	fighterRight.teleportBehindYou();
+        	}
+        	if (pressedKeys.contains(KeyCode.H) && !movementLockRight) {
+        		fighterRight.setPoweredUp();
+        	}
+    	}
+    	
         if(pressedKeys.contains(KeyCode.N) && !movementLockRight) {
         	fighterRight.setBlockOn();
         }
     }
 
     private void handleFighterLeft() {
-        if (pressedKeys.contains(KeyCode.D) && !pressedKeys.contains(KeyCode.A)) {
-            fighterLeft.moveRight();
-        } else if (pressedKeys.contains(KeyCode.A) && !pressedKeys.contains(KeyCode.D)) {
-            fighterLeft.moveLeft();
-        }
-        if (pressedKeys.contains(KeyCode.E)) {
-            fighterLeft.setAnimation(AnimationState.POWER_MOVE);
-        } else if(pressedKeys.contains(KeyCode.D) && pressedKeys.contains(KeyCode.W)) {
-        	fighterLeft.teleportBehindYou();
-        }
-        if (pressedKeys.contains(KeyCode.F) && !movementLockLeft) {
-        	fighterLeft.setPoweredUp();
-        }
+    	if(fighterLeft.getBlock() == false) {
+    		if (pressedKeys.contains(KeyCode.D) && !pressedKeys.contains(KeyCode.A)) {
+            	fighterLeft.moveRight();
+        	} else if (pressedKeys.contains(KeyCode.A) && !pressedKeys.contains(KeyCode.D)) {
+            	fighterLeft.moveLeft();
+        	}
+        	if (pressedKeys.contains(KeyCode.E)) {
+            	fighterLeft.setAnimation(AnimationState.POWER_MOVE);
+        	} else if(pressedKeys.contains(KeyCode.D) && pressedKeys.contains(KeyCode.W)) {
+        		fighterLeft.teleportBehindYou();
+        	}
+        	if (pressedKeys.contains(KeyCode.F) && !movementLockLeft) {
+        		fighterLeft.setPoweredUp();
+        	}
+    	}
         if(pressedKeys.contains(KeyCode.C) && !movementLockLeft) {
         	fighterLeft.setBlockOn();
         }

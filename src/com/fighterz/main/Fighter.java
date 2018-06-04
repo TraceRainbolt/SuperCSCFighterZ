@@ -150,7 +150,12 @@ public abstract class Fighter extends GameObject {
     }
     
     public void setBlockOn() {
-    	isBlocking = true;
+    	if(isBlocking == false) {
+    		isBlocking = true;
+    	}
+    	else {
+    		isBlocking = false;
+    	}
     }
     
     public boolean getBlock() {
