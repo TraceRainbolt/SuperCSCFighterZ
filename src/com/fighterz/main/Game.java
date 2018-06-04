@@ -176,4 +176,8 @@ public class Game {
 	public Fighter getFighterRight() {
 		return fighterRight;
 	}
+	
+	public Fighter getFighterLeft() {
+		return fighterLeft;
+	}
 }
