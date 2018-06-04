@@ -1,5 +1,7 @@
 package com.fighterz.main;
 
+import java.util.logging.Logger;
+
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
@@ -19,6 +21,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
 public class OptionsMenu extends StackPane implements GameScene {
+	private static final Logger logger = Logger.getLogger(OptionsMenu.class.getName());
 
     private static final int MIN_BTN_Y = -170;
     
@@ -65,6 +68,29 @@ public class OptionsMenu extends StackPane implements GameScene {
 
         OptionsLabel resLabel = new OptionsLabel("Resolution");
         OptionsLabel musicVolLabel = new OptionsLabel("Music Volume");
+        OptionsLabel creditsLabel = new OptionsLabel("Credits");
+        OptionsLabel viewCreditsButton = new OptionsLabel("View Credits");
+        viewCreditsButton.setTextFill(Color.WHITE);
+        viewCreditsButton.setCursor(Cursor.HAND);
+        viewCreditsButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent e) {
+                // TODO: show credits
+                
+                AudioManager.MenuSounds.playButtonClickedSound();
+            }
+        });
+        viewCreditsButton.addEventHandler(MouseEvent.MOUSE_ENTERED, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent e) {
+                AudioManager.MenuSounds.playButtonMousedOverSound();
+            }
+        });
+        MainMenu.addGlowEffect(viewCreditsButton);
+        MainMenu.addGlowEffect(minRes);
+        MainMenu.addGlowEffect(medRes);
+        MainMenu.addGlowEffect(maxRes);
+        MainMenu.addGlowEffect(musicVolume);
         
         grid.add(resLabel, 0, 0);
         grid.add(minRes, 2, 0);
@@ -79,9 +105,12 @@ public class OptionsMenu extends StackPane implements GameScene {
         } else if (Window.getHeight() == 1080) {
         	grid.add(pointer, 1, 2);
         } else {
-        	System.out.println("dumb");
+        	logger.severe("Window resolution not recognized");
         	grid.add(pointer, 1, 1);
         }
+        
+        grid.add(creditsLabel, 0, 5);
+        grid.add(viewCreditsButton, 2, 5);
         
         this.getChildren().addAll(imgView, backBtn, logoView, container, heading);
         this.getChildren().remove(grid);
