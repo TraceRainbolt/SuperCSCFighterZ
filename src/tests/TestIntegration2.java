@@ -1,5 +1,5 @@
 //Author: Connor Steele
-// unit test 1/2
+// Integration Test 2/2
 
 package tests;
 
@@ -9,14 +9,13 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.fighterz.main.Fighter;
-import com.fighterz.main.FighterFalessi;
 import com.fighterz.main.FighterMammen;
 import com.fighterz.main.Window;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
 
-public class TestFighters3 {
+public class TestIntegration2 {
 	
 	
 	// Used to allow JavaFX to run
@@ -26,8 +25,7 @@ public class TestFighters3 {
 			}
 		}
 
-		
-		@BeforeClass //make it so there are no graphic errors
+		@BeforeClass
 		public static void initJFX() throws InterruptedException {
 			Thread t = new Thread("JavaFX Init Thread") {
 				public void run() {
@@ -42,26 +40,31 @@ public class TestFighters3 {
 			t.start();
 			Thread.sleep(500);
 		}
-		
-		
-		@Test //make sure characters spawn the right ways
-		public void testFighterSpawn() throws InterruptedException {
-			try {
-				Window.main(null);
-			}
-			catch(Exception e) {
-				
-			}
-			
-			
-			Window.getGame().addFighter(new FighterMammen("right"));
-			Window.getGame().addFighter(new FighterFalessi("left"));
-			
-			Fighter fr = Window.getGame().getFighterRight();
-			Fighter fl = Window.getGame().getFighterLeft();
-			
-			assertTrue((fr instanceof FighterMammen ) && (fl instanceof FighterFalessi )  );
-			
 
+	@Test
+	public void testFighterEnergy() throws InterruptedException {
+		
+		try {
+			Window.main(null);
 		}
+		catch(Exception e) {
+			
+		}
+		
+		
+		Window.getGame().addFighter(new FighterMammen("right"));
+		
+		Fighter f = Window.getGame().getFighterRight();
+		
+		int startEnergy = f.getEnergy();
+		
+		f.onCollide(null);
+		
+		int endEnergy = f.getEnergy();
+		
+		assertTrue(startEnergy == 0 && endEnergy == 10);
+		
+		
+	}
+
 }

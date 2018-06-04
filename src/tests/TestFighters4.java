@@ -1,5 +1,5 @@
 //Author: Connor Steele
-
+// unit test 2/2
 
 package tests;
 
@@ -10,7 +10,6 @@ import org.junit.Test;
 
 import com.fighterz.main.Fighter;
 import com.fighterz.main.FighterFalessi;
-import com.fighterz.main.FighterMammen;
 import com.fighterz.main.Window;
 
 import javafx.application.Application;
