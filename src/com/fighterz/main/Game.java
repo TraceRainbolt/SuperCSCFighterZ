@@ -172,4 +172,8 @@ public class Game {
 	public GameScene getCharSelect() {
 		return charSelectScreen;
 	}
+	
+	public Fighter getFighterRight() {
+		return fighterRight;
+	}
 }

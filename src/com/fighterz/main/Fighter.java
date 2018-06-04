@@ -63,7 +63,12 @@ public abstract class Fighter extends GameObject {
     @Override
     public void onCollide(HitBox hitBox) {
         // Damage the side that isn't us
-        Window.getGame().getFightingStage().subtractHealth(hitBox.getDamage(), side);
+    	if(hitBox != null) {
+    		Window.getGame().getFightingStage().subtractHealth(hitBox.getDamage(), side);
+    	}
+    	else {
+    		this.subtractHealth(10);
+    	}
         energy += 10;
     }
     
@@ -145,6 +150,14 @@ public abstract class Fighter extends GameObject {
     
     public void setBlockOn() {
     	isBlocking = true;
+    }
+    
+    public int getEnergy() {
+    	return energy;
+    }
+    
+    public double getHealth() {
+    	return health;
     }
 
 }
