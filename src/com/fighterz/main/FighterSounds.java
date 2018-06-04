@@ -48,51 +48,70 @@ public class FighterSounds {
 	}
 
 	// MARK: Methods to play sounds
-	public void playBeginGameSound() {
+	public boolean playBeginGameSound() {
 		playExclusiveRandomSoundFromArrayList(lines.beginGame);
+		
+		return playingSound.getStatus() == MediaPlayer.Status.PLAYING;
 	}
 
-	public void playIdleSound() {
+	public boolean playIdleSound() {
 		playExclusiveRandomSoundFromArrayList(lines.idle);
+		
+		return playingSound.getStatus() == MediaPlayer.Status.PLAYING;
 	}
 
-	public void playTakeDamageSound() {
+	public boolean playTakeDamageSound() {
 		MediaPlayer takeDamageSound = getRandomSoundFromArrayList(lines.hit);
 		if (takeDamageSound != null) {
 			takeDamageSound.seek(Duration.ZERO);
 			takeDamageSound.play();
 		}
 		playExclusiveRandomSoundFromArrayList(lines.takeDamage);
+		
+		return playingSound.getStatus() == MediaPlayer.Status.PLAYING;
 	}
 
-	public void playMeleSound() {
+	public boolean playMeleSound() {
 		playExclusiveRandomSoundFromArrayList(lines.mele);
+		
+		return playingSound.getStatus() == MediaPlayer.Status.PLAYING;
 	}
 
-	public void playRangedSound() {
+	public boolean playRangedSound() {
 		playExclusiveRandomSoundFromArrayList(lines.ranged);
+		
+		return playingSound.getStatus() == MediaPlayer.Status.PLAYING;
 	}
 
-	public void playJumpSound() {
+	public boolean playJumpSound() {
 		playExclusiveRandomSoundFromArrayList(lines.jump);
+		
+		return playingSound.getStatus() == MediaPlayer.Status.PLAYING;
 	}
 
-	public void playVictorySound() {
+	public boolean playVictorySound() {
 		playExclusiveRandomSoundFromArrayList(lines.victory);
+		
+		return playingSound.getStatus() == MediaPlayer.Status.PLAYING;
 	}
-	
-	public void playTeleportSound() {
+
+	public boolean playTeleportSound() {
 		MediaPlayer teleportSound = lines.teleport.get(0);
 		teleportSound.seek(Duration.ZERO);
 		teleportSound.play();
+		
+		return teleportSound.getStatus() == MediaPlayer.Status.PLAYING;
 	}
-	
+
 	// Call to stop from playing idle sounds and properly shut down thread
-	public void kill() {
+	public boolean kill() {
+		boolean res;
 		logger.warning("Killing idle sound manager thread");
-		idleSoundManager.kill();
+		res = idleSoundManager.kill();
 		// Ensure no sounds continue to play
 		playingSound.stop();
+		
+		return playingSound.getStatus() == MediaPlayer.Status.STOPPED && res;
 	}
 
 	// Unexpected Behavior: Occasionally doesn't play sounds when called even if
@@ -172,7 +191,7 @@ public class FighterSounds {
 				System.exit(1);
 			}
 		}
-		
+
 		private static void addLinesFromFolderToArrayList(String folder, ArrayList<MediaPlayer> arr) {
 			try {
 				File[] files = new File(FighterSounds.class.getClassLoader().getResource(folder).toURI()).listFiles();
@@ -190,11 +209,13 @@ public class FighterSounds {
 	// playing
 	private class IdleSoundManager extends Thread {
 		private boolean shouldRun = true;
-		
-		public void kill() {
+
+		public boolean kill() {
 			shouldRun = false;
+			
+			return true;
 		}
-		
+
 		@Override
 		public void run() {
 			while (shouldRun) {
