@@ -1,3 +1,5 @@
+//Author: Christopher Gix
+
 package tests;
 
 import static org.junit.Assert.*;
@@ -54,13 +56,15 @@ public class TestFighterIntegration2 {
 		
 		Fighter f = Window.getGame().getFighterRight();
 		
-		f.onCollide(null);
+		f.setBlockOn();
 		
-		int endEnergy = f.getEnergy();
+		double health = f.getHealth();
+		
+		f.onCollide(null);
 		
 		double endHealth = f.getHealth();
 		
-		assertTrue(endHealth == 90.0 && endEnergy == 10);
+		assertTrue(health == endHealth);
 	}
 
 }

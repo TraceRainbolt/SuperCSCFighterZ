@@ -67,7 +67,7 @@ public abstract class Fighter extends GameObject {
     	if(hitBox != null) {
     		Window.getGame().getFightingStage().subtractHealth(hitBox.getDamage(), side);
     	}
-    	else {
+    	else if(isBlocking == false) {
     		this.subtractHealth(10);
     	}
         energy += 10;

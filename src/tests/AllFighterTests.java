@@ -7,7 +7,7 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
-@SuiteClasses({ TestFighters.class, TestFighters2.class, TestFighterIntegration.class })
+@SuiteClasses({ TestFighters.class, TestFighters2.class, TestFighterIntegration.class, TestFighterIntegration.class })
 public class AllFighterTests {
 
 }
