@@ -7,6 +7,6 @@ import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
 @SuiteClasses({ TestFightingStage.class, TestFightingStage2.class })
-public class FightingStageTests {
+public class ConnorATests {
 
 }
