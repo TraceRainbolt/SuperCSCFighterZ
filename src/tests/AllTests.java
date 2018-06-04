@@ -1,3 +1,4 @@
+//Ben's Test Suite
 package tests;
 
 import org.junit.runner.RunWith;
