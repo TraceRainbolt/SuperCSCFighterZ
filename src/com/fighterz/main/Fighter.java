@@ -233,7 +233,7 @@ public abstract class Fighter extends GameObject {
 		try {
 			Thread.sleep(3000);
 		} catch (InterruptedException e) {
-			e.printStackTrace();
+			logger.severe("Thread inturrupted.");
 		}
 		Window.switchScene(Window.getGame().getMainMenu());
 	}
@@ -250,10 +250,10 @@ public abstract class Fighter extends GameObject {
 	    MediaPlayer mediaPlayer = null;
 	    try {
 	        mediaPlayer = new MediaPlayer(media);
+		    mediaPlayer.setAutoPlay(true);
 	    } catch (Exception e) {
-	        e.printStackTrace();
+	        logger.severe("Couldn't create media player.");
 	    }
-	    mediaPlayer.setAutoPlay(true);
 	    MediaView mediaView = new MediaView(mediaPlayer);
 
 	    DoubleProperty mvw = mediaView.fitWidthProperty();
@@ -281,7 +281,7 @@ public abstract class Fighter extends GameObject {
 	        customLocator.hack("video/mp4", 100000, f.toURI());
 	        locatorField.set(media, customLocator);
 	    } catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException | URISyntaxException e) {
-	        e.printStackTrace();
+	    	logger.severe("Error playing data.");
 	    }
 	}
 	
@@ -296,6 +296,7 @@ public abstract class Fighter extends GameObject {
 	        try {
 	            super.init();
 	        } catch (Exception e) {
+	        	logger.severe("Couldn't create locator.");
 	        }
 	    }
 	

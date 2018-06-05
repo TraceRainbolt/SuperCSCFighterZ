@@ -34,10 +34,6 @@ public class FighterMammen extends Fighter {
 		}
     }
 
-    public void setAnimation(AnimationState state) {
-        setupSprite(state);
-    }
-
     protected void setupSprite(AnimationState state) {
 
         if (state == AnimationState.POWER_MOVE) {
@@ -154,16 +150,8 @@ public class FighterMammen extends Fighter {
     @Override
     public void onCollide(HitBox hitBox) {
         super.onCollide(hitBox);
-        System.out.println("Mammen Energy = " + energy);
-        
-        // Play takes damage sound
- 		fighterSounds.playTakeDamageSound();
-    }
 
-    @Override
-    public void teleportBehindYou() {
-        // TODO Auto-generated method stub
-        
+ 		fighterSounds.playTakeDamageSound();
     }
 
 }
