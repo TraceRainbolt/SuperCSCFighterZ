@@ -27,10 +27,7 @@ public class OptionsMenu extends StackPane implements GameScene {
     
     private GridPane grid;
 
-    public OptionsMenu() {
-        // Empty constructor
-    }
-
+    
     public ObservableList<Node> getNodes() {
         return this.getChildren();
     }
@@ -75,8 +72,6 @@ public class OptionsMenu extends StackPane implements GameScene {
         viewCreditsButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent e) {
-                // TODO: show credits
-                
                 AudioManager.MenuSounds.playButtonClickedSound();
             }
         });

@@ -50,8 +50,8 @@ public abstract class Fighter extends GameObject {
 	
 	protected abstract void setupSprite(AnimationState state);
 	
-	private static final String right = "right";
-	private static final String left = "left";
+	private static final String RIGHT = "right";
+	private static final String LEFT = "left";
 
 	public Fighter(String side) {
 		this.side = side;
@@ -87,8 +87,8 @@ public abstract class Fighter extends GameObject {
 		Fighter fighterRight = Window.getGame().getFightingStage().getFighterRight();
 		Fighter fighterLeft = Window.getGame().getFightingStage().getFighterLeft();
 
-		boolean rightLock = Window.getGame().getMovementLock(right);
-		boolean leftLock = Window.getGame().getMovementLock(left);
+		boolean rightLock = Window.getGame().getMovementLock(RIGHT);
+		boolean leftLock = Window.getGame().getMovementLock(LEFT);
 
 		boolean locked = rightLock || leftLock;
 
@@ -163,7 +163,7 @@ public abstract class Fighter extends GameObject {
 	}
 
 	private void nothingPersonnelKid() {
-		Fighter otherFighter = this.side == left ? Window.getGame().getFightingStage().getFighterRight()
+		Fighter otherFighter = this.side == LEFT ? Window.getGame().getFightingStage().getFighterRight()
 				: Window.getGame().getFightingStage().getFighterLeft();
 		double x = otherFighter.getX();
 		this.setX(x - 230 * this.getFlipped() * Window.getHRatio());
@@ -201,16 +201,16 @@ public abstract class Fighter extends GameObject {
 
 	    Window.getGame().nullFighters();
 
-		if(side == left && fighterRight instanceof FighterMammen) {
+		if(side == LEFT && fighterRight instanceof FighterMammen) {
 			playMammenVictory();
 		}
-		if(side == right && fighterLeft instanceof FighterMammen) {
+		if(side == RIGHT && fighterLeft instanceof FighterMammen) {
 			playMammenVictory();
 		}
-		if(side == left && fighterRight instanceof FighterFalessi) {
+		if(side == LEFT && fighterRight instanceof FighterFalessi) {
 			playFalessiVictory();
 		}
-		if(side == right && fighterLeft instanceof FighterFalessi) {
+		if(side == RIGHT && fighterLeft instanceof FighterFalessi) {
 			playFalessiVictory();
 		}
 	}

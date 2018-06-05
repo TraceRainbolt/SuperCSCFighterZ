@@ -64,62 +64,69 @@ public class Game {
         }
         if(Window.getGameScene() instanceof CharacterSelectScreen)
         	charSelectScreen.handleKeys(pressedKeys);
-        if(Window.getGameScene() instanceof FightingStage)
-        	if(pressedKeys.contains(KeyCode.ESCAPE)) {
-        		Window.switchScene(mainMenu);
-        		fightingStage.nullFighters();
-        		fighterRight = null;
-        		fighterLeft = null;
-        		fighterRight.fighterSounds.kill();
-        		fighterLeft.fighterSounds.kill();
-        	}
+        if(Window.getGameScene() instanceof FightingStage && pressedKeys.contains(KeyCode.ESCAPE)) {
+    		Window.switchScene(mainMenu);
+    		fightingStage.nullFighters();
+    		fighterRight.fighterSounds.kill();
+    		fighterLeft.fighterSounds.kill();
+    		fighterRight = null;
+    		fighterLeft = null;
+        }
     }
 
     private void handleFighterRight() {
     	if(!fighterRight.getBlock()) {
-    		if (pressedKeys.contains(KeyCode.L) && !pressedKeys.contains(KeyCode.J)) {
-            	fighterRight.moveRight();
-        	} else if (pressedKeys.contains(KeyCode.J) && !pressedKeys.contains(KeyCode.L)) {
-            	fighterRight.moveLeft();
-        	}
-        	if (pressedKeys.contains(KeyCode.O)) {
-            	fighterRight.setAnimation(AnimationState.POWER_MOVE);
-        	} else if(pressedKeys.contains(KeyCode.U)) {
-        		fighterRight.setAnimation(AnimationState.NORMAL_MOVE);
-        	} if(pressedKeys.contains(KeyCode.I) && pressedKeys.contains(KeyCode.L)) {
-            	fighterRight.teleportBehindYou();
-        	}
-        	if (pressedKeys.contains(KeyCode.H) && !movementLockRight) {
-        		fighterRight.setPoweredUp();
-        	}
+    		doFighterRight();
     	}
     	
         if(pressedKeys.contains(KeyCode.N) && !movementLockRight) {
         	fighterRight.setBlockOn();
         }
     }
+    
+    private void doFighterRight() {
+		if (pressedKeys.contains(KeyCode.L) && !pressedKeys.contains(KeyCode.J)) {
+        	fighterRight.moveRight();
+    	} else if (pressedKeys.contains(KeyCode.J) && !pressedKeys.contains(KeyCode.L)) {
+        	fighterRight.moveLeft();
+    	}
+    	if (pressedKeys.contains(KeyCode.O)) {
+        	fighterRight.setAnimation(AnimationState.POWER_MOVE);
+    	} else if(pressedKeys.contains(KeyCode.U)) {
+    		fighterRight.setAnimation(AnimationState.NORMAL_MOVE);
+    	} if(pressedKeys.contains(KeyCode.I) && pressedKeys.contains(KeyCode.L)) {
+        	fighterRight.teleportBehindYou();
+    	}
+    	if (pressedKeys.contains(KeyCode.H) && !movementLockRight) {
+    		fighterRight.setPoweredUp();
+    	}
+    }
 
     private void handleFighterLeft() {
     	if(!fighterLeft.getBlock()) {
-    		if (pressedKeys.contains(KeyCode.D) && !pressedKeys.contains(KeyCode.A)) {
-            	fighterLeft.moveRight();
-        	} else if (pressedKeys.contains(KeyCode.A) && !pressedKeys.contains(KeyCode.D)) {
-            	fighterLeft.moveLeft();
-        	}
-        	if (pressedKeys.contains(KeyCode.E)) {
-            	fighterLeft.setAnimation(AnimationState.POWER_MOVE);
-        	} else if(pressedKeys.contains(KeyCode.Q)) {
-        		fighterLeft.setAnimation(AnimationState.NORMAL_MOVE);
-        	} else if(pressedKeys.contains(KeyCode.D) && pressedKeys.contains(KeyCode.W)) {
-        		fighterLeft.teleportBehindYou();
-        	}
-        	if (pressedKeys.contains(KeyCode.F) && !movementLockLeft) {
-        		fighterLeft.setPoweredUp();
-        	}
+    		doFighterLeft();
     	}
         if(pressedKeys.contains(KeyCode.C) && !movementLockLeft) {
         	fighterLeft.setBlockOn();
         }
+    }
+    
+    private void doFighterLeft() {
+		if (pressedKeys.contains(KeyCode.D) && !pressedKeys.contains(KeyCode.A)) {
+        	fighterLeft.moveRight();
+    	} else if (pressedKeys.contains(KeyCode.A) && !pressedKeys.contains(KeyCode.D)) {
+        	fighterLeft.moveLeft();
+    	}
+    	if (pressedKeys.contains(KeyCode.E)) {
+        	fighterLeft.setAnimation(AnimationState.POWER_MOVE);
+    	} else if(pressedKeys.contains(KeyCode.Q)) {
+    		fighterLeft.setAnimation(AnimationState.NORMAL_MOVE);
+    	} else if(pressedKeys.contains(KeyCode.D) && pressedKeys.contains(KeyCode.W)) {
+    		fighterLeft.teleportBehindYou();
+    	}
+    	if (pressedKeys.contains(KeyCode.F) && !movementLockLeft) {
+    		fighterLeft.setPoweredUp();
+    	}
     }
 
     public void setMovementLock(boolean value, String side) {

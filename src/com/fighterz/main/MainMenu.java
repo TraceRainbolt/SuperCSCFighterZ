@@ -22,13 +22,11 @@ import javafx.util.Duration;
 public class MainMenu extends StackPane implements GameScene {
 
     private CharacterSelectScreen charSelectScreen;
-    private FightingStage fightingStage;
     private OptionsMenu optionsMenu;
     private LeaderBoards leaderBoards;
 
     public MainMenu(CharacterSelectScreen charSelectScreen, FightingStage fightingStage, OptionsMenu optionsMenu, LeaderBoards leaderBoards) {
         this.charSelectScreen = charSelectScreen;
-        this.fightingStage = fightingStage;
         this.optionsMenu = optionsMenu;
         this.leaderBoards = leaderBoards;
         
