@@ -93,8 +93,7 @@ public class FighterFalessi extends Fighter {
     @Override
     public void onCollide(HitBox hitBox) {
         super.onCollide(hitBox);
-        System.out.println("Falessi Energy = " + energy);
-        logger.log(Level.INFO, "Falessi Energy = " + energy);
+        logger.log(Level.INFO, "Falessi Energy = {0}", energy);
         
         // Play takes damage sound
         fighterSounds.playTakeDamageSound();

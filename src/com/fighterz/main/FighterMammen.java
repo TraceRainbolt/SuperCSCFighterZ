@@ -103,7 +103,7 @@ public class FighterMammen extends Fighter {
     @Override
     public void onCollide(HitBox hitBox) {
         super.onCollide(hitBox);
-        logger.log(Level.INFO, "Mammen Energy = " + energy);
+        logger.log(Level.INFO, "Mammen Energy = {0}", energy);
         
         // Play takes damage sound
  		fighterSounds.playTakeDamageSound();

@@ -38,7 +38,7 @@ public abstract class Fighter extends GameObject {
 
 	protected double health;
 	
-	abstract protected void setupSprite(AnimationState state);
+	protected abstract void setupSprite(AnimationState state);
 
 	public Fighter(String side) {
 		this.side = side;
