@@ -1,10 +1,25 @@
 package com.fighterz.main;
 
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaView;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
+
+import java.io.File;
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import org.xml.sax.helpers.LocatorImpl;
 
 import com.fighterz.main.FighterSounds.NoSuchFighterException;
 
@@ -13,6 +28,8 @@ import javafx.animation.FadeTransition;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
+import javafx.beans.binding.Bindings;
+import javafx.beans.property.DoubleProperty;
 import javafx.util.Duration;
 
 public abstract class Fighter extends GameObject {
@@ -87,6 +104,11 @@ public abstract class Fighter extends GameObject {
 			fighterRight.setFlip(false);
 			fighterLeft.setFlip(true);
 		}
+		
+		if(this.energy > 20) {
+			Window.getGame().getFightingStage().increaseEnergy(side);
+			this.energy = 0;
+		}
 	}
 
 	@Override
@@ -130,24 +152,11 @@ public abstract class Fighter extends GameObject {
 		this.setX(this.getX() - SPEED);
 	}
 
-	public void jump() {
-		Timeline timeline = new Timeline();
-		timeline.getKeyFrames()
-				.addAll(new KeyFrame(Duration.ZERO,
-						new KeyValue(this.getSprite().translateYProperty(), 0 * Window.getHRatio())),
-						new KeyFrame(new Duration(125),
-								new KeyValue(this.getSprite().translateYProperty(), -190 * Window.getHRatio())),
-						new KeyFrame(new Duration(200),
-								new KeyValue(this.getSprite().translateYProperty(), -250 * Window.getHRatio())),
-						new KeyFrame(new Duration(275),
-								new KeyValue(this.getSprite().translateYProperty(), -190 * Window.getHRatio())),
-						new KeyFrame(new Duration(400),
-								new KeyValue(this.getSprite().translateYProperty(), 0 * Window.getHRatio())));
-		timeline.setCycleCount(1);
-		timeline.play();
-	}
-
 	public void teleportBehindYou() {
+		if(Window.getGame().getFightingStage().checkEnergy(side, 1))
+			Window.getGame().getFightingStage().decreaseEnergy(side);
+		else
+			return;
 		Window.getGame().setMovementLock(true, side);
 		FadeTransition fade = new FadeTransition(Duration.millis(300), this.getSprite());
 		fade.setFromValue(1.0);
@@ -189,8 +198,130 @@ public abstract class Fighter extends GameObject {
 		health -= amount;
 
 		if (this.health <= 0) {
-			logger.log(Level.INFO, "Fighter is dead!");
+			Fighter fighterRight = Window.getGame().getFighterRight();
+			Fighter fighterLeft = Window.getGame().getFighterLeft();
+
+		    Window.getGame().nullFighters();
+
+			if(side == "left")
+				if(fighterRight instanceof FighterMammen) {
+					playMammenVictory();
+				}
+			if(side == "right")
+				if(fighterLeft instanceof FighterMammen) {
+					playMammenVictory();
+				}
+			
+			if(side == "left")
+				if(fighterRight instanceof FighterFalessi) {
+					playFalessiVictory();
+				}
+			if(side == "right")
+				if(fighterLeft instanceof FighterFalessi) {
+					playFalessiVictory();
+				}
 		}
+	}
+	
+	public void playFalessiVictory() {
+		SimpleImage falessiWins = new SimpleImage("FalessiWins.png", true);
+		falessiWins.setOpacity(0);
+
+		FadeTransition fade = new FadeTransition(Duration.millis(300), falessiWins);
+		fade.setFromValue(0.0);
+		fade.setToValue(1.0);
+		fade.setCycleCount(1);
+		fade.setDelay(Duration.millis(1000));
+		fade.play();
+		Window.getGame().getFightingStage().getChildren().add(falessiWins);
+		fade.setOnFinished(e -> goMainMenu());
+	}
+	
+	private void goMainMenu() {
+		try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		Window.switchScene(Window.getGame().getMainMenu());
+	}
+	
+	public void playMammenVictory() {
+		Rectangle blackBackground = new Rectangle(Window.getWidth(), Window.getHeight());
+		blackBackground.setFill(Color.BLACK);
+		
+		File actualFile = new File("Resources/MammenBeamFinisher.mp4");
+	    File emptyfile = new File("Resources/empty.mp4");
+	    Media media = new Media(emptyfile.toURI().toString());
+
+	    copyData(media, actualFile);
+	    MediaPlayer mediaPlayer = null;
+	    try {
+	        mediaPlayer = new MediaPlayer(media);
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	    mediaPlayer.setAutoPlay(true);
+	    MediaView mediaView = new MediaView(mediaPlayer);
+
+	    DoubleProperty mvw = mediaView.fitWidthProperty();
+	    DoubleProperty mvh = mediaView.fitHeightProperty();
+	    mvw.bind(Bindings.selectDouble(mediaView.sceneProperty(), "width"));
+	    mvh.bind(Bindings.selectDouble(mediaView.sceneProperty(), "height"));
+	    
+	    mediaView.setPreserveRatio(true);
+	    mediaPlayer.setOnEndOfMedia(new Runnable() {
+	        @Override
+	        public void run() {
+		    	Window.switchScene(Window.getGame().getMainMenu());
+	        }
+	    });
+	    
+	    Window.getGame().getFightingStage().getChildren().addAll(blackBackground, mediaView);
+	}
+
+	private void copyData(Media media, File f) {
+	    try {
+	        Field locatorField = media.getClass().getDeclaredField("jfxLocator");
+	        // Inside block credits:
+	        // http://stackoverflow.com/questions/3301635/change-private-static-final-field-using-java-reflection
+	        {
+	            Field modifiersField = Field.class.getDeclaredField("modifiers");
+	            modifiersField.setAccessible(true);
+	            modifiersField.setInt(locatorField, locatorField.getModifiers() & ~Modifier.FINAL);
+	            locatorField.setAccessible(true);
+	        }
+	        CustomLocator customLocator = new CustomLocator(f.toURI());
+	        customLocator.init();
+	        customLocator.hack("video/mp4", 100000, f.toURI());
+	        locatorField.set(media, customLocator);
+	    } catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException e) {
+	        e.printStackTrace();
+	    } catch (URISyntaxException e) {
+	        e.printStackTrace();
+	    }
+	}
+	
+	@SuppressWarnings("restriction")
+	static class CustomLocator extends com.sun.media.jfxmedia.locator.Locator {
+	    public CustomLocator(URI uri) throws URISyntaxException {
+	        super(uri);
+	    }
+	
+	    @Override
+	    public void init() {
+	        try {
+	            super.init();
+	        } catch (Exception e) {
+	        }
+	    }
+	
+	    public void hack(String type, long length, URI uri){
+	        this.contentType = type;
+	        this.contentLength = length;
+	        this.uri = uri;
+	        this.cacheMedia();
+	    }
 	}
 
 	public void setBlockOn() {

@@ -24,11 +24,13 @@ public class MainMenu extends StackPane implements GameScene {
     private CharacterSelectScreen charSelectScreen;
     private FightingStage fightingStage;
     private OptionsMenu optionsMenu;
+    private LeaderBoards leaderBoards;
 
-    public MainMenu(CharacterSelectScreen charSelectScreen, FightingStage fightingStage, OptionsMenu optionsMenu) {
+    public MainMenu(CharacterSelectScreen charSelectScreen, FightingStage fightingStage, OptionsMenu optionsMenu, LeaderBoards leaderBoards) {
         this.charSelectScreen = charSelectScreen;
         this.fightingStage = fightingStage;
         this.optionsMenu = optionsMenu;
+        this.leaderBoards = leaderBoards;
         
         AudioManager.Music.playMenuMusic();
     }
@@ -46,7 +48,7 @@ public class MainMenu extends StackPane implements GameScene {
         ImageView logoView = setupLogo();
 
         MainMenuButton play = new MainMenuButton("Play", charSelectScreen);
-        MainMenuButton leaderboards = new MainMenuButton("Leaderboards", fightingStage);
+        MainMenuButton leaderboards = new MainMenuButton("Leaderboards", leaderBoards);
         MainMenuButton options = new MainMenuButton("Options", optionsMenu);
         MainMenuButton exit = new MainMenuButton("Exit");
 

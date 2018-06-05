@@ -38,7 +38,8 @@ public class Game {
         this.charSelectScreen = new CharacterSelectScreen();
         
         OptionsMenu optionsMenu = new OptionsMenu();
-        this.mainMenu = new MainMenu(charSelectScreen, fightingStage, optionsMenu);
+        LeaderBoards leaderBoards = new LeaderBoards();
+        this.mainMenu = new MainMenu(charSelectScreen, fightingStage, optionsMenu, leaderBoards);
 
         this.scene = new Scene(mainMenu);
         Window.initCurrentScene(mainMenu);
@@ -63,6 +64,15 @@ public class Game {
         }
         if(Window.getGameScene() instanceof CharacterSelectScreen)
         	charSelectScreen.handleKeys(pressedKeys);
+        if(Window.getGameScene() instanceof FightingStage)
+        	if(pressedKeys.contains(KeyCode.ESCAPE)) {
+        		Window.switchScene(mainMenu);
+        		fightingStage.nullFighters();
+        		fighterRight = null;
+        		fighterLeft = null;
+        		fighterRight.fighterSounds.kill();
+        		fighterLeft.fighterSounds.kill();
+        	}
     }
 
     private void handleFighterRight() {
@@ -74,7 +84,9 @@ public class Game {
         	}
         	if (pressedKeys.contains(KeyCode.O)) {
             	fighterRight.setAnimation(AnimationState.POWER_MOVE);
-        	} else if(pressedKeys.contains(KeyCode.I) && pressedKeys.contains(KeyCode.L)) {
+        	} else if(pressedKeys.contains(KeyCode.U)) {
+        		fighterRight.setAnimation(AnimationState.NORMAL_MOVE);
+        	} if(pressedKeys.contains(KeyCode.I) && pressedKeys.contains(KeyCode.L)) {
             	fighterRight.teleportBehindYou();
         	}
         	if (pressedKeys.contains(KeyCode.H) && !movementLockRight) {
@@ -96,6 +108,8 @@ public class Game {
         	}
         	if (pressedKeys.contains(KeyCode.E)) {
             	fighterLeft.setAnimation(AnimationState.POWER_MOVE);
+        	} else if(pressedKeys.contains(KeyCode.Q)) {
+        		fighterLeft.setAnimation(AnimationState.NORMAL_MOVE);
         	} else if(pressedKeys.contains(KeyCode.D) && pressedKeys.contains(KeyCode.W)) {
         		fighterLeft.teleportBehindYou();
         	}

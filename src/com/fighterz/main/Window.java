@@ -10,7 +10,7 @@ import javafx.util.Duration;
 public class Window extends Application {
 	
     // Currently just shows hitBox boundaries
-    public static final boolean DEBUG = true;
+    public static final boolean DEBUG = false;
 
     // 16 : 9 Ratio based off height
     private static final int INIT_HEIGHT = 720;

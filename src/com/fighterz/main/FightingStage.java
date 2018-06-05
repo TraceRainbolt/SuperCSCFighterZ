@@ -21,27 +21,46 @@ public class FightingStage extends StackPane implements GameScene {
     
     private Fighter fighterRight;
     private Fighter fighterLeft;
-
-    public FightingStage() {
-        // Empty constructor
-    }
+    
+    private EnergyBar energyBarLeft;
+    private EnergyBar energyBarRight;
 
     public void render() {
-        BackButton backBtn = new BackButton(Window.getGame().getCharSelect());
-        // Kill the threads handling idle chatter from fighters
-        backBtn.addEventHandler(MouseEvent.MOUSE_PRESSED, new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent e) {
-                fighterRight.fighterSounds.kill();
-                fighterLeft.fighterSounds.kill();
-            }
-        });
         SimpleImage background = new SimpleImage("StageBasketball.jpg", true);
 
         this.getNodes().add(background);
 
         setupHealthBars();
-        this.getNodes().add(backBtn);
+        setupEnergyBars();
+    }
+    
+    public void increaseEnergy(String side) {
+    	if(side == "left") {
+    		energyBarLeft.increase();
+    	} else {
+    		energyBarRight.increase();
+    	}
+    }
+    
+
+	public void decreaseEnergy(String side) {
+    	if(side == "left") {
+    		energyBarLeft.decrease();
+    	} else {
+    		energyBarRight.decrease();
+    	}
+	}
+    
+    private void setupEnergyBars() {
+    	energyBarLeft = new EnergyBar();
+    	energyBarLeft.setTranslateY(440 * Window.getHRatio());
+    	energyBarLeft.setTranslateX(-530 * Window.getHRatio());
+    	
+    	energyBarRight = new EnergyBar();
+    	energyBarRight.setTranslateY(440 * Window.getHRatio());
+    	energyBarRight.setTranslateX(530 * Window.getHRatio());
+    	
+    	this.getChildren().addAll(energyBarLeft, energyBarRight);
     }
     
     public void setFighterRight(Fighter fighter) {
@@ -147,5 +166,12 @@ public class FightingStage extends StackPane implements GameScene {
     public ObservableList<Node> getNodes() {
         return this.getChildren();
     }
+
+	public boolean checkEnergy(String side, int i) {
+		if(side == "left") {
+			return energyBarLeft.checkEnergy(i);
+		}
+		return energyBarRight.checkEnergy(i);
+	}
 
 }
