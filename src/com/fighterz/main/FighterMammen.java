@@ -97,7 +97,7 @@ public class FighterMammen extends Fighter {
         
         currentAnimation.setCycleCount(1);
         currentAnimation.play();
-        currentAnimation.setOnFinished(e -> setIdle());
+        currentAnimation.setOnFinished(e -> setIdle(idleImage, 29));
         
         // Play melee attack sound
      	fighterSounds.playMeleSound();
@@ -115,7 +115,7 @@ public class FighterMammen extends Fighter {
         
         currentAnimation.setCycleCount(1);
         currentAnimation.play();
-        currentAnimation.setOnFinished(e -> setIdle());
+        currentAnimation.setOnFinished(e -> setIdle(idleImage, 29));
         
         // Play melee attack sound
      	fighterSounds.playMeleSound();
@@ -136,15 +136,6 @@ public class FighterMammen extends Fighter {
         hitBox.setDelay(0.2);
         hitBox.setMaxDuration(2.5);
         return hitBox;
-    }
-
-    private void setIdle() {
-        this.getSprite().setTranslateX(originalX);
-        this.setSprite(idleImage);
-        currentAnimation = new SpriteAnimation(this.getSprite(), Duration.millis(1000), 27);
-        currentAnimation.setCycleCount(Animation.INDEFINITE);
-        currentAnimation.play();
-        Window.getGame().setMovementLock(false, side);
     }
     
     @Override

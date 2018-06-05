@@ -73,7 +73,7 @@ public class FighterFalessi extends Fighter {
         
         currentAnimation.setCycleCount(1);
         currentAnimation.play();
-        currentAnimation.setOnFinished(e -> setIdle());
+        currentAnimation.setOnFinished(e -> setIdle(idleImage, 29));
         
         // Play ranged attack sound
         fighterSounds.playRangedSound();
@@ -90,7 +90,7 @@ public class FighterFalessi extends Fighter {
         
         currentAnimation.setCycleCount(1);
         currentAnimation.play();
-        currentAnimation.setOnFinished(e -> setIdle());
+        currentAnimation.setOnFinished(e -> setIdle(idleImage, 29));
         
         // Play ranged attack sound
         fighterSounds.playRangedSound();
@@ -117,8 +117,5 @@ public class FighterFalessi extends Fighter {
         return hitBox;
     }
 
-    private void setIdle() {
-    	super.setIdle(idleImage, 29);
-    }
 
 }

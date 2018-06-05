@@ -94,7 +94,8 @@ public class Game {
         	fighterRight.setAnimation(AnimationState.POWER_MOVE);
     	} else if(pressedKeys.contains(KeyCode.U)) {
     		fighterRight.setAnimation(AnimationState.NORMAL_MOVE);
-    	} if(pressedKeys.contains(KeyCode.I) && pressedKeys.contains(KeyCode.L)) {
+    	} 
+    	if(pressedKeys.contains(KeyCode.I) && pressedKeys.contains(KeyCode.L)) {
         	fighterRight.teleportBehindYou();
     	}
     	if (pressedKeys.contains(KeyCode.H) && !movementLockRight) {
