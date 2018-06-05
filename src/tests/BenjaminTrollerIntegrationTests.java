@@ -1,4 +1,4 @@
-//Author: Connor Alvin
+// Author: Benjamin Troller
 
 package tests;
 
@@ -14,7 +14,7 @@ import com.fighterz.main.Window;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
-public class TestSoundsIntegration {
+public class BenjaminTrollerIntegrationTests {
 
 	public static class AsNonApp extends Application {
 		@Override
@@ -37,9 +37,9 @@ public class TestSoundsIntegration {
 		t.start();
 		Thread.sleep(500);
 	}
-
+	
 	@Test
-	public void testFighterIdleSound() throws InterruptedException {
+	public void testFighterVictorySound() throws InterruptedException {
 		try {
 			Window.main(null);
 		} catch (Exception e) {
@@ -50,12 +50,30 @@ public class TestSoundsIntegration {
 
 		Fighter f = Window.getGame().getFighterRight();
 
-		f.getFighterSounds().playIdleSound();
+		f.getFighterSounds().playVictorySound();
 
 		String s = f.getFighterSounds().getPlayingSound();
 
-		assertEquals("IdleSound", s);
+		assertEquals("VictorySound", s);
+	}
+	
+	@Test
+	public void testFighterJumpSound() throws InterruptedException {
+		try {
+			Window.main(null);
+		} catch (Exception e) {
 
+		}
+
+		Window.getGame().addFighter(new FighterFalessi("right"));
+
+		Fighter f = Window.getGame().getFighterRight();
+
+		f.getFighterSounds().playJumpSound();
+
+		String s = f.getFighterSounds().getPlayingSound();
+
+		assertEquals("JumpSound", s);
 	}
 
 }

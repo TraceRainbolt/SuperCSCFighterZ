@@ -22,7 +22,6 @@ public class TestSoundsIntegration2 {
 		}
 	}
 
-	
 	@BeforeClass
 	public static void initJFX() throws InterruptedException {
 		Thread t = new Thread("JavaFX Init Thread") {
@@ -31,33 +30,32 @@ public class TestSoundsIntegration2 {
 					Application.launch(AsNonApp.class, new String[0]);
 				} catch (Exception e) {
 					// Don't launch another application if one is already running
-				}	
+				}
 			}
 		};
 		t.setDaemon(true);
 		t.start();
 		Thread.sleep(500);
 	}
-	
+
 	@Test
 	public void testTeleportSound() throws InterruptedException {
 		try {
 			Window.main(null);
+		} catch (Exception e) {
+
 		}
-		catch(Exception e) {
-			
-		}
-		
+
 		Window.getGame().addFighter(new FighterFalessi("right"));
-		
+
 		Fighter f = Window.getGame().getFighterRight();
-		
+
 		f.teleportBehindYou();
-		
+
 		String s = f.getFighterSounds().getPlayingSound();
-		
+
 		assertEquals("TeleportSound", s);
-		
+
 	}
 
 }
