@@ -6,7 +6,7 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
-@SuiteClasses({ TestFightingStage.class, TestFightingStage2.class })
+@SuiteClasses({ TestFightingStage.class, TestFightingStage2.class, TestSoundsIntegration.class, TestSoundsIntegration2.class })
 public class ConnorATests {
 
 }
