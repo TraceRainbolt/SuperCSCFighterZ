@@ -26,10 +26,10 @@ public class FighterMammen extends Fighter {
 		}
     }
     protected void setupSprite(AnimationState state) {
-        if (state == AnimationState.POWER_MOVE && currentAnimation != null) {
+        if (state == AnimationState.NORMAL_MOVE && currentAnimation != null) {
         	check();
             setPointerVision();
-        } else if(state == AnimationState.NORMAL_MOVE && currentAnimation != null) {
+        } else if(state == AnimationState.POWER_MOVE && currentAnimation != null) {
         	if(Window.getGame().getFightingStage().checkEnergy(side, 2)) {
         		Window.getGame().getFightingStage().decreaseEnergy(side);
         		Window.getGame().getFightingStage().decreaseEnergy(side);
@@ -56,13 +56,6 @@ public class FighterMammen extends Fighter {
     }
     
     private void check() {
-    	if(Window.getGame().getFightingStage().checkEnergy(side, 2)) {
-    		Window.getGame().getFightingStage().decreaseEnergy(side);
-    		Window.getGame().getFightingStage().decreaseEnergy(side);
-    	} else {
-    		return;
-    	}
-    	
         Window.getGame().setMovementLock(true, side);
         originalX = this.getX();
 
@@ -85,7 +78,7 @@ public class FighterMammen extends Fighter {
         
         currentAnimation.setCycleCount(1);
         currentAnimation.play();
-        currentAnimation.setOnFinished(e -> setIdle(idleImage, 29));
+        currentAnimation.setOnFinished(e -> setIdle(idleImage, 27));
         
         // Play melee attack sound
      	fighterSounds.playMeleSound();
@@ -103,7 +96,7 @@ public class FighterMammen extends Fighter {
         
         currentAnimation.setCycleCount(1);
         currentAnimation.play();
-        currentAnimation.setOnFinished(e -> setIdle(idleImage, 29));
+        currentAnimation.setOnFinished(e -> setIdle(idleImage, 27));
         
         // Play melee attack sound
      	fighterSounds.playMeleSound();
