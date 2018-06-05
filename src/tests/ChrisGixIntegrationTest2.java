@@ -14,7 +14,7 @@ import com.fighterz.main.Window;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
-public class TestFighterIntegration2 {
+public class ChrisGixIntegrationTest2 {
 
 	// Used to allow JavaFX to run
 	public static class AsNonApp extends Application {

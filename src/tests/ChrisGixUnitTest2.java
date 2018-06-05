@@ -15,7 +15,7 @@ import com.fighterz.main.Window;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
-public class TestFighters2 {
+public class ChrisGixUnitTest2 {
 	
 	
 	// Used to allow JavaFX to run

@@ -7,7 +7,7 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
-@SuiteClasses({ TestFighters.class, TestFighters2.class, TestFighterIntegration.class, TestFighterIntegration.class })
-public class AllFighterTests {
+@SuiteClasses({ ChrisGixUnitTest1.class, ChrisGixUnitTest2.class, ChrisGixIntegrationTest1.class, ChrisGixIntegrationTest2.class })
+public class ChrisGixTestSuite {
 
 }
