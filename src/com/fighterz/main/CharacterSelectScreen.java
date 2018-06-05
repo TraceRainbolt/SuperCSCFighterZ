@@ -122,62 +122,70 @@ public class CharacterSelectScreen extends StackPane implements GameScene {
 		}
 
 		if (pressedKeys.contains(KeyCode.ENTER) && redSelected != null && blueSelected != null) {
-			Task<Void> sleeper = new Task<Void>() {
-				@Override
-				protected Void call() throws Exception {
-					try {
-						Window.switchScene(new LoadingScreen());
-						Thread.sleep(300);
-					} catch (InterruptedException e) {
-						// No more code smell with this comment added?
-					}
-					return null;
-				}
-			};
-			sleeper.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
-				@Override
-				public void handle(WorkerStateEvent event) {
-					Window.switchScene(Window.getGame().getFightingStage());
-					if (redSelected == falessiCharRed) {
-						Window.getGame().addFighter(new FighterFalessi("left"));
-					} else {
-						Window.getGame().addFighter(new FighterMammen("left"));
-					}
-					if (blueSelected == falessiCharBlue) {
-						Window.getGame().addFighter(new FighterFalessi("right"));
-					} else {
-						Window.getGame().addFighter(new FighterMammen("right"));
-					}
-				}
-			});
-			new Thread(sleeper).start();
+			createSleeperThread();
 		}
 
 		if (switched) {
-			if (redSelected == falessiCharRed) {
-				falessiCharRed.toFront();
-				mammenCharRed.toBack();
-			}
-
-			if (blueSelected == falessiCharBlue) {
-				falessiCharBlue.toFront();
-				mammenCharBlue.toBack();
-			}
-
-			if (redSelected == mammenCharRed) {
-				mammenCharRed.toFront();
-				falessiCharRed.toBack();
-			}
-
-			if (blueSelected == mammenCharBlue) {
-				mammenCharBlue.toFront();
-				falessiCharBlue.toBack();
-			}
-
-			falessiIcon.toFront();
-			mammenIcon.toFront();
-			redSelect.toFront();
-			blueSelect.toFront();
+			didSwitch();
 		}
+	}
+	
+	public void createSleeperThread() {
+		Task<Void> sleeper = new Task<Void>() {
+			@Override
+			protected Void call() throws Exception {
+				try {
+					Window.switchScene(new LoadingScreen());
+					Thread.sleep(300);
+				} catch (InterruptedException e) {
+					// No more code smell with this comment added?
+				}
+				return null;
+			}
+		};
+		sleeper.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+			@Override
+			public void handle(WorkerStateEvent event) {
+				Window.switchScene(Window.getGame().getFightingStage());
+				if (redSelected == falessiCharRed) {
+					Window.getGame().addFighter(new FighterFalessi("left"));
+				} else {
+					Window.getGame().addFighter(new FighterMammen("left"));
+				}
+				if (blueSelected == falessiCharBlue) {
+					Window.getGame().addFighter(new FighterFalessi("right"));
+				} else {
+					Window.getGame().addFighter(new FighterMammen("right"));
+				}
+			}
+		});
+		new Thread(sleeper).start();
+	}
+	
+	public void didSwitch() {
+		if (redSelected == falessiCharRed) {
+			falessiCharRed.toFront();
+			mammenCharRed.toBack();
+		}
+
+		if (blueSelected == falessiCharBlue) {
+			falessiCharBlue.toFront();
+			mammenCharBlue.toBack();
+		}
+
+		if (redSelected == mammenCharRed) {
+			mammenCharRed.toFront();
+			falessiCharRed.toBack();
+		}
+
+		if (blueSelected == mammenCharBlue) {
+			mammenCharBlue.toFront();
+			falessiCharBlue.toBack();
+		}
+
+		falessiIcon.toFront();
+		mammenIcon.toFront();
+		redSelect.toFront();
+		blueSelect.toFront();
 	}
 }
