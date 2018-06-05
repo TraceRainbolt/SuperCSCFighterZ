@@ -1,14 +1,5 @@
 package com.fighterz.main;
 
-import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
-import javafx.scene.media.MediaView;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Font;
-
 import java.io.File;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
@@ -19,17 +10,18 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.xml.sax.helpers.LocatorImpl;
-
 import com.fighterz.main.FighterSounds.NoSuchFighterException;
 
 import javafx.animation.Animation;
 import javafx.animation.FadeTransition;
-import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
-import javafx.animation.Timeline;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.DoubleProperty;
+import javafx.scene.image.Image;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaView;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 
 public abstract class Fighter extends GameObject {
@@ -57,6 +49,9 @@ public abstract class Fighter extends GameObject {
 	protected double health;
 	
 	protected abstract void setupSprite(AnimationState state);
+	
+	private static final String right = "right";
+	private static final String left = "left";
 
 	public Fighter(String side) {
 		this.side = side;
@@ -92,8 +87,8 @@ public abstract class Fighter extends GameObject {
 		Fighter fighterRight = Window.getGame().getFightingStage().getFighterRight();
 		Fighter fighterLeft = Window.getGame().getFightingStage().getFighterLeft();
 
-		boolean rightLock = Window.getGame().getMovementLock("right");
-		boolean leftLock = Window.getGame().getMovementLock("left");
+		boolean rightLock = Window.getGame().getMovementLock(right);
+		boolean leftLock = Window.getGame().getMovementLock(left);
 
 		boolean locked = rightLock || leftLock;
 
@@ -167,9 +162,8 @@ public abstract class Fighter extends GameObject {
 		fade.setOnFinished(e -> nothingPersonnelKid());
 	}
 
-	// TODO get other fighter instead of left
 	private void nothingPersonnelKid() {
-		Fighter otherFighter = this.side == "left" ? Window.getGame().getFightingStage().getFighterRight()
+		Fighter otherFighter = this.side == left ? Window.getGame().getFightingStage().getFighterRight()
 				: Window.getGame().getFightingStage().getFighterLeft();
 		double x = otherFighter.getX();
 		this.setX(x - 230 * this.getFlipped() * Window.getHRatio());
@@ -197,37 +191,27 @@ public abstract class Fighter extends GameObject {
 	public void subtractHealth(double amount) {
 		health -= amount;
 
-		if (this.health <= 0) {
-			Fighter fighterRight = Window.getGame().getFighterRight();
-			Fighter fighterLeft = Window.getGame().getFighterLeft();
+		if (this.health <= 0)
+			playVictory();
+	}
+	
+	private void playVictory() {
+		Fighter fighterRight = Window.getGame().getFighterRight();
+		Fighter fighterLeft = Window.getGame().getFighterLeft();
 
-		    Window.getGame().nullFighters();
+	    Window.getGame().nullFighters();
 
-			if(side == "left")
-				if(fighterRight instanceof FighterMammen) {
-					playMammenVictory();
-					fighterRight.fighterSounds.kill();
-	        		fighterLeft.fighterSounds.kill();
-				}
-			if(side == "right")
-				if(fighterLeft instanceof FighterMammen) {
-					playMammenVictory();
-					fighterRight.fighterSounds.kill();
-	        		fighterLeft.fighterSounds.kill();
-				}
-			
-			if(side == "left")
-				if(fighterRight instanceof FighterFalessi) {
-					playFalessiVictory();
-					fighterRight.fighterSounds.kill();
-	        		fighterLeft.fighterSounds.kill();
-				}
-			if(side == "right")
-				if(fighterLeft instanceof FighterFalessi) {
-					playFalessiVictory();
-					fighterRight.fighterSounds.kill();
-	        		fighterLeft.fighterSounds.kill();
-				}
+		if(side == left && fighterRight instanceof FighterMammen) {
+			playMammenVictory();
+		}
+		if(side == right && fighterLeft instanceof FighterMammen) {
+			playMammenVictory();
+		}
+		if(side == left && fighterRight instanceof FighterFalessi) {
+			playFalessiVictory();
+		}
+		if(side == right && fighterLeft instanceof FighterFalessi) {
+			playFalessiVictory();
 		}
 	}
 	
@@ -278,12 +262,7 @@ public abstract class Fighter extends GameObject {
 	    mvh.bind(Bindings.selectDouble(mediaView.sceneProperty(), "height"));
 	    
 	    mediaView.setPreserveRatio(true);
-	    mediaPlayer.setOnEndOfMedia(new Runnable() {
-	        @Override
-	        public void run() {
-		    	Window.switchScene(Window.getGame().getMainMenu());
-	        }
-	    });
+	    mediaPlayer.setOnEndOfMedia(() -> Window.switchScene(Window.getGame().getMainMenu()));
 	    
 	    Window.getGame().getFightingStage().getChildren().addAll(blackBackground, mediaView);
 	}
@@ -291,21 +270,17 @@ public abstract class Fighter extends GameObject {
 	private void copyData(Media media, File f) {
 	    try {
 	        Field locatorField = media.getClass().getDeclaredField("jfxLocator");
-	        // Inside block credits:
-	        // http://stackoverflow.com/questions/3301635/change-private-static-final-field-using-java-reflection
-	        {
-	            Field modifiersField = Field.class.getDeclaredField("modifiers");
-	            modifiersField.setAccessible(true);
-	            modifiersField.setInt(locatorField, locatorField.getModifiers() & ~Modifier.FINAL);
-	            locatorField.setAccessible(true);
-	        }
+	        
+            Field modifiersField = Field.class.getDeclaredField("modifiers");
+            modifiersField.setAccessible(true);
+            modifiersField.setInt(locatorField, locatorField.getModifiers() & ~Modifier.FINAL);
+            locatorField.setAccessible(true);
+            
 	        CustomLocator customLocator = new CustomLocator(f.toURI());
 	        customLocator.init();
 	        customLocator.hack("video/mp4", 100000, f.toURI());
 	        locatorField.set(media, customLocator);
-	    } catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException e) {
-	        e.printStackTrace();
-	    } catch (URISyntaxException e) {
+	    } catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException | URISyntaxException e) {
 	        e.printStackTrace();
 	    }
 	}
