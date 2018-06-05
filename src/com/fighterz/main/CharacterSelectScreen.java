@@ -134,13 +134,8 @@ public class CharacterSelectScreen extends StackPane implements GameScene {
 		Task<Void> sleeper = new Task<Void>() {
 			@Override
 			protected Void call() throws Exception {
-				try {
-					Window.switchScene(new LoadingScreen());
-					Thread.sleep(300);
-				} catch (InterruptedException e) {
-					// No more code smell with this comment added?
-					throw e;
-				}
+				Window.switchScene(new LoadingScreen());
+				Thread.sleep(300);
 				return null;
 			}
 		};
