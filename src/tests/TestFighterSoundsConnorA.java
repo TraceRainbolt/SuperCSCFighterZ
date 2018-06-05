@@ -14,7 +14,7 @@ import com.fighterz.main.Window;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
-public class TestSoundsIntegration {
+public class TestFighterSoundsConnorA {
 
 	public static class AsNonApp extends Application {
 		@Override
@@ -55,6 +55,25 @@ public class TestSoundsIntegration {
 		String s = f.getFighterSounds().getPlayingSound();
 
 		assertEquals("IdleSound", s);
+
+	}
+	@Test
+	public void testTeleportSound() throws InterruptedException {
+		try {
+			Window.main(null);
+		} catch (Exception e) {
+
+		}
+
+		Window.getGame().addFighter(new FighterFalessi("right"));
+
+		Fighter f = Window.getGame().getFighterRight();
+
+		f.teleportBehindYou();
+
+		String s = f.getFighterSounds().getPlayingSound();
+
+		assertEquals("TeleportSound", s);
 
 	}
 

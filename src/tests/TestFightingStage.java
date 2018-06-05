@@ -57,5 +57,26 @@ public class TestFightingStage {
 		assertNotNull(fs.getFighterRight());
 		
 	}
+	
+	@Test
+	public void testFightingStageSetup2() throws InterruptedException {
+		try {
+			Window.main(null);
+		}
+		catch(Exception e) {
+			
+		}
+		
+		FightingStage fs = Window.getGame().getFightingStage();
+		
+		Fighter f = new FighterFalessi("right");
+		
+		fs.setFighterRight(f);
+		
+		fs.nullFighters();
+		
+		assertNull(fs.getFighterRight());
+		
+	}
 
 }
