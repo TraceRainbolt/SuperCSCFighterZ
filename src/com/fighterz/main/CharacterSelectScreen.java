@@ -139,6 +139,7 @@ public class CharacterSelectScreen extends StackPane implements GameScene {
 					Thread.sleep(300);
 				} catch (InterruptedException e) {
 					// No more code smell with this comment added?
+					throw e;
 				}
 				return null;
 			}

@@ -6,7 +6,7 @@ public class Camera {
 		Fighter left = Window.getGame().getFightingStage().getFighterLeft();
 		Fighter right = Window.getGame().getFightingStage().getFighterRight();
 		
-		double lowX = -Window.getWidth() / 2 + 110 * Window.getHRatio();
+		double lowX = -((double)Window.getWidth()) / 2 + 110 * Window.getHRatio();
 		double highX = -lowX;
 
 		checkBounds(left, lowX, highX);
