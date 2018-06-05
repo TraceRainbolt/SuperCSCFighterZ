@@ -1,28 +1,20 @@
 package com.fighterz.main;
-
 import java.util.logging.Logger;
-
 import com.fighterz.main.FighterSounds.NoSuchFighterException;
-
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.scene.image.Image;
 import javafx.util.Duration;
-
 public class FighterMammen extends Fighter {
 	private static final Logger logger = Logger.getLogger(FighterMammen.class.getName());
-
     private final Image idleImage = new Image("SpriteMammenIdle.png", false);
     private final Image pointerVision = new Image("SpriteMammenPointerVision.png", false);
     private final Image powerVision = new Image("SpirteMammenPowerPointers.png", false);
-
-
     public FighterMammen(String side) {
         super(side);
         this.setAnimation(AnimationState.IDLE);
-
         HitBox hurtBox = new HitBox(this, HitBoxType.HURT, 292, 510, 0, -85);
         this.addHitBox(hurtBox);
         
@@ -33,47 +25,25 @@ public class FighterMammen extends Fighter {
 			System.exit(1);
 		}
     }
-
     protected void setupSprite(AnimationState state) {
-
-        if (state == AnimationState.POWER_MOVE) {
-            if (currentAnimation != null) {
-                Window.getGame().setMovementLock(true, side);
-                originalX = this.getX();
-
-                // Gotta do the jumpTo here as well
-                currentAnimation.jumpTo(Duration.millis(2000));
-                currentAnimation.pause();
-
-                this.setSprite(idleImage);
-                setPointerVision();
-            }
-        } else if(state == AnimationState.NORMAL_MOVE) {
-            if (currentAnimation != null) {
-            	if(Window.getGame().getFightingStage().checkEnergy(side, 2)) {
-            		Window.getGame().getFightingStage().decreaseEnergy(side);
-            		Window.getGame().getFightingStage().decreaseEnergy(side);
-            	} else {
-            		return;
-            	}
-            	
-                Window.getGame().setMovementLock(true, side);
-                originalX = this.getX();
-
-                // Gotta do the jumpTo here as well
-                currentAnimation.jumpTo(Duration.millis(2000));
-                currentAnimation.pause();
-
-                this.setSprite(idleImage);
-                setPowerVision();
-            }
+        if (state == AnimationState.POWER_MOVE && currentAnimation != null) {
+        	check();
+            setPointerVision();
+        } else if(state == AnimationState.NORMAL_MOVE && currentAnimation != null) {
+        	if(Window.getGame().getFightingStage().checkEnergy(side, 2)) {
+        		Window.getGame().getFightingStage().decreaseEnergy(side);
+        		Window.getGame().getFightingStage().decreaseEnergy(side);
+        	} else {
+        		return;
+        	}
+        	check();
+            setPowerVision();
         } else {
             this.setSprite(idleImage);
             currentAnimation = new SpriteAnimation(this.getSprite(), Duration.millis(1000), 27);
             currentAnimation.setCycleCount(Animation.INDEFINITE);
             currentAnimation.play();
         }
-
         Timeline timeline = new Timeline();
         timeline.getKeyFrames().addAll(
         	new KeyFrame(Duration.ZERO,
@@ -84,7 +54,25 @@ public class FighterMammen extends Fighter {
         timeline.setCycleCount(Animation.INDEFINITE);
         timeline.play();
     }
+    
+    private void check() {
+    	if(Window.getGame().getFightingStage().checkEnergy(side, 2)) {
+    		Window.getGame().getFightingStage().decreaseEnergy(side);
+    		Window.getGame().getFightingStage().decreaseEnergy(side);
+    	} else {
+    		return;
+    	}
+    	
+        Window.getGame().setMovementLock(true, side);
+        originalX = this.getX();
 
+        // Gotta do the jumpTo here as well
+        currentAnimation.jumpTo(Duration.millis(2000));
+        currentAnimation.pause();
+
+        this.setSprite(idleImage);
+    }
+    
     private void setPointerVision() {
         HitBox hitBox = createPointerVisionHitbox();
         this.addHitBox(hitBox);
@@ -128,8 +116,6 @@ public class FighterMammen extends Fighter {
         hitBox.setMaxDuration(2.5);
         return hitBox;
     }
-
-
     private HitBox createPointerVisionHitbox() {
         HitBox hitBox = new HitBox(this, HitBoxType.HIT, 700, 140, -500, -110);
         hitBox.setDamage(10);
@@ -141,8 +127,6 @@ public class FighterMammen extends Fighter {
     @Override
     public void onCollide(HitBox hitBox) {
         super.onCollide(hitBox);
-
  		fighterSounds.playTakeDamageSound();
     }
-
 }
