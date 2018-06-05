@@ -1,3 +1,4 @@
+//Author: Trace Rainbolt
 package tests;
 
 import org.junit.runner.RunWith;

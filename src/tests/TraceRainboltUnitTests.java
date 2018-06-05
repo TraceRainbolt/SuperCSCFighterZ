@@ -1,3 +1,4 @@
+//Author: Trace Rainbolt
 package tests;
 
 import static org.junit.Assert.*;

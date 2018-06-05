@@ -51,7 +51,7 @@ public class FightingStage extends StackPane implements GameScene {
     	}
 	}
     
-    private void setupEnergyBars() {
+    public void setupEnergyBars() {
     	energyBarLeft = new EnergyBar();
     	energyBarLeft.setTranslateY(440 * Window.getHRatio());
     	energyBarLeft.setTranslateX(-530 * Window.getHRatio());
@@ -168,6 +168,9 @@ public class FightingStage extends StackPane implements GameScene {
     }
 
 	public boolean checkEnergy(String side, int i) {
+		if(energyBarLeft == null || energyBarRight == null) {
+			return false;
+		}
 		if(side == "left") {
 			return energyBarLeft.checkEnergy(i);
 		}

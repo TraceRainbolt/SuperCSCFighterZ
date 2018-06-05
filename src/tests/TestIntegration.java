@@ -54,7 +54,7 @@ public class TestIntegration {
 
 		Fighter f = Window.getGame().getFighterRight();
 
-		f.setAnimation(AnimationState.POWER_MOVE); // this function calls another function that plays sound and sets a
+		f.setAnimation(AnimationState.NORMAL_MOVE); // this function calls another function that plays sound and sets a
 													// boolean in the FighterSoundsClass
 
 		String s = f.getFighterSounds().getPlayingSound();

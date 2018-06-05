@@ -69,6 +69,8 @@ public class TestFighterSoundsConnorA {
 
 		Fighter f = Window.getGame().getFighterRight();
 
+		Window.getGame().getFightingStage().setupEnergyBars();
+		Window.getGame().getFightingStage().increaseEnergy("right");
 		f.teleportBehindYou();
 
 		String s = f.getFighterSounds().getPlayingSound();
