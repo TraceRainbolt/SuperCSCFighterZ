@@ -47,10 +47,10 @@ public class FighterSounds {
 			super(message);
 		}
 	}
-	
+
 	public String getPlayingSound() // for integration testing
 	{
-		return myPlaySound; //this gets set to the name of the last sound played
+		return myPlaySound; // this gets set to the name of the last sound played
 	}
 
 	// MARK: Methods to play sounds
@@ -218,8 +218,8 @@ public class FighterSounds {
 
 		public boolean kill() {
 			shouldRun = false;
-			
-			return true;
+
+			return !shouldRun;
 		}
 
 		@Override
