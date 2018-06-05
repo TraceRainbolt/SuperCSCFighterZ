@@ -7,7 +7,7 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
-@SuiteClasses({ MannyJimenezUnitTest.class, MannyJimenezIntegrationTests.class })
+@SuiteClasses({ MannyJimenezUnitTests.class, MannyJimenezIntegrationTests.class })
 public class MannyJimenezTestSuite {
 
 }
