@@ -43,7 +43,7 @@ public class TestIntegration {
 		}
 
 	@Test
-	public void testInteg() throws InterruptedException {
+	public void testInteg() throws InterruptedException { //test Falessi Sound integration
 		
 		try {
 			Window.main(null);

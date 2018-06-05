@@ -43,7 +43,7 @@ public class TestIntegration2 {
 		}
 
 	@Test
-	public void testMoreInteg() throws InterruptedException {
+	public void testMoreInteg() throws InterruptedException { //test Mammen sound integration
 		
 		try {
 			Window.main(null);
