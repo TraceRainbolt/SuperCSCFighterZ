@@ -8,6 +8,7 @@ import static org.junit.Assert.*;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import com.fighterz.main.AnimationState;
 import com.fighterz.main.Fighter;
 import com.fighterz.main.FighterMammen;
 import com.fighterz.main.Window;
@@ -56,8 +57,11 @@ public class TestIntegration2 {
 		
 		Fighter f = Window.getGame().getFighterRight();
 		
-		
-		
+		f.setAnimation(AnimationState.POWER_MOVE); //this function calls another function that plays sound and sets a boolean in the FighterSoundsClass
+
+		String s = f.getFighterSounds().getPlayingSound();
+
+		assertTrue(s.equals("MeleSound")); //make sure the sound is set when the move is used
 	}
 
 }

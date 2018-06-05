@@ -56,13 +56,13 @@ public class FighterSounds {
 	// MARK: Methods to play sounds
 	public boolean playBeginGameSound() {
 		playExclusiveRandomSoundFromArrayList(lines.beginGame);
-		
+		myPlaySound = "BeginGameSound";
 		return playingSound.getStatus() == MediaPlayer.Status.PLAYING;
 	}
 
 	public boolean playIdleSound() {
 		playExclusiveRandomSoundFromArrayList(lines.idle);
-		
+		myPlaySound = "IdleSound";
 		return playingSound.getStatus() == MediaPlayer.Status.PLAYING;
 	}
 
@@ -73,13 +73,13 @@ public class FighterSounds {
 			takeDamageSound.play();
 		}
 		playExclusiveRandomSoundFromArrayList(lines.takeDamage);
-		
+		myPlaySound = "TakeDamageSound";
 		return playingSound.getStatus() == MediaPlayer.Status.PLAYING;
 	}
 
 	public boolean playMeleSound() {
 		playExclusiveRandomSoundFromArrayList(lines.mele);
-		
+		myPlaySound = "MeleSound";
 		return playingSound.getStatus() == MediaPlayer.Status.PLAYING;
 	}
 
@@ -91,13 +91,13 @@ public class FighterSounds {
 
 	public boolean playJumpSound() {
 		playExclusiveRandomSoundFromArrayList(lines.jump);
-		
+		myPlaySound = "JumpSound";
 		return playingSound.getStatus() == MediaPlayer.Status.PLAYING;
 	}
 
 	public boolean playVictorySound() {
 		playExclusiveRandomSoundFromArrayList(lines.victory);
-		
+		myPlaySound = "VictorySound";
 		return playingSound.getStatus() == MediaPlayer.Status.PLAYING;
 	}
 
@@ -105,7 +105,7 @@ public class FighterSounds {
 		MediaPlayer teleportSound = lines.teleport.get(0);
 		teleportSound.seek(Duration.ZERO);
 		teleportSound.play();
-		
+		myPlaySound = "TeleportSound";
 		return teleportSound.getStatus() == MediaPlayer.Status.PLAYING;
 	}
 

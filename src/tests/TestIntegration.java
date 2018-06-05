@@ -11,7 +11,6 @@ import org.junit.Test;
 import com.fighterz.main.AnimationState;
 import com.fighterz.main.Fighter;
 import com.fighterz.main.FighterFalessi;
-import com.fighterz.main.FighterMammen;
 import com.fighterz.main.Window;
 
 import javafx.application.Application;
