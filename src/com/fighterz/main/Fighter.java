@@ -309,7 +309,12 @@ public abstract class Fighter extends GameObject {
 	}
 
 	public void setBlockOn() {
-		isBlocking = true;
+		if(isBlocking)
+			isBlocking = false;
+		else {
+			isBlocking = true;
+		}
+		
 	}
 
 	public boolean getBlock() {
