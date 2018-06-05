@@ -8,7 +8,9 @@ import static org.junit.Assert.*;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import com.fighterz.main.AnimationState;
 import com.fighterz.main.Fighter;
+import com.fighterz.main.FighterFalessi;
 import com.fighterz.main.FighterMammen;
 import com.fighterz.main.Window;
 
@@ -42,7 +44,7 @@ public class TestIntegration {
 		}
 
 	@Test
-	public void testFighterEnergy() throws InterruptedException {
+	public void testInteg() throws InterruptedException {
 		
 		try {
 			Window.main(null);
@@ -52,17 +54,15 @@ public class TestIntegration {
 		}
 		
 		
-		Window.getGame().addFighter(new FighterMammen("right"));
+		Window.getGame().addFighter(new FighterFalessi("right"));
 		
 		Fighter f = Window.getGame().getFighterRight();
 		
-		int startEnergy = f.getEnergy();
+		f.setAnimation(AnimationState.POWER_MOVE); //this function calls another function that plays sound and sets a boolean in the FighterSoundsClass
+
+		String s = f.getFighterSounds().getPlayingSound();
 		
-		f.onCollide(null);
-		
-		int endEnergy = f.getEnergy();
-		
-		assertTrue(startEnergy == 0 && endEnergy == 10);
+		assertTrue(s.equals("RangedSound")); //make sure the sound is set when the move is used
 		
 		
 	}

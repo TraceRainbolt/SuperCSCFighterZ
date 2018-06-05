@@ -42,7 +42,7 @@ public class TestIntegration2 {
 		}
 
 	@Test
-	public void testFighterEnergy() throws InterruptedException {
+	public void testMoreInteg() throws InterruptedException {
 		
 		try {
 			Window.main(null);
@@ -56,13 +56,6 @@ public class TestIntegration2 {
 		
 		Fighter f = Window.getGame().getFighterRight();
 		
-		int startEnergy = f.getEnergy();
-		
-		f.onCollide(null);
-		
-		int endEnergy = f.getEnergy();
-		
-		assertTrue(startEnergy == 0 && endEnergy == 10);
 		
 		
 	}

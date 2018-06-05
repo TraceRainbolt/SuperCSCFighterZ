@@ -67,10 +67,15 @@ public abstract class Fighter extends GameObject {
     	if(hitBox != null) {
     		Window.getGame().getFightingStage().subtractHealth(hitBox.getDamage(), side);
     	}
-    	else if(isBlocking == false) {
+    	else {
     		this.subtractHealth(10);
     	}
         energy += 10;
+    }
+    
+    public FighterSounds getFighterSounds() //use for integration testing to access the class
+    {
+    	return fighterSounds;
     }
     
     public String getSide() {
@@ -150,12 +155,7 @@ public abstract class Fighter extends GameObject {
     }
     
     public void setBlockOn() {
-    	if(isBlocking == false) {
-    		isBlocking = true;
-    	}
-    	else {
-    		isBlocking = false;
-    	}
+    	isBlocking = true;
     }
     
     public boolean getBlock() {

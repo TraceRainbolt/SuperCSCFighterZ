@@ -19,6 +19,7 @@ public class FighterSounds {
 	private Lines lines;
 	// Ensures only one sound can play at a time
 	private MediaPlayer playingSound = null;
+	private String myPlaySound = null;
 	// Used to pick lines at random
 	private Random random = new Random();
 	// Plays idle lines at random times when nothing else is playing
@@ -45,6 +46,11 @@ public class FighterSounds {
 		public NoSuchFighterException(String message) {
 			super(message);
 		}
+	}
+	
+	public String getPlayingSound() // for integration testing
+	{
+		return myPlaySound; //this gets set to the name of the last sound played
 	}
 
 	// MARK: Methods to play sounds
@@ -79,7 +85,7 @@ public class FighterSounds {
 
 	public boolean playRangedSound() {
 		playExclusiveRandomSoundFromArrayList(lines.ranged);
-		
+		myPlaySound = "RangedSound";
 		return playingSound.getStatus() == MediaPlayer.Status.PLAYING;
 	}
 
