@@ -206,19 +206,27 @@ public abstract class Fighter extends GameObject {
 			if(side == "left")
 				if(fighterRight instanceof FighterMammen) {
 					playMammenVictory();
+					fighterRight.fighterSounds.kill();
+	        		fighterLeft.fighterSounds.kill();
 				}
 			if(side == "right")
 				if(fighterLeft instanceof FighterMammen) {
 					playMammenVictory();
+					fighterRight.fighterSounds.kill();
+	        		fighterLeft.fighterSounds.kill();
 				}
 			
 			if(side == "left")
 				if(fighterRight instanceof FighterFalessi) {
 					playFalessiVictory();
+					fighterRight.fighterSounds.kill();
+	        		fighterLeft.fighterSounds.kill();
 				}
 			if(side == "right")
 				if(fighterLeft instanceof FighterFalessi) {
 					playFalessiVictory();
+					fighterRight.fighterSounds.kill();
+	        		fighterLeft.fighterSounds.kill();
 				}
 		}
 	}
