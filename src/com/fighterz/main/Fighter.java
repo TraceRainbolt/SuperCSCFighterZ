@@ -100,6 +100,8 @@ public abstract class Fighter extends GameObject {
 			this.subtractHealth(10);
 		}
 		energy += 10;
+		
+		fighterSounds.playTakeDamageSound();
 	}
 
 	public FighterSounds getFighterSounds() // use for integration testing to access the class
@@ -185,6 +187,10 @@ public abstract class Fighter extends GameObject {
 
 	public void subtractHealth(double amount) {
 		health -= amount;
+
+		if (this.health <= 0) {
+			logger.log(Level.INFO, "Fighter is dead!");
+		}
 	}
 
 	public void setBlockOn() {

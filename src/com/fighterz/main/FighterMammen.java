@@ -1,8 +1,5 @@
 package com.fighterz.main;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -11,7 +8,6 @@ import javafx.scene.image.Image;
 import javafx.util.Duration;
 
 public class FighterMammen extends Fighter {
-	private static final Logger logger = Logger.getLogger(FighterMammen.class.getName());
 
     private static final Image idleImage = new Image("SpriteMammenIdle.png", false);
     private static final Image pointerVision = new Image("SpriteMammenPointerVision.png", false);
@@ -95,22 +91,4 @@ public class FighterMammen extends Fighter {
     	super.setIdle(idleImage, 27);
     }
     
-    @Override
-    public void onCollide(HitBox hitBox) {
-        super.onCollide(hitBox);
-        logger.log(Level.INFO, "Mammen Energy = {0}", energy);
-        
-        // Play takes damage sound
- 		fighterSounds.playTakeDamageSound();
-    }
-    
-    @Override
-    public void subtractHealth(double amount) {
-    	super.subtractHealth(amount);
-    	if(this.health <= 0) {
-    		logger.log(Level.INFO, "Mammen is dead!");
-    	}
-    	
-    }
-
 }

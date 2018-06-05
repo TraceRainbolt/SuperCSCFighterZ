@@ -1,14 +1,10 @@
 package com.fighterz.main;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import javafx.animation.Animation;
 import javafx.scene.image.Image;
 import javafx.util.Duration;
 
 public class FighterFalessi extends Fighter {
-	private static final Logger logger = Logger.getLogger(FighterFalessi.class.getName());
 
     private static final Image powerBallImage = new Image("SpriteFalessiPowerBall.png", false);
     private static final Image idleImage = new Image("SpriteFalessiIdle.png", false);
@@ -83,23 +79,6 @@ public class FighterFalessi extends Fighter {
 
     private void setIdle() {
     	super.setIdle(idleImage, 29);
-    }
-    
-    @Override
-    public void onCollide(HitBox hitBox) {
-        super.onCollide(hitBox);
-        logger.log(Level.INFO, "Falessi Energy = {0}", energy);
-        
-        // Play takes damage sound
-        fighterSounds.playTakeDamageSound();
-    }
-    
-    @Override
-    public void subtractHealth(double amount) {
-    	super.subtractHealth(amount);
-    	if(this.health <= 0) {
-    		logger.log(Level.INFO, "Falessi is dead!");
-    	}
     }
 
 }
