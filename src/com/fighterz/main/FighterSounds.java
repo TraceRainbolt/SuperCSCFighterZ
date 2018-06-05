@@ -116,7 +116,7 @@ public class FighterSounds {
 		res = idleSoundManager.kill();
 		// Ensure no sounds continue to play
 		playingSound.stop();
-		
+		myPlaySound = "";////////////
 		return playingSound.getStatus() == MediaPlayer.Status.STOPPED && res;
 	}
 
