@@ -76,7 +76,7 @@ public class FighterFalessi extends Fighter {
     // Sets all the params for the power ball hit box. Trial and error was used.
     private HitBox createPowerBallHitbox() {
         HitBox hitBox = new HitBox(this, HitBoxType.HIT, 100, 100, 100, -150);
-        if(this.poweredUp == true) {
+        if(this.poweredUp) {
         	hitBox.setDamage(30);
         	this.poweredUp = false;
         	this.energy -= 100;

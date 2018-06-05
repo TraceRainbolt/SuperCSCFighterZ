@@ -28,7 +28,8 @@ public abstract class Fighter extends GameObject {
     
     protected boolean poweredUp;
     
-    protected boolean isBlocking; //this value is checked in FightingStage.subtractHealth();
+    //this value is checked in FightingStage.subtractHealth();
+    protected boolean isBlocking;
     
     protected double health;
 

@@ -64,7 +64,7 @@ public class Game {
     }
 
     private void handleFighterRight() {
-    	if(fighterRight.getBlock() == false) {
+    	if(!fighterRight.getBlock()) {
     		if (pressedKeys.contains(KeyCode.L) && !pressedKeys.contains(KeyCode.J)) {
             	fighterRight.moveRight();
         	} else if (pressedKeys.contains(KeyCode.J) && !pressedKeys.contains(KeyCode.L)) {
@@ -86,7 +86,7 @@ public class Game {
     }
 
     private void handleFighterLeft() {
-    	if(fighterLeft.getBlock() == false) {
+    	if(!fighterLeft.getBlock()) {
     		if (pressedKeys.contains(KeyCode.D) && !pressedKeys.contains(KeyCode.A)) {
             	fighterLeft.moveRight();
         	} else if (pressedKeys.contains(KeyCode.A) && !pressedKeys.contains(KeyCode.D)) {
