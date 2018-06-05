@@ -129,7 +129,7 @@ public class CharacterSelectScreen extends StackPane implements GameScene {
 			didSwitch();
 		}
 	}
-	
+
 	public void createSleeperThread() {
 		Task<Void> sleeper = new Task<Void>() {
 			@Override
@@ -161,7 +161,7 @@ public class CharacterSelectScreen extends StackPane implements GameScene {
 		});
 		new Thread(sleeper).start();
 	}
-	
+
 	public void didSwitch() {
 		if (redSelected == falessiCharRed) {
 			falessiCharRed.toFront();

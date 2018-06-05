@@ -82,12 +82,7 @@ public class FighterFalessi extends Fighter {
     }
 
     private void setIdle() {
-        this.getSprite().setTranslateX(originalX);
-        this.setSprite(idleImage);
-        currentAnimation = new SpriteAnimation(this.getSprite(), Duration.millis(1000), 29);
-        currentAnimation.setCycleCount(Animation.INDEFINITE);
-        currentAnimation.play();
-        Window.getGame().setMovementLock(false, side);
+    	super.setIdle(idleImage, 29);
     }
     
     @Override

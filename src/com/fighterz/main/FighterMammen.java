@@ -92,12 +92,7 @@ public class FighterMammen extends Fighter {
     }
 
     private void setIdle() {
-        this.getSprite().setTranslateX(originalX);
-        this.setSprite(idleImage);
-        currentAnimation = new SpriteAnimation(this.getSprite(), Duration.millis(1000), 27);
-        currentAnimation.setCycleCount(Animation.INDEFINITE);
-        currentAnimation.play();
-        Window.getGame().setMovementLock(false, side);
+    	super.setIdle(idleImage, 27);
     }
     
     @Override

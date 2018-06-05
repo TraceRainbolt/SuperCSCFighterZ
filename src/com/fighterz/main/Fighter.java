@@ -1,5 +1,6 @@
 package com.fighterz.main;
 
+import javafx.scene.image.Image;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
@@ -50,6 +51,15 @@ public abstract class Fighter extends GameObject {
 	
 	public void setAnimation(AnimationState state) {
         setupSprite(state);
+    }
+	
+	protected void setIdle(Image idleImage, int count) {
+        this.getSprite().setTranslateX(originalX);
+        this.setSprite(idleImage);
+        currentAnimation = new SpriteAnimation(this.getSprite(), Duration.millis(1000), count);
+        currentAnimation.setCycleCount(Animation.INDEFINITE);
+        currentAnimation.play();
+        Window.getGame().setMovementLock(false, side);
     }
 	
 	public void setupFighterSounds(String fighterName) {
