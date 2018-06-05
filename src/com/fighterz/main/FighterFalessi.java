@@ -1,15 +1,14 @@
 package com.fighterz.main;
 
+import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import com.fighterz.main.FighterSounds.NoSuchFighterException;
 
 import javafx.animation.Animation;
 import javafx.scene.image.Image;
 import javafx.util.Duration;
 
 public class FighterFalessi extends Fighter {
-	private static final Logger logger = Logger.getLogger(Fighter.class.getName());
+	private static final Logger logger = Logger.getLogger(FighterFalessi.class.getName());
 
     private static final Image powerBallImage = new Image("SpriteFalessiPowerBall.png", false);
     private static final Image idleImage = new Image("SpriteFalessiIdle.png", false);
@@ -21,20 +20,11 @@ public class FighterFalessi extends Fighter {
         HitBox hurtBox = new HitBox(this, HitBoxType.HURT, 240, 750, 20, 0);
         this.addHitBox(hurtBox);
         
-        try {
-			fighterSounds = new FighterSounds("Falessi");
-		} catch (NoSuchFighterException e) {
-			logger.severe("Unable to create fighter sound object for Falessi");
-			System.exit(1);
-		}
-    }
-    
-
-    public void setAnimation(AnimationState state) {
-        setupSprite(state);
+        setupFighterSounds("Falessi");
     }
 
-    private void setupSprite(AnimationState state) {
+    @Override
+	protected void setupSprite(AnimationState state) {
         if (state == AnimationState.POWER_MOVE) {
             if (currentAnimation != null) {
                 Window.getGame().setMovementLock(true, side);
@@ -104,6 +94,7 @@ public class FighterFalessi extends Fighter {
     public void onCollide(HitBox hitBox) {
         super.onCollide(hitBox);
         System.out.println("Falessi Energy = " + energy);
+        logger.log(Level.INFO, "Falessi Energy = " + energy);
         
         // Play takes damage sound
         fighterSounds.playTakeDamageSound();
@@ -113,7 +104,7 @@ public class FighterFalessi extends Fighter {
     public void subtractHealth(double amount) {
     	super.subtractHealth(amount);
     	if(this.health <= 0) {
-    		System.out.println("Falessi is dead!");
+    		logger.log(Level.INFO, "Falessi is dead!");
     	}
     }
 

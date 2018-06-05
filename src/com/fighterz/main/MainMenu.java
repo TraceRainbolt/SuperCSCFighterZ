@@ -149,7 +149,7 @@ public class MainMenu extends StackPane implements GameScene {
             this.setTextFill(Color.WHITE);
             this.setCursor(Cursor.HAND);
             
-            this.dropShadow = dropShadow = new DropShadow();
+            this.dropShadow = new DropShadow();
             dropShadow.setRadius(1.6);
             dropShadow.setOffsetX(2.0);
             dropShadow.setOffsetY(2.0);

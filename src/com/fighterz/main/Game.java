@@ -7,6 +7,8 @@ import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
 
 public class Game {
+	
+	private String RIGHT_STR = "right";
 
     private Handler handler;
 
@@ -107,7 +109,7 @@ public class Game {
     }
 
     public void setMovementLock(boolean value, String side) {
-        if(side == "right") {
+        if(side == RIGHT_STR) {
             movementLockRight = value;
         } else if (side == "left") {
             movementLockLeft = value;
@@ -115,7 +117,7 @@ public class Game {
     }
     
     public boolean getMovementLock(String side) {
-        if(side == "right")
+        if(side == RIGHT_STR)
             return movementLockRight;
         return movementLockLeft;
     }
@@ -153,7 +155,7 @@ public class Game {
 
     public void addFighter(Fighter fighter) {
         addObjects(fighter);
-        if(fighter.getSide() == "right") {
+        if(fighter.getSide() == RIGHT_STR) {
             fighterRight = fighter;
             fightingStage.setFighterRight(fighter);
         } else if(fighter.getSide() == "left") {

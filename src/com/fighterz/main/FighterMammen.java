@@ -1,8 +1,7 @@
 package com.fighterz.main;
 
+import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import com.fighterz.main.FighterSounds.NoSuchFighterException;
 
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
@@ -24,19 +23,10 @@ public class FighterMammen extends Fighter {
         HitBox hurtBox = new HitBox(this, HitBoxType.HURT, 292, 510, 0, -85);
         this.addHitBox(hurtBox);
         
-        try {
-			fighterSounds = new FighterSounds("Mammen");
-		} catch (NoSuchFighterException e) {
-			logger.severe("Unable to create FighterSounds for Mammen");
-			System.exit(1);
-		}
+        setupFighterSounds("Mammen");
     }
 
-    public void setAnimation(AnimationState state) {
-        setupSprite(state);
-    }
-
-    private void setupSprite(AnimationState state) {
+    protected void setupSprite(AnimationState state) {
 
         if (state == AnimationState.POWER_MOVE) {
             if (currentAnimation != null) {
@@ -113,7 +103,7 @@ public class FighterMammen extends Fighter {
     @Override
     public void onCollide(HitBox hitBox) {
         super.onCollide(hitBox);
-        System.out.println("Mammen Energy = " + energy);
+        logger.log(Level.INFO, "Mammen Energy = " + energy);
         
         // Play takes damage sound
  		fighterSounds.playTakeDamageSound();
@@ -123,7 +113,7 @@ public class FighterMammen extends Fighter {
     public void subtractHealth(double amount) {
     	super.subtractHealth(amount);
     	if(this.health <= 0) {
-    		System.out.println("Mammen is dead!");
+    		logger.log(Level.INFO, "Mammen is dead!");
     	}
     	
     }

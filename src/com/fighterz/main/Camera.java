@@ -1,14 +1,10 @@
 package com.fighterz.main;
 
 public class Camera {
-	
-	private Fighter left;
-	private Fighter right;
-	
 
 	public void updateView() {
-		left = Window.getGame().getFightingStage().getFighterLeft();
-		right = Window.getGame().getFightingStage().getFighterRight();
+		Fighter left = Window.getGame().getFightingStage().getFighterLeft();
+		Fighter right = Window.getGame().getFightingStage().getFighterRight();
 		
 		double lowX = -Window.getWidth() / 2 + 110 * Window.getHRatio();
 		double highX = -lowX;
