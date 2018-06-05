@@ -69,9 +69,11 @@ public class OptionsMenu extends StackPane implements GameScene {
         OptionsLabel viewCreditsButton = new OptionsLabel("View Credits");
         viewCreditsButton.setTextFill(Color.WHITE);
         viewCreditsButton.setCursor(Cursor.HAND);
+        GameScene that = this;
         viewCreditsButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent e) {
+            	Window.switchScene(new CreditsScreen(that));
                 AudioManager.MenuSounds.playButtonClickedSound();
             }
         });
