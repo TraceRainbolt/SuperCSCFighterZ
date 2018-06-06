@@ -3,6 +3,9 @@ import javafx.animation.Animation;
 import javafx.scene.image.Image;
 import javafx.util.Duration;
 public class FighterFalessi extends Fighter {
+	
+	public int davideFalessiWantsACodeSmell = 3;
+	
     private static final Image powerBallImage = new Image("SpriteFalessiPowerBall.png", false);
     private static final Image idleImage = new Image("SpriteFalessiIdle.png", false);
     private static final Image weakBallImage = new Image("SpriteFalessiWeakBall.png", false);
