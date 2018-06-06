@@ -267,8 +267,6 @@ public abstract class Fighter extends GameObject {
 
 	    DoubleProperty mvw = mediaView.fitWidthProperty();
 	    DoubleProperty mvh = mediaView.fitHeightProperty();
-	    mvw.bind(Bindings.selectDouble(mediaView.sceneProperty(), "width"));
-	    mvh.bind(Bindings.selectDouble(mediaView.sceneProperty(), "height"));
 	    
 	    mediaView.setPreserveRatio(true);
 	    if (mediaPlayer != null) {
@@ -276,6 +274,9 @@ public abstract class Fighter extends GameObject {
 	    }
 	    
 	    Window.getGame().getFightingStage().getChildren().addAll(blackBackground, mediaView);
+	    
+	    mvw.bind(Bindings.selectDouble(mediaView.sceneProperty(), "width"));
+	    mvh.bind(Bindings.selectDouble(mediaView.sceneProperty(), "height"));
 	}
 
 	private void copyData(Media media, File f) {
