@@ -271,7 +271,7 @@ public abstract class Fighter extends GameObject {
 	    mvh.bind(Bindings.selectDouble(mediaView.sceneProperty(), "height"));
 	    
 	    mediaView.setPreserveRatio(true);
-	    if (media != null) {
+	    if (media != null && mediaPlayer != null) {
 		    mediaPlayer.setOnEndOfMedia(() -> Window.switchScene(Window.getGame().getMainMenu()));
 	    }
 	    
