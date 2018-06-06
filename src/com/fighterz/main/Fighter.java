@@ -242,6 +242,7 @@ public abstract class Fighter extends GameObject {
 			Thread.sleep(3000);
 		} catch (InterruptedException e) {
 			logger.severe("Thread inturrupted.");
+			Thread.currentThread().interrupt();
 		}
 		Window.switchScene(Window.getGame().getMainMenu());
 	}
@@ -270,7 +271,9 @@ public abstract class Fighter extends GameObject {
 	    mvh.bind(Bindings.selectDouble(mediaView.sceneProperty(), "height"));
 	    
 	    mediaView.setPreserveRatio(true);
-	    mediaPlayer.setOnEndOfMedia(() -> Window.switchScene(Window.getGame().getMainMenu()));
+	    if (media != null) {
+		    mediaPlayer.setOnEndOfMedia(() -> Window.switchScene(Window.getGame().getMainMenu()));
+	    }
 	    
 	    Window.getGame().getFightingStage().getChildren().addAll(blackBackground, mediaView);
 	}

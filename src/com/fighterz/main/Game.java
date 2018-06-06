@@ -67,8 +67,12 @@ public class Game {
         if(Window.getGameScene() instanceof FightingStage && pressedKeys.contains(KeyCode.ESCAPE)) {
     		Window.switchScene(mainMenu);
     		fightingStage.nullFighters();
-    		fighterRight.fighterSounds.kill();
-    		fighterLeft.fighterSounds.kill();
+    		if (fighterRight != null) {
+	    		fighterRight.fighterSounds.kill();
+    		}
+    		if (fighterLeft != null) {
+    			fighterLeft.fighterSounds.kill();
+    		}
     		fighterRight = null;
     		fighterLeft = null;
         }
