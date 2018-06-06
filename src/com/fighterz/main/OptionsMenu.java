@@ -66,6 +66,7 @@ public class OptionsMenu extends StackPane implements GameScene {
         OptionsLabel resLabel = new OptionsLabel("Resolution");
         OptionsLabel musicVolLabel = new OptionsLabel("Music Volume");
         OptionsLabel creditsLabel = new OptionsLabel("Credits");
+        
         OptionsLabel viewCreditsButton = new OptionsLabel("View Credits");
         viewCreditsButton.setTextFill(Color.WHITE);
         viewCreditsButton.setCursor(Cursor.HAND);
@@ -83,7 +84,27 @@ public class OptionsMenu extends StackPane implements GameScene {
                 AudioManager.MenuSounds.playButtonMousedOverSound();
             }
         });
+        
+        OptionsLabel instructionsLabel = new OptionsLabel("Instructions");
+        OptionsLabel viewInstructionsButton = new OptionsLabel("View Controls");
+        viewInstructionsButton.setTextFill(Color.WHITE);
+        viewInstructionsButton.setCursor(Cursor.HAND);
+        viewInstructionsButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent e) {
+            	Window.switchScene(new InstructionsScreen(that));
+                AudioManager.MenuSounds.playButtonClickedSound();
+            }
+        });
+        viewInstructionsButton.addEventHandler(MouseEvent.MOUSE_ENTERED, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent e) {
+                AudioManager.MenuSounds.playButtonMousedOverSound();
+            }
+        });
+        
         MainMenu.addGlowEffect(viewCreditsButton);
+        MainMenu.addGlowEffect(viewInstructionsButton);
         MainMenu.addGlowEffect(minRes);
         MainMenu.addGlowEffect(medRes);
         MainMenu.addGlowEffect(maxRes);
@@ -108,6 +129,9 @@ public class OptionsMenu extends StackPane implements GameScene {
         
         grid.add(creditsLabel, 0, 5);
         grid.add(viewCreditsButton, 2, 5);
+        
+        grid.add(instructionsLabel, 0, 6);
+        grid.add(viewInstructionsButton, 2, 6);
         
         this.getChildren().addAll(imgView, backBtn, logoView, container, heading);
         this.getChildren().remove(grid);
