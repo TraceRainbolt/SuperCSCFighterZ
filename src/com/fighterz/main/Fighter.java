@@ -196,8 +196,16 @@ public abstract class Fighter extends GameObject {
 	}
 	
 	private void playVictory() {
+		MediaPlayer victoryLine = fighterSounds.getVictorySound();
+		
 		Fighter fighterRight = Window.getGame().getFighterRight();
 		Fighter fighterLeft = Window.getGame().getFighterLeft();
+		
+		fighterRight.fighterSounds.kill();
+		fighterLeft.fighterSounds.kill();
+		
+		victoryLine.seek(Duration.ZERO);
+		victoryLine.play();
 
 	    Window.getGame().nullFighters();
 

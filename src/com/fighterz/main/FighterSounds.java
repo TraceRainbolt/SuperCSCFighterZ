@@ -100,6 +100,10 @@ public class FighterSounds {
 		myPlaySound = "VictorySound";
 		return playingSound.getStatus() == MediaPlayer.Status.PLAYING;
 	}
+	
+	public MediaPlayer getVictorySound() {
+		return getRandomSoundFromArrayList(lines.victory);
+	}
 
 	public boolean playTeleportSound() {
 		MediaPlayer teleportSound = lines.teleport.get(0);
