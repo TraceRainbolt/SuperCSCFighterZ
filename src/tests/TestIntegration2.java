@@ -61,7 +61,7 @@ public class TestIntegration2 {
 
 		String s = f.getFighterSounds().getPlayingSound();
 
-		assertTrue(s.equals("MeleSound")); //make sure the sound is set when the move is used
+		assertTrue(s.equals("BeginGameSound")); //make sure the sound is set when the move is used
 	}
 
 }
